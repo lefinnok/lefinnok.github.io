@@ -1,0 +1,97 @@
+body {
+    background: white;
+  }
+  
+  .accentcontainer {
+    position: absolute;
+    height:2.6vw;
+    width: 20vw;
+    top: 10vw;
+    
+    display: flex;
+  }
+  
+  .accentcontainer .mainbox{
+    position:absolute;
+    background: black;
+    width: 1.2vw;
+    height: 100%;
+    animation: impact-move 6s ease 0s infinite normal forwards;
+    transform-origin:right center;
+    
+  }
+  
+  .accentcontainer .bufferbox{
+    
+    width: 4.5vw;
+    height: 100%;
+    
+  }
+  
+  .accentcontainer .sideboxes{
+    background: black;
+    width: 1vw;
+    height: 100%;
+    margin-left: 0.3vw;
+    animation: sidebox-routine 6s ease 0s infinite normal forwards;
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+  
+  @keyframes sidebox-routine{
+    0%{
+      animation-timing-function: ease-in;
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    45%{
+      opacity: .6;
+      transform: scale(1);
+    }
+    50%{
+      opacity: .6;
+      transform: scale(1);
+    }
+    55%{
+      opacity: .6;
+      transform: scale(1);
+    }
+    100%{
+      animation-timing-function: ease-out;
+      opacity: 0;
+      transform: scale(0.8);
+    }
+  }
+  
+  @keyframes impact-move {
+    0% {
+      animation-timing-function: ease-in;
+      opacity: 0;
+      transform: translateX(0vw);
+    }
+    25%{
+      animation-timing-function: ease-out;
+      opacity: 1;
+      transform: translateX(3vw);
+    }
+    30%{
+      animation-timing-function: ease-in;
+      opacity: 1;
+      transform: translateX(2.8vw) scaleX(1);
+    }
+    55%{
+      animation-timing-function: ease-in;
+      opacity: 1;
+      transform: translateX(2.8vw) scaleX(1);
+    }
+    
+    90%{
+      transform: translateX(18.8vw) scaleX(1);
+    }
+    100% {
+      transform: translateX(18.8vw) scaleX(0);
+      opacity: 1;
+      
+    }
+  }
+  
