@@ -1,0 +1,29 @@
+#container {
+    position:absolute;
+    top: 0;
+    right: 0;
+    width: 60vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.circle {
+    width: 1vw;
+    height: 1vw;
+    position: absolute;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    border-color: black;
+    border-style: solid;
+    border-width: 0.20vw;
+    z-index: 2;
+}
+
+#myCanvas {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60vw;
+    height: 100vh;
+    z-index: 1;
+}
