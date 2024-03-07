@@ -1,0 +1,192 @@
+#projects-body{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1vh;
+    align-items: stretch;
+    width: 96vw;
+    height: 98%;
+    background: black;
+    color: white;
+    font-family: "Fira Code", monospace;
+    overflow: hidden;
+    border: 0px solid white;
+    scroll-snap-type: x mandatory; /* Added */
+    
+}
+
+#projects-catalogue{
+    width: 20%;
+    border: 1px solid white;
+}
+
+#projects-catalogue-title{
+    width: 100%;
+    text-align: center;
+    font-size: 1vw;
+    border-bottom: 1px solid white;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+}
+
+#projects-display {
+    display: flex; /* Enables flexbox layout */
+    flex: 1; /* Flex grow factor, can be adjusted or removed if it doesn't fit your layout */
+    overflow-x: auto; /* Allows horizontal scrolling if children overflow the width of the container */
+    flex-wrap: nowrap; /* Prevents wrapping of items to ensure horizontal layout */
+    scroll-snap-type: x mandatory; /* Enables scroll snap to ensure children align to the container's start edge when scrolling */
+    -webkit-overflow-scrolling: touch; /* For momentum scrolling on iOS devices */
+}
+
+#projects-display > * {
+    flex: 0 0 100%; /* Sets the basis to 100% and prevents flex items from growing or shrinking */
+    scroll-snap-align: start; /* Aligns the snap point of each child element at the start of the container */
+}
+    
+
+#projects-list{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: space-around;
+    font-size: 1vw;
+}
+
+#projects-list li {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    list-style-type: none;
+    margin: 10px;
+    border-left: 0.3vw solid white;
+    z-index: 2;
+    overflow: hidden;
+    transition: transform 0.5s ease;
+    height: 2vw;
+}
+
+#projects-list li:hover {
+    transition: transform 0.5s ease;
+    background-color: rgb(16, 16, 16);
+}
+
+#projects-list a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    z-index: 10;
+    flex: 1;
+    text-align: center;
+}
+
+.project-model{
+    width:30vw;
+    height:20vw;
+}
+
+.project-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background: black;
+    color: white;
+    font-family: "Fira Code", monospace;
+    
+    border: 0px solid white;
+    overflow: hidden;
+    scroll-margin-top: var(--header-height);
+}
+
+.project-container .project-container-top{
+    display: flex;
+    flex-direction: row;
+    padding-top: 3vw;
+    justify-content: left;
+    width: 100%;
+    height: 60%;
+    background: black;
+    color: white;
+    font-family: "Fira Code", monospace;
+    border: 0px solid white;
+}
+
+.project-container .project-container-bottom {
+    display: flex;
+    flex-direction: column;
+    padding-left: 6vw;
+    width: 100%;
+    height: 40%;
+    background: black;
+    color: white;
+    font-family: "Fira Code", monospace;
+    border-top: 0vw solid white;
+}
+
+.project-container .project-title{
+    font-size: 2vw;
+    font-weight: bold;
+    margin: 0;
+    padding-left: 1vw;
+    border-left: 3vw solid white;
+}
+
+.project-container .project-title p{
+    margin: 0;
+}
+
+.project-container .project-tags{
+    font-size: 1vw;
+    margin: 0;
+    width: 80%;
+    border-left: 0.2vw solid white;
+    margin-left: 1.3vw;
+    padding-top: 1.2vw;
+    padding-left: 0.6vw;
+    
+}
+
+.project-container .project-tags ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row; /* Items are placed in a row */
+    flex-wrap: wrap; /* Enables wrapping of items */
+    align-items: center;
+    justify-content: flex-start; /* Aligns items to the start of the container */
+    
+}
+
+.project-container .project-tags ul li{
+    margin: 0.2vw;
+    padding: 0.2vw;
+    border: 1px solid white;
+    
+    font-size: 1vw;
+}
+
+.project-container .project-date{
+    display: flex;
+    flex-direction: row;
+}
+
+.project-container .project-date-label{
+    font-size: 1.2vw;
+    font-weight: bold;
+    color:black;
+    background-color: white;
+    padding-left: 0.3vw;
+    padding-right: 0.3vw;
+    margin-right: 0.3vw;
+    
+}
+
+.project-scroll-container{
+    display:none;
+}

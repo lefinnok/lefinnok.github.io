@@ -1,0 +1,20 @@
+:root {
+    --header-height: 4.5vw; /* Replace [YourHeaderHeight] with the actual height */
+}
+
+html {
+    scroll-behavior: smooth;
+  }
+
+body {
+    display: flex;
+    background: black;
+    font-family: "Fira Code", monospace;
+    color: white;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.text-black {
+    color: black !important; /* Using !important to override other styles */
+}

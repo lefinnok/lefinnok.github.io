@@ -3,58 +3,259 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>Lefinno Kwok Portfolio</title>
-
-    <!-- Link to the CSS file -->
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" type="text/css" href="circlestyles.css">
-    <link rel="stylesheet" type="text/css" href="titleaccentstyles.css">
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="styles/responsiveness.css">
+    <link rel="stylesheet" href="styles/scrollbar.css">
+    <link rel="stylesheet" href="styles/projects/styles.css">
+    <link rel="stylesheet" href="styles/projects/responsiveness.css">
+    <link rel="stylesheet" href="styles/home/styles.css">
+    <link rel="stylesheet" href="styles/home/responsiveness.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
+        body {
+            font-family: 'Fira Code', monospace;
+        }
+    </style>
+    
 </head>
 <body>
-    <div id="title">
-        <h1 id="title-1">LEFINNO</h1>
-        <h1 id="title-2">KWOK</h1>
-        <div id="ac1" class="accentcontainer">
-            <div class="sideboxes"></div>
-            <div class="sideboxes"></div>
-            <div class="sideboxes"></div>
-            <div class="sideboxes"></div>
-            <div class="sideboxes"></div>
-            <div class="sideboxes"></div>
-        </div>
-        <div id="ac2" class="accentcontainer">
-            <div class="sideboxes"></div>
-            <div class="sideboxes"></div>
-            <div class="sideboxes"></div>
-            <div class="sideboxes"></div>
-            <div class="sideboxes"></div>
-            <div class="sideboxes"></div>
-            <div class="sideboxes"></div>
-            <div class="sideboxes"></div>
-            <div class="sideboxes"></div>
-            <div class="sideboxes"></div>
-            <div class="sideboxes"></div>
-            <div class="sideboxes"></div>
-        </div>
-    </div>
-    <div id="sub-title">PORTFOLIO</div>
-    <div id="menu-bar">
-        <h1 id="about">ABOUT ME</h1>
-        <br />
-        <h1 id="project">PROJECT SHOWCASE</h1>
-        <br />
-        <h1 id="orgs">ORGANISATIONS</h1>
-        <br />
-        <h1 id="stuf">STUFF</h1>
-        <br />
-        <h1 id="hobbies">HOBBIES</h1>
-        <br />
-        <h1 id="contacts">CONTACT ME</h1>
-    </div>
     <div id="container"></div>
-    <canvas id="myCanvas"></canvas>
-    <script src="script.js"></script>
+    <div class="header-container">
+
+        <header>
+            <div id="title-bar"></div>
+            <div id="title-background-box">
+                <h1 id="name">LEFINNO KWOK</h1>
+            </div>
+        </header>
+    
+        <div id="navbar">
+            <div id="menu">>CLICK TO EXPAND<</div>
+            <ul>
+                <li><a href="#home"><span>HOME</span></a></li>
+                <!--<li><a href="#about"><span>ABOUT</span></a></li>-->
+                <li><a href="#projects"><span>PROJECTS</span></a></li>
+                
+            </ul>
+        </div>
+    
+    </div>
+    <div id="contents" >
+        <section id="home">
+            <div id="home-body">
+                <div id="home-title">
+                    <div>
+                        <h1>Welcome to my portfolio page.</h1>
+                        <h2>Here I showcase my passion to</h2>
+                    </div>
+                    <div id="create">
+                        <div>create</div>
+                    </div>
+                </div>
+                <div id="home-ongoing-project">
+                    <div id="home-ongoing-project-title">Ongoing Project</div>
+                    <a href="#projects-ocelli">
+                        <span>Ocelli</span>
+                        <div class="project-model" data-model-path="assets/models/Ocelli.fbx" data-camera-z = "39" data-camera-y = "-1"></div>
+                    </a>
+                    
+                </div>
+                <div id="contacts">
+                    <div id="contacts-title" class="button"><a href="https://linktr.ee/lefinno">Contact Me Here</a></div> 
+                </div>
+            </div>
+            
+        </section>
+        <!--
+        <section id="about">
+            
+        </section>
+        -->
+        <section id="projects">
+            <div id="projects-body">
+                <div id="projects-catalogue">
+                    <div id="projects-catalogue-title">Catalogue</div>
+                    <ul id="projects-list">
+                        <li><a href="#projects-ocelli"><span>[NASS] Ocelli</span></a></li>
+                        <li><a href="#projects-8bit"><span>8-bit Transistor Computer</span></a></li>
+                        <li><a href="#projects-gesture"><span>Gesture Recognition</span></a></li>
+                        <li><a href="#projects-spacesaver"><span>[LD42] Space Saver</span></a></li>
+                        <li><a href="#projects-handheld"><span>Retro Handheld</span></a></li>
+                        <!--<li><a href="#projects-nass"><span>NASS</span></a></li>-->
+                        <!--<li><a href="#projects-duckyeats"><span>Ducky Eats</span></a></li>-->
+                        <!--<li><a href="#projects-inventory"><span>Inventory Management System</span></a></li>-->
+                    </ul>
+                </div>
+                
+                <div id="projects-display">
+                    <div id="projects-ocelli" class="project-container">
+                        <div class="project-container-top">
+                            <div class="project-model-container">
+                                <div class="project-model" data-model-path="assets/models/Ocelli.fbx" data-camera-z = "60" data-camera-y = "-6"></div>
+                            </div>
+                            <div class="project-info-container">
+                                <div class="project-title">
+                                    <p>[NASS] Ocelli</p>
+                                </div>
+                                <div class="project-tags"><ul>
+                                    <li>computer-vision</li>
+                                    <li>embedded-development</li>
+                                    <li>machine-learning</li>
+                                    <li>IOT</li>
+                                    <li>opencv</li>
+                                    <li>mediapipe</li>
+                                    <li>python</li>
+                                    <li>c++</li>
+                                </ul></div>
+                                <div class="project-description">
+                                    <p>A small and robust platform and framework for employing computer vision on surveying, location mapping, and reverse-ar applications. Currently in development for the NASS Drone project.</p>
+                                </div>
+                                <div class="project-date"><div class="project-date-label">Project-Date</div>Ongoing</div>
+                            </div>
+                        </div>
+                        <div class="project-container-bottom">
+                            <div class="project-extra-information">
+                                <a href="https://www.instagram.com/nasshku/"><img src="assets/svgs/simple-nass-banner.svg" style="width: 30vw; height: auto;" ></img></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="projects-8bit" class="project-container">
+                        <div class="project-container-top">
+                            <div class="project-model-container">
+                                <div class="project-model" data-model-path="assets/models/Transistor.fbx" data-camera-z = "80" data-camera-y = "-30"></div>
+                            </div>
+                            <div class="project-info-container">
+                                <div class="project-title">
+                                    <p>8-bit Transistor Computer</p>
+                                </div>
+                                <div class="project-tags"><ul>
+                                    <li>Computer Architechture</li>
+                                    <li>Low Level Computing</li>
+                                    <li>Instruction Set</li>
+                                    <li>Electronics</li>
+                                    <li>11-T Full Adder</li>
+                                </ul></div>
+                                <div class="project-description">
+                                    <p>A practive and passion project for exploring basic low level computer architechture during the spring and summers of 2020. A detailed project report can be found below.</p>
+                                </div>
+                                <div class="project-date"><div class="project-date-label">Project-Date</div>Early-Mid 2020</div>
+                            </div>
+                        </div>
+                        <div class="project-container-bottom">
+                            <div class="project-extra-information">
+                                <div class="button"><a href="https://drive.google.com/drive/folders/14p-HwvDzRF4q1wWnCwneI4SFRlhN_Nqr?usp=sharing"><span>Project Report</span></a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="projects-gesture" class="project-container">
+                        <div class="project-container-top">
+                            <div class="project-model-container">
+                                <div class="project-model" data-model-path="assets/models/Gesture.fbx" data-camera-z = "10"></div>
+                            </div>
+                            <div class="project-info-container">
+                                <div class="project-title">
+                                    <p>Gesture Recognition</p>
+                                </div>
+                                <div class="project-tags"><ul>
+                                    <li>Computer Vision</li>
+                                    <li>Python</li>
+                                    <li>Single Reference</li>
+                                    <li>Quick Deployment</li>
+                                    <li>Art Application</li>
+                                    <li>Hand Recognition</li>
+                                    <li>Body Recognition</li>
+                                </ul></div>
+                                <div class="project-description">
+                                    <p>A gesture recognition algorithm first developed as a practice project, utilizing some graph comparison method from various academic sources, transpoing them into python. Later it was applied to an interactive arts project and altered to accept full body gesture recognition.</p>
+                                </div>
+                                <div class="project-date"><div class="project-date-label">Project-Date</div>Late 2020, Late 2022</div>
+                            </div>
+                        </div>
+                        <div class="project-container-bottom">
+                            <div class="project-extra-information">
+                                <div class="button"><a href="https://github.com/lefinnok/Hand-Recognition"><span>GitHub</span></a></div>
+                                <div class="button"><a href="https://sketchfab.com/3d-models/hand-low-poly-d6c802a74a174c8c805deb20186d1877"><span>Model Credit</span></a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="projects-spacesaver" class="project-container">
+                        <div class="project-container-top">
+                            <div class="project-model-container">
+                                <div class="project-model" data-model-path="assets/models/SpaceDef.fbx" data-camera-z = "26"></div>
+                            </div>
+                            <div class="project-info-container">
+                                <div class="project-title">
+                                    <p>[LD42] Space Saver</p>
+                                </div>
+                                <div class="project-tags"><ul>
+                                    <li>Game Development</li>
+                                    <li>Game Design</li>
+                                    <li>3D Modeling</li>
+                                    <li>Music Composition</li>
+                                    <li>Sound Design</li>
+                                    <li>C#</li>
+                                </ul></div>
+                                <div class="project-description">
+                                    <p>One of my earliest projects, a game jam game developed in the middle of highschool. A lot was learned on the go, and new concepts and ideas were introduced. The memories are certainly fond.</p>
+                                </div>
+                                <div class="project-date"><div class="project-date-label">Project-Date</div>August 2018</div>
+                            </div>
+                        </div>
+                        <div class="project-container-bottom">
+                            <div class="project-extra-information">
+                                <div class="button"><a href="https://ldjam.com/events/ludum-dare/42/space-saver"><span>Project Listing</span></a></div>
+                                <div class="button"><a href="https://drive.google.com/drive/folders/1nNS5bGq2mdb4g2cjW25cR6dOHNJ3b7N_?usp=sharing"><span>Code Base</span></a></div>
+                                <div class="button"><a href="https://lefinno.itch.io/space-saver"><span>Play the Game</span></a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="projects-handheld" class="project-container">
+                        <div class="project-container-top">
+                            <div class="project-model-container">
+                                <div class="project-model" data-model-path="assets/models/Handheld.fbx" data-camera-z = "100" data-camera-y="-10"></div>
+                            </div>
+                            <div class="project-info-container">
+                                <div class="project-title">
+                                    <p>Retro Handheld</p>
+                                </div>
+                                <div class="project-tags"><ul>
+                                    <li>PCB Design</li>
+                                    <li>Systems Design</li>
+                                    <li>Software Engineering</li>
+                                    <li>Operating Systems</li>
+                                    <li>Embedded Development</li>
+                                    <li>3D Printing</li>
+                                    <li>C++</li>
+                                    <li>ESP32</li>
+                                    <li>Product Design</li>
+                                </ul></div>
+                                <div class="project-description">
+                                    <p>A final year project, developing a retro style handheld device from scratch with microcontrollers and other electronic components, mounted on a custom made pcb.</p>
+                                </div>
+                                <div class="project-date"><div class="project-date-label">Project-Date</div>Early 2022</div>
+                            </div>
+                        </div>
+                        <div class="project-container-bottom">
+                            <div class="project-extra-information">
+                                <div class="button"><a href="https://drive.google.com/file/d/18XjOOtjTWs_L05xXd1XclnCL-5F6Ao8k/view?usp=sharing"><span>Project Report</span></a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+    </div>
+    <script src="bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.133.1/build/three.min.js"></script>
+    <script src="scripts/grain.js"></script>
+    <script src="scripts/scrollfix.js"></script>
+    
+    <script src="scripts/navsquare.js"></script>
+    
 </body>
 
-
+</html>
