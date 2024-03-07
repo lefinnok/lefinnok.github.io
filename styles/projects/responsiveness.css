@@ -1,0 +1,80 @@
+@media screen and (max-width: 768px) {
+    
+    .project-container .project-container-top{
+        flex-direction: column;
+        align-items: center;
+        height: 80%;
+    }
+
+    .project-container .project-container-bottom{
+        
+        height:20%;
+
+    }
+    
+    .project-model{
+        width:80vw;
+        height:45vw;
+        
+    }
+    
+
+    .project-container .project-title{
+        font-size: 6vw;
+        padding-left: 3vw;
+        border-left: 8vw solid white;
+    }
+
+    .project-container .project-tags{
+        font-size: 3vw;
+        
+        border-left: 0.6vw solid white;
+        margin-left: 3.6vw;
+        padding-top: 1.2vw;
+        padding-left: 0.6vw;
+        
+    }
+    
+    .project-container .project-tags ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: row; /* Items are placed in a row */
+        flex-wrap: wrap; /* Enables wrapping of items */
+        align-items: center;
+        justify-content: flex-start; /* Aligns items to the start of the container */
+        
+    }
+    
+    .project-container .project-tags ul li{
+        margin: 1vw;
+        padding: 1vw;
+        border: 1px solid white;
+        
+        font-size: 3vw;
+    }
+    
+    .project-container .project-date{
+        display: flex;
+        flex-direction: row;
+    }
+    
+    .project-container .project-date-label{
+        font-size: 3vw;
+        font-weight: bold;
+        color:black;
+        background-color: white;
+        padding-left: 0.9vw;
+        padding-right: 0.9vw;
+        margin-right: 0.9vw;
+        
+    }
+
+    #projects-body{
+        height: 96%;
+    }
+
+    
+}
+
