@@ -1,38 +1,99 @@
-@media screen and (max-width: 768px) {
+/* Tablet breakpoint */
+@media screen and (max-width: 1024px) {
+    #projects-catalogue {
+        width: 25%;
+    }
     
-    .project-container .project-container-top{
+    #projects-catalogue-title {
+        font-size: 1.8vw;
+    }
+    
+    #projects-list {
+        font-size: 1.5vw;
+    }
+    
+    #projects-list li {
+        height: 3vw;
+        margin: 15px;
+    }
+    
+    .project-model {
+        width: 35vw;
+        height: 25vw;
+    }
+    
+    .project-container .project-title {
+        font-size: 3vw;
+    }
+    
+    .project-container .project-tags ul li {
+        font-size: 1.5vw;
+    }
+    
+    .project-container .project-description {
+        font-size: 1.8vw;
+    }
+}
+
+/* Mobile breakpoint */
+@media screen and (max-width: 768px) {
+    #projects-body {
+        flex-direction: column;
+        overflow-y: auto;
+        width: 100vw;
+        height: 96%;
+    }
+    
+    #projects-catalogue {
+        display: none;
+    }
+    
+    #projects-display {
+        flex-direction: column; 
+        overflow-y: auto;
+        scroll-snap-type: y mandatory;
+    }
+    
+    #projects-display > * {
+        min-height: calc(100vh - var(--header-height));
+        scroll-snap-align: start;
+    }
+    
+    .project-container .project-container-top {
         flex-direction: column;
         align-items: center;
         height: 80%;
-    }
-
-    .project-container .project-container-bottom{
-        
-        height:20%;
-
+        padding-top: 4vw;
     }
     
-    .project-model{
-        width:80vw;
-        height:45vw;
-        
+    .project-model-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 4vw;
     }
     
-
-    .project-container .project-title{
+    .project-model {
+        width: 80vw;
+        height: 45vw;
+    }
+    
+    .project-info-container {
+        width: 90vw;
+    }
+    
+    .project-container .project-title {
         font-size: 6vw;
         padding-left: 3vw;
         border-left: 8vw solid white;
     }
-
-    .project-container .project-tags{
+    
+    .project-container .project-tags {
         font-size: 3vw;
-        
         border-left: 0.6vw solid white;
         margin-left: 3.6vw;
         padding-top: 1.2vw;
         padding-left: 0.6vw;
-        
     }
     
     .project-container .project-tags ul {
@@ -40,41 +101,88 @@
         padding: 0;
         margin: 0;
         display: flex;
-        flex-direction: row; /* Items are placed in a row */
-        flex-wrap: wrap; /* Enables wrapping of items */
+        flex-direction: row;
+        flex-wrap: wrap;
         align-items: center;
-        justify-content: flex-start; /* Aligns items to the start of the container */
-        
+        justify-content: flex-start;
     }
     
-    .project-container .project-tags ul li{
+    .project-container .project-tags ul li {
         margin: 1vw;
         padding: 1vw;
         border: 1px solid white;
-        
         font-size: 3vw;
     }
     
-    .project-container .project-date{
+    .project-container .project-date {
         display: flex;
         flex-direction: row;
     }
     
-    .project-container .project-date-label{
+    .project-container .project-date-label {
         font-size: 3vw;
         font-weight: bold;
-        color:black;
+        color: black;
         background-color: white;
         padding-left: 0.9vw;
         padding-right: 0.9vw;
         margin-right: 0.9vw;
-        
     }
-
-    #projects-body{
-        height: 96%;
-    }
-
     
+    .project-container .project-container-bottom {
+        height: 20%;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .project-container .project-extra-information {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .project-container .button {
+        margin: 2vw;
+        padding: 2vw;
+    }
+    
+    .project-container .button a {
+        font-size: 3.5vw;
+    }
 }
 
+/* Small mobile breakpoint */
+@media screen and (max-width: 480px) {
+    .project-model {
+        width: 90vw;
+        height: 55vw;
+    }
+    
+    .project-container .project-title {
+        font-size: 7vw;
+        padding-left: 4vw;
+        border-left: 10vw solid white;
+    }
+    
+    .project-container .project-tags ul li {
+        font-size: 4vw;
+        margin: 1.5vw;
+        padding: 1.5vw;
+    }
+    
+    .project-container .project-description {
+        font-size: 4.5vw;
+    }
+    
+    .project-container .project-date {
+        font-size: 4.5vw;
+    }
+    
+    .project-container .project-date-label {
+        font-size: 4vw;
+    }
+    
+    .project-container .button a {
+        font-size: 4.5vw;
+    }
+}

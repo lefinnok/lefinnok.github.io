@@ -1,22 +1,76 @@
+/* Tablet breakpoint */
+@media screen and (max-width: 1024px) {
+    #home-title {
+        margin-top: 3vw;
+    }
+    
+    #home-title h1 {
+        font-size: 3.5vw;
+    }
+    
+    #home-title h2 {
+        font-size: 2.5vw;
+    }
+    
+    #create {
+        font-size: 6vw;
+    }
+    
+    #home-ongoing-project {
+        margin: 3vw;
+    }
+    
+    #home-ongoing-project a {
+        font-size: 10vw;
+    }
+    
+    #contacts {
+        font-size: 2.5vw;
+    }
+}
+
+/* Mobile breakpoint */
 @media screen and (max-width: 768px) {
-    #home-title{
+    #home-title {
         flex-direction: column;
         align-items: center;
+        margin-top: 5vw;
+    }
+    
+    #home-title h1 {
+        font-size: 6vw;
+        text-align: center;
+        margin-top: 0;
+    }
+    
+    #home-title h2 {
+        font-size: 4vw;
+        text-align: center;
+    }
+    
+    #create {
+        font-size: 10vw;
+        margin-top: 4vw;
     }
 
-    #home-ongoing-project{
+    #home-ongoing-project {
         margin-left: 0;
         margin-right: 0;
         border: 0;
         font-size: 4.5vw;
+        margin-top: 8vw;
+    }
+    
+    #home-ongoing-project-title {
+        text-align: center;
+        margin-bottom: 3vw;
     }
 
-    
-    #home-ongoing-project>*{
-        margin-left: 0vw;
+    #home-ongoing-project > * {
+        margin-left: 0;
     }
     
-    #home-ongoing-project a{
+    #home-ongoing-project a {
         color: white;
         text-decoration: none;
         font-weight: bold;
@@ -24,14 +78,68 @@
         flex: 1;
         text-align: center;
         font-size: 16vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     
-    #home-ongoing-project .project-model{
-        width: 60vw;
-        height: 30vw;
+    #home-ongoing-project .project-model {
+        width: 70vw;
+        height: 50vw;
+        margin: 0 auto;
+        margin-top: 4vw;
+        display: block;
+        overflow: visible;
     }
 
-    #contacts{
+    #contacts {
         font-size: 4.5vw;
+        display: flex;
+        justify-content: center;
+        margin-top: 8vw;
+        margin-bottom: 8vw;
+    }
+    
+    #contacts .button {
+        padding: 3vw;
+    }
+}
+
+/* Small mobile breakpoint */
+@media screen and (max-width: 480px) {
+    #home-title h1 {
+        font-size: 8vw;
+    }
+    
+    #home-title h2 {
+        font-size: 5vw;
+    }
+    
+    #create {
+        font-size: 12vw;
+    }
+    
+    #home-ongoing-project {
+        font-size: 5.5vw;
+    }
+    
+    #home-ongoing-project a {
+        font-size: 18vw;
+    }
+    
+    #home-ongoing-project .project-model {
+        width: 85vw;
+        height: 60vw;
+        overflow: visible;
+    }
+    
+    #contacts {
+        font-size: 5.5vw;
+        margin-top: 10vw;
+        margin-bottom: 10vw;
+    }
+    
+    #contacts .button {
+        padding: 4vw;
     }
 }

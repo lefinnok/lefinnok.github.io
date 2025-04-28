@@ -1,14 +1,67 @@
+/* Base responsive styles */
+:root {
+    --header-height: 4.5vw;
+    --mobile-header-height: 16vw;
+    --mobile-breakpoint: 768px;
+    --tablet-breakpoint: 1024px;
+    --font-size-base: 1.2vw;
+    --font-size-mobile: 3vw;
+    --transition-speed: 0.3s;
+}
+
+/* Tablet breakpoint */
+@media screen and (max-width: 1024px) {
+    :root {
+        --header-height: 6vw;
+    }
+    
+    body {
+        font-size: 1.8vw;
+    }
+    
+    #name {
+        font-size: 3vw;
+    }
+    
+    #title-bar {
+        width: 6vw;
+        height: 6vw;
+    }
+    
+    #title-background-box {
+        height: 6vw;
+    }
+    
+    #navbar {
+        height: 6vw;
+    }
+    
+    #navbar ul {
+        font-size: 2vw;
+    }
+    
+    .project-title {
+        font-size: 3vw !important;
+    }
+    
+    .project-tags ul li {
+        font-size: 1.5vw !important;
+    }
+}
+
+/* Mobile breakpoint */
 @media screen and (max-width: 768px) {
     :root {
-        --header-height: 16vw; /* Replace [YourHeaderHeight] with the actual height */
+        --header-height: var(--mobile-header-height);
     }
+    
     #container {
         width: 30vw;
         height: 30vw;
     }
 
-    body{
-        font-size: 3vw;
+    body {
+        font-size: var(--font-size-mobile);
     }
 
     #name {
@@ -17,9 +70,11 @@
         margin-left: 2.4vw;
         margin-right: 2.4vw;
     }
-    #title-container{
+    
+    #title-container {
         height: 12vw;
     }
+    
     #title-bar {
         width: 12vw;
         height: 12vw;
@@ -33,21 +88,23 @@
         width: 50vw;
         left: 0;
     }
+    
     #navbar {
         height: 12vw;
         width: 50vw;
-        display: flex;        /* Establish flex container */
-        flex-direction: column; /* Stack flex items (children) vertically */
-        align-items: center;  /* Center align the flex items horizontally */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
+    
     #navbar ul {
         position: relative;
     }
 
     #navbar ul li {
         position: absolute;
-        top: 0; /* Align to the top of the ul */
-        left: 0; /* Align to the left of the ul */
+        top: 0;
+        left: 0;
         z-index: 2;
         width: 100%;
         height: 100%;
@@ -55,43 +112,98 @@
     }
 
     #navbar ul li.active {
-        z-index:3 ;
-        
-        
+        z-index: 3;
     }
-    #navbar ul li.active a{
-        z-index:11 ;
-        
+    
+    #navbar ul li.active a {
+        z-index: 11;
     }
-    #navbar span{
-        
+    
+    #navbar span {
         font-size: 6vw;
     }
-    #navbar #menu{
+    
+    #navbar #menu {
         font-size: 3vw;
         display: flex;
-        cursor:pointer;
+        cursor: pointer;
     }
 
     #navbar ul li.expanded1 {
-        top: 100%; /* Move down by the height of one menu item */
-        transition: top 0.3s ease; /* Smooth transition for the movement */
+        top: 100%;
+        transition: top var(--transition-speed) ease;
     }
+    
     #navbar ul li.expanded2 {
-        top: 200%; /* Move down by the height of one menu item */
-        transition: top 0.3s ease; /* Smooth transition for the movement */
+        top: 200%;
+        transition: top var(--transition-speed) ease;
     }
+    
     #navbar ul li.expanded3 {
-        top: 300%; /* Move down by the height of one menu item */
-        transition: top 0.3s ease; /* Smooth transition for the movement */
+        top: 300%;
+        transition: top var(--transition-speed) ease;
     }
+    
     #navbar ul li.expanded4 {
-        top: 400%; /* Move down by the height of one menu item */
-        transition: top 0.3s ease; /* Smooth transition for the movement */
+        top: 400%;
+        transition: top var(--transition-speed) ease;
     }
 
-    #projects-catalogue{
+    #projects-catalogue {
         display: none;
+    }
+    
+    /* Touch-friendly button styles */
+    .button {
+        padding: 3vw;
+        margin: 2vw;
+        min-height: 8vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Improved tap targets */
+    #navbar a, .button a, #projects-list a {
+        padding: 2vw;
     }
 }
 
+/* Small mobile breakpoint for extreme adaptations */
+@media screen and (max-width: 480px) {
+    :root {
+        --header-height: 20vw;
+        --font-size-mobile: 4vw;
+    }
+    
+    #name {
+        font-size: 7vw;
+    }
+    
+    #title-bar {
+        width: 15vw;
+        height: 15vw;
+    }
+    
+    #title-background-box {
+        height: 15vw;
+    }
+    
+    #navbar {
+        height: 15vw;
+    }
+    
+    #navbar span {
+        font-size: 7vw;
+    }
+    
+    .project-model {
+        width: 80vw !important;
+        height: 50vw !important;
+    }
+    
+    .project-container .project-container-top {
+        flex-direction: column;
+        padding-top: 5vw;
+    }
+}

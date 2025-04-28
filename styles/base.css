@@ -1,10 +1,22 @@
 :root {
-    --header-height: 10vw; /* Replace [YourHeaderHeight] with the actual height */
+    /* Core sizing variables */
+    --header-height: 4.5vw;
+    --mobile-header-height: 16vw;
+    --mobile-breakpoint: 768px;
+    --tablet-breakpoint: 1024px;
+    
+    /* Typography variables */
+    --font-size-base: 1.2vw;
+    --font-size-mobile: 3vw;
+    
+    /* Animation variables */
+    --transition-speed: 0.3s;
+    --transition-function: ease;
 }
 
 html {
     scroll-behavior: smooth;
-  }
+}
 
 body {
     display: flex;
@@ -13,10 +25,37 @@ body {
     color: white;
     flex-direction: column;
     overflow: hidden;
-    font-size: 1.2vw;
+    font-size: var(--font-size-base);
+    margin: 0;
+    padding: 0;
 }
 
 .text-black {
     color: black !important; /* Using !important to override other styles */
 }
 
+/* Base touch support for mobile devices */
+@media (hover: none) {
+    /* Styles for touch devices */
+    .button, 
+    #navbar a, 
+    #projects-list a {
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(255, 255, 255, 0.2);
+    }
+}
+
+/* Base high-resolution screen support */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    /* Optimizations for high-resolution screens */
+    .navsquare {
+        backface-visibility: hidden;
+    }
+}
+
+/* Use hardware acceleration where appropriate */
+.navsquare,
+.button {
+    transform: translateZ(0);
+    will-change: transform;
+}

@@ -1,7 +1,8 @@
 #home{
     background-color: black;
-    overflow: hidden;
-    height: 96%;
+    overflow: visible;
+    min-height: 100%;
+    padding-bottom: 10vh;
 }
 #home-title{
     display: flex;
@@ -30,15 +31,14 @@
     font-family: "Fira Code", monospace;
     overflow: hidden;
     border-left: 3vw solid white;
-    padding-left: -3vw;
+    padding-left: 2vw;
     margin-left: 10vw;
     margin-right: 10vw;
     text-align: center;
-    
 }
 
 #home-ongoing-project>*{
-    margin-left: -3vw;
+    margin-left: 0;
 }
 
 #home-ongoing-project a{
@@ -53,18 +53,24 @@
 }
 
 #home-ongoing-project .project-model{
-    width: 30vw;
-    height: 10vw;
+    width: 40vw;
+    height: 30vw;
+    margin: 0 auto;
+    margin-top: 2vw;
+    display: block;
+    border: 0;
+    overflow: visible;
 }
 
 #contacts{
     display: flex;
     flex-direction: column;
-    margin-top: 2vh;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
     align-items: center;
     color: white;
     font-family: "Fira Code", monospace;
-    overflow: hidden;
+    overflow: visible;
     border: 0px solid white;
     margin-left: 10vw;
     margin-right: 10vw;
