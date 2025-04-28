@@ -3,6 +3,9 @@
     font-size: 1.5vw;
     margin-left: 0.6vw;
     margin-right: 0.6vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #title-bar {
@@ -12,12 +15,15 @@
     height: 3vw;
     background-color: white;
     border: 1px solid white;
+    flex-shrink: 0;
 }
 
 #title-background-box {
     border: 1px solid white;
     height: 3vw;
     left: 0;
+    display: flex;
+    align-items: center;
 }
 
 #navbar {
@@ -29,6 +35,7 @@
     display: flex;
     justify-content: center;
     align-items: stretch;
+    position: relative;
 }
 
 #navbar a {
@@ -38,6 +45,10 @@
     z-index: 10;
     flex: 1;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color var(--transition-speed) var(--transition-function);
 }
 
 #navbar ul {
@@ -63,8 +74,6 @@
     border: 0px solid white;
     z-index: 2;
     overflow: hidden;
-    
-    
 }
 
 #navbar li span {
@@ -77,33 +86,78 @@
     width: 3px;
     height: 3px;
     background-color: white;
-    transition: transform 0.5s ease;
+    transition: transform var(--transition-speed) var(--transition-function);
     transform: scale(0);
     transform-origin: bottom left;
     mix-blend-mode: difference;
     z-index: -1;
 }
 
-#navbar #menu{
+#navbar #menu {
     display: none;
+    font-size: 1.2vw;
+    cursor: pointer;
+    user-select: none;
+    padding: 0.5vw;
+    transition: background-color var(--transition-speed) var(--transition-function);
 }
 
-.button{
+#navbar #menu:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.button {
     border: 1px solid white;
     padding: 1vw;
     width: fit-content;
     margin: 1vw;
+    cursor: pointer;
+    transition: background-color var(--transition-speed) var(--transition-function), 
+                transform var(--transition-speed) var(--transition-function);
 }
 
-.button:hover{
-    transition: transform 0.5s ease;
+.button:hover {
     background-color: rgb(16, 16, 16);
+    transform: translateY(-2px);
 }
 
-.button a{
+.button:active {
+    transform: translateY(0);
+}
+
+.button a {
     color: white;
     text-decoration: none;
     font-weight: bold;
     z-index: 10;
     text-align: center;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* Touch device optimizations */
+@media (hover: none) {
+    .button:hover {
+        transform: none;
+        background-color: transparent;
+    }
+    
+    .button:active {
+        background-color: rgb(16, 16, 16);
+    }
+}
+
+/* Larger buttons for touch targets on mobile */
+@media screen and (max-width: 768px) {
+    #navbar #menu {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .button {
+        min-width: 30vw;
+        text-align: center;
+    }
 }
