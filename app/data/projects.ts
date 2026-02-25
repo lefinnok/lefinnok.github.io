@@ -125,7 +125,7 @@ export const projects: Project[] = [
       },
     ],
     model: { path: "/models/Gesture.fbx", cameraZ: 10, cameraY: 0 },
-    hasInteractiveDemo: false,
+    hasInteractiveDemo: true,
     demoComponentName: "GestureRecognitionDemo",
   },
   {
