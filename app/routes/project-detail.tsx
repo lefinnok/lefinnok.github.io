@@ -81,6 +81,7 @@ export default function ProjectDetail() {
               config={project.model}
               height="100%"
               rotationSpeed={0.004}
+              followMouse
             />
           </Box>
         </ScrollReveal>

@@ -8,6 +8,7 @@ import {
   Stack,
 } from "@mui/material";
 import { Link } from "react-router";
+import { useState } from "react";
 import { FbxModelViewer } from "./FbxModelViewer";
 import type { Project } from "~/lib/types";
 
@@ -16,8 +17,12 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
+  const [hovered, setHovered] = useState(false);
+
   return (
     <Card
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       sx={{
         height: "100%",
         display: "flex",
@@ -34,6 +39,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             config={project.model}
             height={220}
             rotationSpeed={0.003}
+            hovered={hovered}
           />
         </Box>
         <CardContent sx={{ flex: 1 }}>

@@ -1,7 +1,5 @@
 import { Box, Typography } from "@mui/material";
 import { NavLink } from "react-router";
-import { useEffect, useRef, useState, useCallback } from "react";
-import { NavSquareGrid } from "./NavSquareGrid";
 
 interface NavSquareLinkProps {
   to: string;
@@ -10,53 +8,31 @@ interface NavSquareLinkProps {
 }
 
 export function NavSquareLink({ to, label, isActive }: NavSquareLinkProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  const [hovered, setHovered] = useState(false);
-  const [canHover, setCanHover] = useState(false);
-
-  useEffect(() => {
-    setCanHover(window.matchMedia("(hover: hover)").matches);
-  }, []);
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-
-    const observer = new ResizeObserver(() => {
-      setDimensions({
-        width: el.offsetWidth,
-        height: el.offsetHeight,
-      });
-    });
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  const handleMouseEnter = useCallback(() => {
-    if (canHover && !isActive) setHovered(true);
-  }, [canHover, isActive]);
-
-  const handleMouseLeave = useCallback(() => {
-    if (canHover) setHovered(false);
-  }, [canHover]);
-
-  const showGrid = isActive || hovered;
-
   return (
     <Box
-      ref={containerRef}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
       sx={{
         position: "relative",
         overflow: "hidden",
+        "&:hover .swipe-fill": {
+          transform: "translateX(0)",
+        },
       }}
     >
-      <NavSquareGrid
-        active={showGrid}
-        width={dimensions.width}
-        height={dimensions.height}
+      {/* Swipe fill background */}
+      <Box
+        className="swipe-fill"
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          bgcolor: "#ffffff",
+          transform: isActive ? "translateX(0)" : "translateX(-100%)",
+          transition: "transform 0.25s ease-out",
+          pointerEvents: "none",
+          mixBlendMode: "difference",
+        }}
       />
       <Typography
         component={NavLink}
