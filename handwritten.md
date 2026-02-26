@@ -35,3 +35,8 @@ for space saver, we will use a embedded itch
 
 
 for ocelli, it's basically trying to use stereo to replace lidar, and trading expensive physical sensor for expensive computation and computational chip cost, currently it is just a theorhetical project, and the end goal application for this sensor was to aid in argricultural and automating pollination for both traditional and vertical farms. this sensor also aims to be more robust in rough enviroments, with a smaller footprint and weight than a lidar sensor
+
+
+===
+
+for retro handheld, I think I would like to have an emulator built for the game we've made? if possible. we would still need to find the code for the firmware

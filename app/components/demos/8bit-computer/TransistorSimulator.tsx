@@ -26,6 +26,7 @@ import {
   tStateCount,
   fetchLength,
 } from "./engine/types";
+import { PROGRAMS_16, PROGRAMS_256, type SampleProgram } from "./engine/programs";
 import { ArchitectureSvg } from "./views/ArchitectureSvg";
 import { ControlBar } from "./controls/ControlBar";
 
@@ -49,33 +50,16 @@ type SimAction =
   | { type: "RESET" }
   | { type: "LOAD"; program: number[]; errors: { line: number; message: string }[] }
   | { type: "SET_SOURCE"; source: string }
-  | { type: "SET_RAM_SIZE"; ramSize: RamSize };
-
-const DEFAULT_SOURCE_16 = `; Add two numbers
-LDA 14     ; Load value at addr 14
-ADD 15     ; Add value at addr 15
-OUT        ; Display result
-HLT        ; Stop
-
-ORG 14     ; Place data at addr 14
-DB 28      ; First number
-DB 14      ; Second number`;
-
-const DEFAULT_SOURCE_256 = `; Add two numbers (256B mode)
-LDA data1  ; Load first number
-ADD data2  ; Add second number
-OUT        ; Display result
-HLT        ; Stop
-
-data1: DB 28   ; First number
-data2: DB 14   ; Second number`;
+  | { type: "SET_RAM_SIZE"; ramSize: RamSize }
+  | { type: "LOAD_PROGRAM"; program: SampleProgram };
 
 function createInitialSimState(): SimState {
   const ramSize: RamSize = 16;
-  const result = assemble(DEFAULT_SOURCE_16, ramSize);
+  const source = PROGRAMS_16[0].source;
+  const result = assemble(source, ramSize);
   return {
     cpu: createInitialState(result.program, ramSize),
-    source: DEFAULT_SOURCE_16,
+    source,
     assembleErrors: result.errors,
     ramSize,
   };
@@ -104,14 +88,23 @@ function simReducer(state: SimState, action: SimAction): SimState {
     case "SET_SOURCE":
       return { ...state, source: action.source };
     case "SET_RAM_SIZE": {
-      const newSource =
-        action.ramSize === 256 ? DEFAULT_SOURCE_256 : DEFAULT_SOURCE_16;
+      const programs = action.ramSize === 256 ? PROGRAMS_256 : PROGRAMS_16;
+      const newSource = programs[0].source;
       const result = assemble(newSource, action.ramSize);
       return {
         cpu: createInitialState(result.program, action.ramSize),
         source: newSource,
         assembleErrors: result.errors,
         ramSize: action.ramSize,
+      };
+    }
+    case "LOAD_PROGRAM": {
+      const result = assemble(action.program.source, action.program.ramSize);
+      return {
+        cpu: createInitialState(result.program, action.program.ramSize),
+        source: action.program.source,
+        assembleErrors: result.errors,
+        ramSize: action.program.ramSize,
       };
     }
   }
@@ -326,6 +319,16 @@ export default function TransistorSimulator() {
 
         {/* Side panel: Assembly editor + RAM + Output */}
         <Box sx={{ flex: 2, minWidth: 0, maxWidth: { lg: 340 } }}>
+          {/* Program selector — all programs, auto-switches mode */}
+          <SectionLabel>EXAMPLES</SectionLabel>
+          <ProgramSelector
+            currentSource={source}
+            onSelect={(prog) => {
+              dispatch({ type: "LOAD_PROGRAM", program: prog });
+              setRunning(false);
+            }}
+          />
+
           {/* Assembly editor */}
           <SectionLabel>ASSEMBLY {ramSize === 256 && "(2-byte instructions)"}</SectionLabel>
           <TextField
@@ -710,5 +713,69 @@ function FlagChip({ label, active }: { label: string; active: boolean }) {
         transition: "background-color 0.15s, color 0.15s",
       }}
     />
+  );
+}
+
+// ── Program selector ────────────────────────────────────────────
+
+function ProgramSelector({
+  currentSource,
+  onSelect,
+}: {
+  currentSource: string;
+  onSelect: (prog: SampleProgram) => void;
+}) {
+  return (
+    <Box sx={{ mb: 1.5 }}>
+      {([
+        { label: "16B", programs: PROGRAMS_16 },
+        { label: "256B", programs: PROGRAMS_256 },
+      ] as const).map(({ label, programs }) => (
+        <Box key={label} sx={{ mb: 0.75 }}>
+          <Typography
+            sx={{
+              fontSize: 9,
+              fontFamily: MONO,
+              color: "rgba(255,255,255,0.25)",
+              mb: 0.25,
+              letterSpacing: 0.5,
+            }}
+          >
+            {label}
+          </Typography>
+          <Stack direction="row" spacing={0.5} flexWrap="wrap" useFlexGap>
+            {programs.map((prog) => {
+              const active = currentSource.trim() === prog.source.trim();
+              return (
+                <Chip
+                  key={prog.id}
+                  label={prog.name}
+                  size="small"
+                  onClick={() => onSelect(prog)}
+                  title={prog.description}
+                  sx={{
+                    height: 22,
+                    fontSize: 10,
+                    fontFamily: MONO,
+                    bgcolor: active
+                      ? "rgba(0,229,255,0.12)"
+                      : "rgba(255,255,255,0.04)",
+                    color: active ? SECONDARY : "rgba(255,255,255,0.5)",
+                    border: active
+                      ? "1px solid rgba(0,229,255,0.3)"
+                      : "1px solid rgba(255,255,255,0.08)",
+                    cursor: "pointer",
+                    "&:hover": {
+                      bgcolor: "rgba(0,229,255,0.08)",
+                      color: SECONDARY,
+                    },
+                  }}
+                />
+              );
+            })}
+          </Stack>
+        </Box>
+      ))}
+    </Box>
   );
 }
