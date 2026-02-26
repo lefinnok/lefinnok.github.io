@@ -2,6 +2,7 @@ import { type CpuState, type ModuleId, CS, activeModules } from "../engine/types
 import { disassemble } from "../engine/cpu";
 import { ModuleBlock } from "./ModuleBlock";
 import { LedStrip, ledStripWidth } from "./LedStrip";
+import { BusAnimation } from "./BusAnimation";
 
 const ACCENT = "#f97316";
 const BUS_COLOR = "#2a2a2a";
@@ -461,6 +462,12 @@ export function ArchitectureSvg({
         <FlagIndicator x={540} y={150} label="C" active={cpu.flagCarry} />
         <FlagIndicator x={565} y={150} label="Z" active={cpu.flagZero} />
       </g>
+
+      {/* ── Bus data packet animation ─────────────────────────── */}
+      <BusAnimation
+        controlWord={cpu.controlWord}
+        stepKey={`${cpu.cycleCount}-${cpu.tState}`}
+      />
 
       {/* ── Halted overlay ───────────────────────────────────── */}
       {cpu.halted && (

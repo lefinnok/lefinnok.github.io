@@ -28,6 +28,7 @@ import {
 } from "./engine/types";
 import { PROGRAMS_16, PROGRAMS_256, type SampleProgram } from "./engine/programs";
 import { ArchitectureSvg } from "./views/ArchitectureSvg";
+import { ModuleDetailPanel } from "./views/ModuleDetailPanel";
 import { ControlBar } from "./controls/ControlBar";
 
 // ── Colors ──────────────────────────────────────────────────────
@@ -317,93 +318,105 @@ export default function TransistorSimulator() {
           )}
         </Box>
 
-        {/* Side panel: Assembly editor + RAM + Output */}
+        {/* Side panel: Module detail OR Assembly editor */}
         <Box sx={{ flex: 2, minWidth: 0, maxWidth: { lg: 340 } }}>
-          {/* Program selector — all programs, auto-switches mode */}
-          <SectionLabel>EXAMPLES</SectionLabel>
-          <ProgramSelector
-            currentSource={source}
-            onSelect={(prog) => {
-              dispatch({ type: "LOAD_PROGRAM", program: prog });
-              setRunning(false);
-            }}
-          />
-
-          {/* Assembly editor */}
-          <SectionLabel>ASSEMBLY {ramSize === 256 && "(2-byte instructions)"}</SectionLabel>
-          <TextField
-            multiline
-            minRows={8}
-            maxRows={12}
-            value={source}
-            onChange={(e) =>
-              dispatch({ type: "SET_SOURCE", source: e.target.value })
-            }
-            sx={{
-              width: "100%",
-              "& .MuiInputBase-root": {
-                fontFamily: "'Fira Code', monospace",
-                fontSize: 11,
-                lineHeight: 1.6,
-                bgcolor: "#141414",
-                color: "rgba(255,255,255,0.8)",
-              },
-              "& .MuiOutlinedInput-notchedOutline": {
-                borderColor: "rgba(255,255,255,0.1)",
-              },
-            }}
-          />
-          <Button
-            size="small"
-            variant="contained"
-            onClick={handleAssemble}
-            sx={{
-              mt: 1,
-              fontSize: 11,
-              bgcolor: ACCENT,
-              color: "#000",
-              "&:hover": { bgcolor: "#ea580c" },
-              textTransform: "none",
-            }}
-          >
-            Assemble & Load
-          </Button>
-          {assembleErrors.length > 0 && (
-            <Alert severity="error" sx={{ mt: 1, fontSize: 11, py: 0 }}>
-              {assembleErrors.map((e, i) => (
-                <Box key={i}>Line {e.line}: {e.message}</Box>
-              ))}
-            </Alert>
-          )}
-
-          {/* RAM grid */}
-          <SectionLabel sx={{ mt: 2 }}>
-            RAM ({ramSize === 256 ? "256" : "16"} x 8)
-          </SectionLabel>
-          <RamGrid cpu={cpu} />
-
-          {/* Output history */}
-          {cpu.outputHistory.length > 0 && (
+          {selectedModule ? (
+            <Paper sx={{ bgcolor: "#141414", p: 1.5, borderRadius: 1 }}>
+              <ModuleDetailPanel
+                moduleId={selectedModule}
+                cpu={cpu}
+                onClose={() => setSelectedModule(null)}
+              />
+            </Paper>
+          ) : (
             <>
-              <SectionLabel sx={{ mt: 2 }}>OUTPUT</SectionLabel>
-              <Paper sx={{ bgcolor: "#141414", p: 1, borderRadius: 1 }}>
-                <Stack direction="row" spacing={0.5} flexWrap="wrap">
-                  {cpu.outputHistory.map((val, i) => (
-                    <Chip
-                      key={i}
-                      label={`${val} (0x${toHex(val)})`}
-                      size="small"
-                      sx={{
-                        height: 20,
-                        fontSize: 11,
-                        fontFamily: "'Fira Code', monospace",
-                        bgcolor: "rgba(0,229,255,0.1)",
-                        color: SECONDARY,
-                      }}
-                    />
+              {/* Program selector — all programs, auto-switches mode */}
+              <SectionLabel>EXAMPLES</SectionLabel>
+              <ProgramSelector
+                currentSource={source}
+                onSelect={(prog) => {
+                  dispatch({ type: "LOAD_PROGRAM", program: prog });
+                  setRunning(false);
+                }}
+              />
+
+              {/* Assembly editor */}
+              <SectionLabel>ASSEMBLY {ramSize === 256 && "(2-byte instructions)"}</SectionLabel>
+              <TextField
+                multiline
+                minRows={8}
+                maxRows={12}
+                value={source}
+                onChange={(e) =>
+                  dispatch({ type: "SET_SOURCE", source: e.target.value })
+                }
+                sx={{
+                  width: "100%",
+                  "& .MuiInputBase-root": {
+                    fontFamily: "'Fira Code', monospace",
+                    fontSize: 11,
+                    lineHeight: 1.6,
+                    bgcolor: "#141414",
+                    color: "rgba(255,255,255,0.8)",
+                  },
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "rgba(255,255,255,0.1)",
+                  },
+                }}
+              />
+              <Button
+                size="small"
+                variant="contained"
+                onClick={handleAssemble}
+                sx={{
+                  mt: 1,
+                  fontSize: 11,
+                  bgcolor: ACCENT,
+                  color: "#000",
+                  "&:hover": { bgcolor: "#ea580c" },
+                  textTransform: "none",
+                }}
+              >
+                Assemble & Load
+              </Button>
+              {assembleErrors.length > 0 && (
+                <Alert severity="error" sx={{ mt: 1, fontSize: 11, py: 0 }}>
+                  {assembleErrors.map((e, i) => (
+                    <Box key={i}>Line {e.line}: {e.message}</Box>
                   ))}
-                </Stack>
-              </Paper>
+                </Alert>
+              )}
+
+              {/* RAM grid */}
+              <SectionLabel sx={{ mt: 2 }}>
+                RAM ({ramSize === 256 ? "256" : "16"} x 8)
+              </SectionLabel>
+              <RamGrid cpu={cpu} />
+
+              {/* Output history */}
+              {cpu.outputHistory.length > 0 && (
+                <>
+                  <SectionLabel sx={{ mt: 2 }}>OUTPUT</SectionLabel>
+                  <Paper sx={{ bgcolor: "#141414", p: 1, borderRadius: 1 }}>
+                    <Stack direction="row" spacing={0.5} flexWrap="wrap">
+                      {cpu.outputHistory.map((val, i) => (
+                        <Chip
+                          key={i}
+                          label={`${val} (0x${toHex(val)})`}
+                          size="small"
+                          sx={{
+                            height: 20,
+                            fontSize: 11,
+                            fontFamily: "'Fira Code', monospace",
+                            bgcolor: "rgba(0,229,255,0.1)",
+                            color: SECONDARY,
+                          }}
+                        />
+                      ))}
+                    </Stack>
+                  </Paper>
+                </>
+              )}
             </>
           )}
         </Box>
