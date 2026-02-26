@@ -63,15 +63,16 @@ export default function ProjectDetail() {
         sx={{
           display: "grid",
           gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+          alignItems: "stretch",
           gap: 6,
           mb: 6,
         }}
       >
-        <ScrollReveal sx={{ alignSelf: "stretch" }}>
+        <ScrollReveal sx={{ height: "100%" }}>
           <Box
             sx={{
               height: { xs: 300, md: "100%" },
-              minHeight: { md: 400 },
+              minHeight: { md: 300 },
               bgcolor: "background.paper",
               borderRadius: 2,
               overflow: "hidden",
