@@ -1,17 +1,26 @@
-import { type CpuState, CS, T_STATE_COUNT } from "./types";
+import {
+  type CpuState,
+  type RamSize,
+  CS,
+  tStateCount,
+  fetchLength,
+  addrMask as getAddrMask,
+} from "./types";
 import { getMicrocode } from "./microcode";
 
-const RAM_SIZE = 16;
 const BYTE_MASK = 0xff;
 const NIBBLE_MASK = 0x0f;
 
 /**
  * Create a fresh CPU state, optionally pre-loaded with a program in RAM.
  */
-export function createInitialState(program?: number[]): CpuState {
-  const ram = new Array<number>(RAM_SIZE).fill(0);
+export function createInitialState(
+  program?: number[],
+  ramSize: RamSize = 16,
+): CpuState {
+  const ram = new Array<number>(ramSize).fill(0);
   if (program) {
-    for (let i = 0; i < Math.min(program.length, RAM_SIZE); i++) {
+    for (let i = 0; i < Math.min(program.length, ramSize); i++) {
       ram[i] = program[i] & BYTE_MASK;
     }
   }
@@ -21,11 +30,13 @@ export function createInitialState(program?: number[]): CpuState {
     regB: 0,
     regIR: 0,
     regOut: 0,
+    regOperand: 0,
     pc: 0,
     mar: 0,
     flagCarry: false,
     flagZero: false,
     ram,
+    ramSize,
     tState: 0,
     halted: false,
     bus: 0,
@@ -49,14 +60,19 @@ export function createInitialState(program?: number[]): CpuState {
 export function stepCpu(prev: CpuState): CpuState {
   if (prev.halted) return prev;
 
+  const { ramSize } = prev;
+  const mask = getAddrMask(ramSize);
+
   // Decode current instruction (upper nibble of IR)
   const opcode = (prev.regIR >> 4) & NIBBLE_MASK;
 
   // 1. Microcode lookup
-  const controlWord = getMicrocode(opcode, prev.tState, {
-    carry: prev.flagCarry,
-    zero: prev.flagZero,
-  });
+  const controlWord = getMicrocode(
+    opcode,
+    prev.tState,
+    { carry: prev.flagCarry, zero: prev.flagZero },
+    ramSize,
+  );
 
   // Clone state (shallow copy + new arrays)
   const s: CpuState = {
@@ -69,7 +85,7 @@ export function stepCpu(prev: CpuState): CpuState {
   let bus = 0;
 
   if (controlWord & CS.CO) {
-    bus = s.pc & NIBBLE_MASK;
+    bus = s.pc & mask;
   } else if (controlWord & CS.AO) {
     bus = s.regA & BYTE_MASK;
   } else if (controlWord & CS.EO) {
@@ -78,14 +94,19 @@ export function stepCpu(prev: CpuState): CpuState {
       controlWord & CS.SU ? s.regA - s.regB : s.regA + s.regB;
     bus = result & BYTE_MASK;
   } else if (controlWord & CS.RO) {
-    bus = s.ram[s.mar & NIBBLE_MASK] & BYTE_MASK;
+    bus = s.ram[s.mar & mask] & BYTE_MASK;
   } else if (controlWord & CS.IO) {
-    bus = s.regIR & NIBBLE_MASK;
+    // Classic mode: output lower 4 bits of IR (operand nibble)
+    // Extended mode: output full 8-bit operand register
+    bus =
+      ramSize === 256
+        ? s.regOperand & BYTE_MASK
+        : s.regIR & NIBBLE_MASK;
   }
 
   // 3. Apply inputs — load from bus into registers/memory
   if (controlWord & CS.MI) {
-    s.mar = bus & NIBBLE_MASK;
+    s.mar = bus & mask;
   }
   if (controlWord & CS.II) {
     s.regIR = bus & BYTE_MASK;
@@ -97,28 +118,29 @@ export function stepCpu(prev: CpuState): CpuState {
     s.regB = bus & BYTE_MASK;
   }
   if (controlWord & CS.RI) {
-    s.ram[s.mar & NIBBLE_MASK] = bus & BYTE_MASK;
+    s.ram[s.mar & mask] = bus & BYTE_MASK;
   }
   if (controlWord & CS.OI) {
     s.regOut = bus & BYTE_MASK;
     s.outputHistory.push(bus & BYTE_MASK);
   }
   if (controlWord & CS.CE) {
-    s.pc = (s.pc + 1) & NIBBLE_MASK;
+    s.pc = (s.pc + 1) & mask;
   }
   if (controlWord & CS.J) {
-    s.pc = bus & NIBBLE_MASK;
+    s.pc = bus & mask;
+  }
+
+  // Extended mode: at T3 of fetch cycle, load bus value into operand register
+  if (ramSize === 256 && prev.tState === 3) {
+    s.regOperand = bus & BYTE_MASK;
   }
 
   // Flags — only latched when FI is active (matches hardware)
   if (controlWord & CS.FI) {
-    const result =
-      controlWord & CS.SU ? s.regA - s.regB : s.regA + s.regB;
-    // Note: we use the pre-latch regA/regB (the ALU inputs haven't changed
+    // Use the pre-latch regA/regB values (ALU inputs haven't changed
     // even though AI may also be active this tick — in hardware, the register
     // loads on the clock edge while the ALU is combinational).
-    // Actually, AI loads bus into regA above, but the ALU inputs are the
-    // *previous* regA and regB values. We need the original values:
     const aluResult =
       controlWord & CS.SU ? prev.regA - prev.regB : prev.regA + prev.regB;
     s.flagCarry = aluResult > BYTE_MASK || aluResult < 0;
@@ -131,7 +153,8 @@ export function stepCpu(prev: CpuState): CpuState {
   }
 
   // 4. Advance T-state
-  const nextT = (prev.tState + 1) % T_STATE_COUNT;
+  const tCount = tStateCount(ramSize);
+  const nextT = (prev.tState + 1) % tCount;
   s.tState = nextT;
   if (nextT === 0) {
     s.cycleCount = prev.cycleCount + 1;
@@ -147,7 +170,7 @@ export function stepCpu(prev: CpuState): CpuState {
 /**
  * Step until the current instruction completes (T-state wraps to 0).
  * Returns the state after the full instruction, or earlier if halted.
- * If already at T0, executes a full instruction (5 T-states).
+ * If already at T0, executes a full instruction.
  */
 export function stepInstruction(state: CpuState): CpuState {
   let s = state;
@@ -167,10 +190,20 @@ export function stepInstruction(state: CpuState): CpuState {
 
 /**
  * Decode a byte into its mnemonic + operand for display.
+ *
+ * In extended mode (ramSize=256), pass the operand byte separately
+ * since instructions are 2 bytes wide.
  */
-export function disassemble(byte: number): string {
+export function disassemble(
+  byte: number,
+  operandByte?: number,
+  ramSize: RamSize = 16,
+): string {
   const opcode = (byte >> 4) & NIBBLE_MASK;
-  const operand = byte & NIBBLE_MASK;
+  const operand =
+    ramSize === 256 && operandByte !== undefined
+      ? operandByte & BYTE_MASK
+      : byte & NIBBLE_MASK;
 
   const names: Record<number, string> = {
     0x0: "NOP",

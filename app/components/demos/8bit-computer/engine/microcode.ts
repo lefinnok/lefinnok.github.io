@@ -1,20 +1,30 @@
-import { CS, Opcode, T_STATE_COUNT } from "./types";
+import { CS, Opcode, type RamSize, tStateCount, fetchLength } from "./types";
 
 // ── Microcode ROM ───────────────────────────────────────────────
 // Maps (opcode, tState) -> control word bitmask.
 //
-// T0–T1 are the universal FETCH cycle (same for every instruction).
-// T2–T4 are instruction-specific EXECUTE steps.
+// T0–T1 (classic) or T0–T3 (extended) are the universal FETCH cycle.
+// Remaining T-states are instruction-specific EXECUTE steps.
 // Unused T-states return 0 (no signals active = NOP tick).
 //
 // Conditional jumps (JC, JZ) check flags at lookup time —
 // matching how the physical EEPROM has separate pages for each
 // flag combination.
 
-// Fetch cycle (shared)
-const FETCH: number[] = [
+// Fetch cycle — classic mode (1-byte instructions)
+const FETCH_CLASSIC: number[] = [
   CS.CO | CS.MI, // T0: PC out -> MAR in
   CS.RO | CS.II | CS.CE, // T1: RAM out -> IR in, increment PC
+];
+
+// Fetch cycle — extended mode (2-byte instructions)
+// T0-T1: fetch opcode byte into IR
+// T2-T3: fetch operand byte (loaded into regOperand by CPU step fn)
+const FETCH_EXTENDED: number[] = [
+  CS.CO | CS.MI, // T0: PC out -> MAR in
+  CS.RO | CS.II | CS.CE, // T1: RAM out -> IR in, increment PC
+  CS.CO | CS.MI, // T2: PC out -> MAR in (for operand byte)
+  CS.RO | CS.CE, // T3: RAM out (operand on bus), increment PC
 ];
 
 // Per-instruction execute microcode (T2, T3, T4)
@@ -64,17 +74,21 @@ export function getMicrocode(
   opcode: number,
   tState: number,
   flags: { carry: boolean; zero: boolean },
+  ramSize: RamSize = 16,
 ): number {
-  // Bounds check
-  if (tState < 0 || tState >= T_STATE_COUNT) return 0;
+  const tCount = tStateCount(ramSize);
+  const fetch = ramSize === 256 ? FETCH_EXTENDED : FETCH_CLASSIC;
 
-  // T0–T1: universal fetch cycle
-  if (tState < FETCH.length) {
-    return FETCH[tState];
+  // Bounds check
+  if (tState < 0 || tState >= tCount) return 0;
+
+  // Fetch cycle
+  if (tState < fetch.length) {
+    return fetch[tState];
   }
 
-  // T2–T4: instruction-specific execute
-  const execIdx = tState - FETCH.length; // 0, 1, or 2
+  // Execute steps (offset by fetch length)
+  const execIdx = tState - fetch.length;
 
   // Conditional jumps — only jump if the relevant flag is set
   if (opcode === Opcode.JC) {
@@ -106,10 +120,12 @@ export function getMicrocode(
 export function getInstructionMicrocode(
   opcode: number,
   flags: { carry: boolean; zero: boolean },
+  ramSize: RamSize = 16,
 ): number[] {
+  const tCount = tStateCount(ramSize);
   const result: number[] = [];
-  for (let t = 0; t < T_STATE_COUNT; t++) {
-    result.push(getMicrocode(opcode, t, flags));
+  for (let t = 0; t < tCount; t++) {
+    result.push(getMicrocode(opcode, t, flags, ramSize));
   }
   return result;
 }

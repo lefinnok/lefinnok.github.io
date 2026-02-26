@@ -14,6 +14,8 @@ interface ControlBarProps {
   halted: boolean;
   running: boolean;
   speed: number;
+  tStateCount: number;
+  fetchLen: number;
   onTick: () => void;
   onStep: () => void;
   onRunToggle: () => void;
@@ -26,6 +28,8 @@ export function ControlBar({
   halted,
   running,
   speed,
+  tStateCount,
+  fetchLen,
   onTick,
   onStep,
   onRunToggle,
@@ -163,7 +167,7 @@ export function ControlBar({
 
       <Divider orientation="vertical" flexItem sx={{ mx: 0.5 }} />
 
-      <TStateIndicator tState={tState} halted={halted} />
+      <TStateIndicator tState={tState} halted={halted} count={tStateCount} fetchLen={fetchLen} />
     </Stack>
   );
 }

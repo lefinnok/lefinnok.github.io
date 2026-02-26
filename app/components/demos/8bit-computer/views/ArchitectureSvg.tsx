@@ -18,7 +18,7 @@ const BUS_BOTTOM = 490;
 const MODULES = {
   pc: { x: 30, y: 40, w: 120, h: 52, label: "Program Counter" },
   mar: { x: 30, y: 110, w: 120, h: 52, label: "MAR" },
-  ram: { x: 30, y: 180, w: 120, h: 52, label: "RAM 16\u00d78" },
+  ram: { x: 30, y: 180, w: 120, h: 52 },
   ir: { x: 30, y: 260, w: 120, h: 52, label: "Instruction Reg" },
   control: { x: 30, y: 340, w: 120, h: 48, label: "Control Logic" },
   clock: { x: 30, y: 410, w: 120, h: 48, label: "Clock" },
@@ -273,7 +273,7 @@ export function ArchitectureSvg({
         width={MODULES.pc.w}
         height={MODULES.pc.h}
         value={cpu.pc}
-        bits={4}
+        bits={cpu.ramSize === 256 ? 8 : 4}
         active={isActive("pc")}
         selected={isSelected("pc")}
         onClick={() => handleClick("pc")}
@@ -292,7 +292,7 @@ export function ArchitectureSvg({
         width={MODULES.mar.w}
         height={MODULES.mar.h}
         value={cpu.mar}
-        bits={4}
+        bits={cpu.ramSize === 256 ? 8 : 4}
         active={isActive("mar")}
         selected={isSelected("mar")}
         onClick={() => handleClick("mar")}
@@ -303,7 +303,7 @@ export function ArchitectureSvg({
 
       <ModuleBlock
         id="ram"
-        label={MODULES.ram.label}
+        label={cpu.ramSize === 256 ? "RAM 256\u00d78" : "RAM 16\u00d78"}
         x={MODULES.ram.x}
         y={MODULES.ram.y}
         width={MODULES.ram.w}
@@ -336,7 +336,7 @@ export function ArchitectureSvg({
           { name: "II", active: !!(cw & CS.II), direction: "in" },
           { name: "IO", active: !!(cw & CS.IO), direction: "out" },
         ]}
-        sublabel={disassemble(cpu.regIR)}
+        sublabel={disassemble(cpu.regIR, cpu.ramSize === 256 ? cpu.regOperand : undefined, cpu.ramSize)}
       />
 
       <ModuleBlock

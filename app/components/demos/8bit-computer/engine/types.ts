@@ -81,26 +81,30 @@ export function opcodeHasOperand(op: number): boolean {
 
 // ── CPU state ───────────────────────────────────────────────────
 
+export type RamSize = 16 | 256;
+
 export interface CpuState {
   // Registers
   regA: number; // 8-bit accumulator
   regB: number; // 8-bit B register
   regIR: number; // 8-bit instruction register
   regOut: number; // 8-bit output register
+  regOperand: number; // 8-bit operand register (extended mode: 2nd instruction byte)
 
   // Counters / addressing
-  pc: number; // 4-bit program counter
-  mar: number; // 4-bit memory address register
+  pc: number; // 4-bit (classic) or 8-bit (extended) program counter
+  mar: number; // 4-bit (classic) or 8-bit (extended) memory address register
 
   // Flags
   flagCarry: boolean;
   flagZero: boolean;
 
   // Memory
-  ram: number[]; // 16 x 8-bit
+  ram: number[]; // 16 x 8-bit (classic) or 256 x 8-bit (extended)
+  ramSize: RamSize; // RAM size mode
 
   // Execution state
-  tState: number; // 0–4 (current microcode step within instruction)
+  tState: number; // 0–4 (classic) or 0–7 (extended)
   halted: boolean;
 
   // Set during step for visualization
@@ -161,11 +165,28 @@ export function activeModules(controlWord: number): Set<ModuleId> {
   return set;
 }
 
-// ── T-state labels ──────────────────────────────────────────────
+// ── T-state configuration ───────────────────────────────────────
 
+/** Classic: 5 T-states (2 fetch + 3 execute). Extended: 8 (4 fetch + 4 execute). */
+export function tStateCount(ramSize: RamSize): number {
+  return ramSize === 256 ? 8 : 5;
+}
+
+/** Number of T-states in the fetch cycle. */
+export function fetchLength(ramSize: RamSize): number {
+  return ramSize === 256 ? 4 : 2;
+}
+
+/** Backward-compat constant for classic mode. */
 export const T_STATE_COUNT = 5;
 
-export function tStateLabel(t: number): string {
-  if (t <= 1) return "FETCH";
+export function tStateLabel(t: number, ramSize: RamSize = 16): string {
+  const fl = fetchLength(ramSize);
+  if (t < fl) return "FETCH";
   return "EXECUTE";
+}
+
+/** Address mask: 0x0F for classic, 0xFF for extended. */
+export function addrMask(ramSize: RamSize): number {
+  return ramSize === 256 ? 0xff : 0x0f;
 }

@@ -1,6 +1,5 @@
-import { Opcode } from "./types";
+import { Opcode, type RamSize } from "./types";
 
-const RAM_SIZE = 16;
 const BYTE_MASK = 0xff;
 const NIBBLE_MASK = 0x0f;
 
@@ -32,7 +31,7 @@ export interface AssemblerError {
 
 export interface AssemblerResult {
   success: boolean;
-  program: number[]; // 16-byte array (always returned, may be partial on error)
+  program: number[]; // RAM image (always returned, may be partial on error)
   errors: AssemblerError[];
   labels: Map<string, number>;
 }
@@ -71,12 +70,23 @@ function parseNumber(token: string): number | null {
  *   // also a comment
  *
  * Operands can be decimal (14), hex (0xE), binary (0b1110), or a label name.
+ *
+ * Classic mode (ramSize=16): 1-byte instructions [opcode:4][operand:4], 16 bytes RAM.
+ * Extended mode (ramSize=256): 2-byte instructions [opcode:4][0000:4] [operand:8], 256 bytes RAM.
  */
-export function assemble(source: string): AssemblerResult {
+export function assemble(
+  source: string,
+  ramSize: RamSize = 16,
+): AssemblerResult {
   const lines = source.split("\n");
   const errors: AssemblerError[] = [];
   const labels = new Map<string, number>();
-  const program = new Array<number>(RAM_SIZE).fill(0);
+  const program = new Array<number>(ramSize).fill(0);
+
+  const extended = ramSize === 256;
+  // Instructions occupy 2 bytes in extended mode, 1 byte in classic
+  const instrBytes = extended ? 2 : 1;
+  const operandMax = extended ? 255 : 15;
 
   // Intermediate representation from pass 1
   interface ParsedLine {
@@ -112,7 +122,10 @@ export function assemble(source: string): AssemblerResult {
     if (labelMatch) {
       const labelName = labelMatch[1].toLowerCase();
       if (labels.has(labelName)) {
-        errors.push({ line: lineNum, message: `Duplicate label "${labelMatch[1]}"` });
+        errors.push({
+          line: lineNum,
+          message: `Duplicate label "${labelMatch[1]}"`,
+        });
       } else {
         labels.set(labelName, addr);
       }
@@ -132,8 +145,11 @@ export function assemble(source: string): AssemblerResult {
         continue;
       }
       const orgAddr = parseNumber(operandToken);
-      if (orgAddr === null || orgAddr < 0 || orgAddr >= RAM_SIZE) {
-        errors.push({ line: lineNum, message: `ORG address must be 0–${RAM_SIZE - 1}` });
+      if (orgAddr === null || orgAddr < 0 || orgAddr >= ramSize) {
+        errors.push({
+          line: lineNum,
+          message: `ORG address must be 0–${ramSize - 1}`,
+        });
         continue;
       }
       addr = orgAddr;
@@ -143,18 +159,27 @@ export function assemble(source: string): AssemblerResult {
 
     // Validate mnemonic
     if (mnemonic !== "DB" && !(mnemonic in MNEMONICS)) {
-      errors.push({ line: lineNum, message: `Unknown mnemonic "${tokens[0]}"` });
+      errors.push({
+        line: lineNum,
+        message: `Unknown mnemonic "${tokens[0]}"`,
+      });
       continue;
     }
 
+    // Determine how many bytes this line will emit
+    const byteCount = mnemonic === "DB" ? 1 : instrBytes;
+
     // Check address overflow
-    if (addr >= RAM_SIZE) {
-      errors.push({ line: lineNum, message: `Program exceeds ${RAM_SIZE} bytes of RAM` });
+    if (addr + byteCount > ramSize) {
+      errors.push({
+        line: lineNum,
+        message: `Program exceeds ${ramSize} bytes of RAM`,
+      });
       break;
     }
 
     parsed.push({ lineNum, mnemonic, operandToken });
-    addr++;
+    addr += byteCount;
   }
 
   // ── Pass 2: resolve operands, emit bytes ──────────────────────
@@ -169,16 +194,16 @@ export function assemble(source: string): AssemblerResult {
       continue;
     }
 
-    if (addr >= RAM_SIZE) break;
+    if (addr >= ramSize) break;
 
-    // DB directive — raw byte
+    // DB directive — raw byte (always 1 byte regardless of mode)
     if (mnemonic === "DB") {
       if (operandToken === null) {
         errors.push({ line: lineNum, message: "DB requires a value" });
         addr++;
         continue;
       }
-      const val = resolveOperand(operandToken, labels, lineNum, errors, true);
+      const val = resolveOperand(operandToken, labels, lineNum, errors, 255);
       if (val !== null) {
         program[addr] = val & BYTE_MASK;
       }
@@ -188,28 +213,74 @@ export function assemble(source: string): AssemblerResult {
 
     const opcode = MNEMONICS[mnemonic];
 
-    if (NO_OPERAND.has(mnemonic)) {
-      // No operand expected
-      if (operandToken !== null) {
-        errors.push({ line: lineNum, message: `${mnemonic} takes no operand` });
-      }
+    if (extended) {
+      // Extended mode: 2-byte instructions
+      // Byte 0: [opcode:4][0000:4]
+      // Byte 1: [operand:8] (0x00 for no-operand instructions)
       program[addr] = (opcode << 4) & BYTE_MASK;
-    } else {
-      // Operand required
-      if (operandToken === null) {
-        errors.push({ line: lineNum, message: `${mnemonic} requires an operand` });
-        program[addr] = (opcode << 4) & BYTE_MASK;
+
+      if (NO_OPERAND.has(mnemonic)) {
+        if (operandToken !== null) {
+          errors.push({
+            line: lineNum,
+            message: `${mnemonic} takes no operand`,
+          });
+        }
+        program[addr + 1] = 0;
       } else {
-        const val = resolveOperand(operandToken, labels, lineNum, errors, false);
-        if (val !== null) {
-          program[addr] = ((opcode << 4) | (val & NIBBLE_MASK)) & BYTE_MASK;
+        if (operandToken === null) {
+          errors.push({
+            line: lineNum,
+            message: `${mnemonic} requires an operand`,
+          });
+          program[addr + 1] = 0;
         } else {
-          program[addr] = (opcode << 4) & BYTE_MASK;
+          const val = resolveOperand(
+            operandToken,
+            labels,
+            lineNum,
+            errors,
+            operandMax,
+          );
+          program[addr + 1] = val !== null ? val & BYTE_MASK : 0;
         }
       }
+      addr += 2;
+    } else {
+      // Classic mode: 1-byte instructions [opcode:4][operand:4]
+      if (NO_OPERAND.has(mnemonic)) {
+        if (operandToken !== null) {
+          errors.push({
+            line: lineNum,
+            message: `${mnemonic} takes no operand`,
+          });
+        }
+        program[addr] = (opcode << 4) & BYTE_MASK;
+      } else {
+        if (operandToken === null) {
+          errors.push({
+            line: lineNum,
+            message: `${mnemonic} requires an operand`,
+          });
+          program[addr] = (opcode << 4) & BYTE_MASK;
+        } else {
+          const val = resolveOperand(
+            operandToken,
+            labels,
+            lineNum,
+            errors,
+            operandMax,
+          );
+          if (val !== null) {
+            program[addr] =
+              ((opcode << 4) | (val & NIBBLE_MASK)) & BYTE_MASK;
+          } else {
+            program[addr] = (opcode << 4) & BYTE_MASK;
+          }
+        }
+      }
+      addr++;
     }
-
-    addr++;
   }
 
   return {
@@ -229,16 +300,15 @@ function resolveOperand(
   labels: Map<string, number>,
   lineNum: number,
   errors: AssemblerError[],
-  fullByte: boolean, // true for DB (0-255), false for operand (0-15)
+  maxVal: number,
 ): number | null {
   // Try numeric literal first
   const num = parseNumber(token);
   if (num !== null) {
-    const max = fullByte ? 255 : 15;
-    if (num < 0 || num > max) {
+    if (num < 0 || num > maxVal) {
       errors.push({
         line: lineNum,
-        message: `Value ${num} out of range (0–${max})`,
+        message: `Value ${num} out of range (0–${maxVal})`,
       });
     }
     return num;
