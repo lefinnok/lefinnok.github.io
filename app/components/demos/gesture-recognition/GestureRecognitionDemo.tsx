@@ -114,16 +114,38 @@ export default function GestureRecognitionDemo() {
 
   // Track fullscreen state
   useEffect(() => {
-    const handler = () => setIsFullscreen(!!document.fullscreenElement);
+    const handler = () =>
+      setIsFullscreen(
+        !!(document.fullscreenElement ?? (document as any).webkitFullscreenElement),
+      );
     document.addEventListener("fullscreenchange", handler);
-    return () => document.removeEventListener("fullscreenchange", handler);
+    document.addEventListener("webkitfullscreenchange", handler);
+    return () => {
+      document.removeEventListener("fullscreenchange", handler);
+      document.removeEventListener("webkitfullscreenchange", handler);
+    };
   }, []);
 
-  const toggleFullscreen = useCallback(() => {
-    if (!document.fullscreenElement) {
-      demoRef.current?.requestFullscreen();
-    } else {
-      document.exitFullscreen();
+  const toggleFullscreen = useCallback(async () => {
+    try {
+      if (!document.fullscreenElement) {
+        const el = demoRef.current;
+        if (el) {
+          await (
+            el.requestFullscreen?.() ??
+            (el as any).webkitRequestFullscreen?.() ??
+            (el as any).msRequestFullscreen?.()
+          );
+        }
+      } else {
+        await (
+          document.exitFullscreen?.() ??
+          (document as any).webkitExitFullscreen?.() ??
+          (document as any).msExitFullscreen?.()
+        );
+      }
+    } catch {
+      // Fullscreen not supported or denied
     }
   }, []);
 
@@ -571,8 +593,22 @@ export default function GestureRecognitionDemo() {
                   if (recognizing) setCurrentMatch(null);
                 }}
                 disabled={references.length === 0}
-                color={recognizing ? "primary" : "inherit"}
-                sx={{ height: 34, fontSize: 12 }}
+                sx={{
+                  height: 34,
+                  fontSize: 12,
+                  bgcolor: recognizing ? "transparent" : "#22c55e",
+                  color: recognizing ? "#ef4444" : "#fff",
+                  borderColor: recognizing ? "#ef4444" : "#22c55e",
+                  "&:hover": {
+                    bgcolor: recognizing ? "rgba(239,68,68,0.08)" : "#16a34a",
+                    borderColor: recognizing ? "#ef4444" : "#16a34a",
+                  },
+                  "&.Mui-disabled": {
+                    bgcolor: "rgba(34,197,94,0.15)",
+                    color: "rgba(255,255,255,0.3)",
+                    borderColor: "transparent",
+                  },
+                }}
               >
                 {recognizing ? "Stop" : "Recognize"}
               </Button>
@@ -762,61 +798,37 @@ function drawMatchLabel(
   h: number,
 ) {
   const wrist = landmarks[0];
-  const wx = (1 - wrist.x) * w; // mirrored
+  const wx = (1 - wrist.x) * w;
   const wy = wrist.y * h;
 
-  // Position label offset from wrist — above if there's room, below otherwise
-  const labelAbove = wy > 80;
-  const offsetY = labelAbove ? -60 : 60;
-  // Nudge horizontally toward center to avoid clipping at edges
-  const nudgeX = wx < w * 0.3 ? 40 : wx > w * 0.7 ? -40 : 0;
-  const lx = wx + nudgeX;
-  const ly = wy + offsetY;
-
-  const text = match.label;
-  const score = Math.round(match.similarity);
+  const above = wy > 120;
+  const ty = above ? wy - 90 : wy + 100;
+  // Push label to whichever side has more room
+  const offsetX = wx < w / 2 ? -120 : 120;
+  const tx = Math.max(60, Math.min(w - 60, wx + offsetX));
 
   ctx.save();
 
-  // Connecting line: wrist → label
+  // Thin connecting line
   ctx.beginPath();
   ctx.moveTo(wx, wy);
-  ctx.lineTo(lx, ly + (labelAbove ? 12 : -28));
-  ctx.strokeStyle = "rgba(0, 229, 255, 0.5)";
-  ctx.lineWidth = 1.5;
-  ctx.setLineDash([4, 4]);
-  ctx.stroke();
-  ctx.setLineDash([]);
-
-  // Background pill behind text
-  ctx.font = "bold 22px Inter, sans-serif";
-  const labelW = ctx.measureText(text).width;
-  ctx.font = "12px 'Fira Code', monospace";
-  const scoreText = `d = ${score}`;
-  const scoreW = ctx.measureText(scoreText).width;
-  const pillW = Math.max(labelW, scoreW) + 24;
-  const pillH = 44;
-  const pillX = lx - pillW / 2;
-  const pillY = ly - (labelAbove ? pillH - 4 : -4);
-
-  ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
-  ctx.beginPath();
-  ctx.roundRect(pillX, pillY, pillW, pillH, 8);
-  ctx.fill();
-  ctx.strokeStyle = "rgba(0, 229, 255, 0.4)";
+  ctx.lineTo(tx, above ? ty + 14 : ty - 14);
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.15)";
   ctx.lineWidth = 1;
   ctx.stroke();
 
-  // Label text
+  // Label
   ctx.textAlign = "center";
-  ctx.font = "bold 22px Inter, sans-serif";
-  ctx.fillStyle = ACCENT;
-  ctx.fillText(text, lx, pillY + 22);
+  ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
+  ctx.shadowBlur = 6;
 
-  // Score text
-  ctx.font = "12px 'Fira Code', monospace";
-  ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
-  ctx.fillText(scoreText, lx, pillY + 38);
+  ctx.font = "500 16px Inter, sans-serif";
+  ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
+  ctx.fillText(match.label, tx, ty);
+
+  ctx.font = "11px 'Fira Code', monospace";
+  ctx.fillStyle = "rgba(255, 255, 255, 0.35)";
+  ctx.fillText(`${Math.round(match.similarity)}`, tx, ty + 14);
 
   ctx.restore();
 }

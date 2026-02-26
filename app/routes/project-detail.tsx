@@ -16,6 +16,7 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import DescriptionIcon from "@mui/icons-material/Description";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
+import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import { useParams, Link } from "react-router";
 import { ScrollReveal } from "~/components/ScrollReveal";
 import { FbxModelViewer } from "~/components/FbxModelViewer";
@@ -66,10 +67,11 @@ export default function ProjectDetail() {
           mb: 6,
         }}
       >
-        <ScrollReveal>
+        <ScrollReveal sx={{ alignSelf: "stretch" }}>
           <Box
             sx={{
-              height: { xs: 300, md: 400 },
+              height: { xs: 300, md: "100%" },
+              minHeight: { md: 400 },
               bgcolor: "background.paper",
               borderRadius: 2,
               overflow: "hidden",
@@ -121,30 +123,52 @@ export default function ProjectDetail() {
             ))}
           </Box>
 
-          {project.links.length > 0 && (
-            <Stack direction="row" flexWrap="wrap" gap={1}>
-              {project.links.map((link) => (
-                <Button
-                  key={link.url}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variant="outlined"
-                  size="small"
-                  startIcon={LINK_ICONS[link.type]}
-                >
-                  {link.label}
-                </Button>
-              ))}
-            </Stack>
-          )}
+          <Stack direction="row" flexWrap="wrap" gap={1}>
+            {project.hasInteractiveDemo && (
+              <Button
+                variant="outlined"
+                size="small"
+                startIcon={<PlayCircleOutlineIcon />}
+                onClick={() =>
+                  document
+                    .getElementById("interactive-demo")
+                    ?.scrollIntoView({ behavior: "smooth" })
+                }
+                sx={{
+                  color: "#f97316",
+                  borderColor: "#f97316",
+                  "&:hover": {
+                    borderColor: "#ea580c",
+                    bgcolor: "rgba(249,115,22,0.08)",
+                  },
+                }}
+              >
+                Try Demo
+              </Button>
+            )}
+            {project.links.map((link) => (
+              <Button
+                key={link.url}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="outlined"
+                size="small"
+                startIcon={LINK_ICONS[link.type]}
+              >
+                {link.label}
+              </Button>
+            ))}
+          </Stack>
         </ScrollReveal>
       </Box>
 
-      <InteractiveDemoSlot
-        available={project.hasInteractiveDemo}
-        componentName={project.demoComponentName}
-      />
+      <Box id="interactive-demo">
+        <InteractiveDemoSlot
+          available={project.hasInteractiveDemo}
+          componentName={project.demoComponentName}
+        />
+      </Box>
     </Container>
   );
 }
