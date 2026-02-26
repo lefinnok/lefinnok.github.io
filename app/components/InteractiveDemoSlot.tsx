@@ -1,5 +1,6 @@
 import { lazy, Suspense } from "react";
-import { Box, Typography, CircularProgress } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import { MatrixLoader } from "~/components/MatrixLoader";
 
 const DEMO_COMPONENTS: Record<
   string,
@@ -46,11 +47,7 @@ export function InteractiveDemoSlot({
   return (
     <Box sx={{ mt: 6 }}>
       <Suspense
-        fallback={
-          <Box sx={{ display: "flex", justifyContent: "center", py: 8 }}>
-            <CircularProgress />
-          </Box>
-        }
+        fallback={<MatrixLoader message="Loading demo..." height={300} />}
       >
         <DemoComponent />
       </Suspense>

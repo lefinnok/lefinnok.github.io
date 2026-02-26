@@ -34,6 +34,7 @@ import {
 } from "./graphAlgorithm";
 import { AlgorithmExplanation } from "./AlgorithmExplanation";
 import { VerticalSpectrum } from "./ExplanationVisuals";
+import { MatrixLoader } from "~/components/MatrixLoader";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type HandLandmarker = any;
@@ -415,12 +416,29 @@ export default function GestureRecognitionDemo() {
                   gap: 2,
                 }}
               >
-                <VideocamIcon sx={{ fontSize: 48, color: "text.secondary" }} />
+                {loading && (
+                  <MatrixLoader
+                    message="Initializing WASM..."
+                    height="100%"
+                    width="100%"
+                    density="normal"
+                    sx={{
+                      position: "absolute",
+                      inset: 0,
+                      zIndex: 0,
+                      borderRadius: 0,
+                    }}
+                  />
+                )}
+                <VideocamIcon
+                  sx={{ fontSize: 48, color: "text.secondary", zIndex: 1 }}
+                />
                 <Button
                   variant="outlined"
                   startIcon={<VideocamIcon />}
                   onClick={startCamera}
                   disabled={loading}
+                  sx={{ zIndex: 1 }}
                 >
                   {loading ? "Starting..." : "Start Camera"}
                 </Button>

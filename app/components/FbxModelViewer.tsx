@@ -1,8 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Box } from "@mui/material";
 import * as THREE from "three";
 import { FBXLoader } from "three-stdlib";
 import { useReducedMotion } from "~/hooks/useReducedMotion";
+import { MatrixLoader } from "~/components/MatrixLoader";
 import type { ProjectModelConfig } from "~/lib/types";
 
 interface FbxModelViewerProps {
@@ -30,6 +31,7 @@ export function FbxModelViewer({
 }: FbxModelViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
+  const [modelLoading, setModelLoading] = useState(true);
   const localHoveredRef = useRef(false);
   const externalHoveredRef = useRef(externalHovered ?? false);
   // Normalized mouse position: -1 to 1 on each axis, relative to container center
@@ -98,6 +100,7 @@ export function FbxModelViewer({
       model = fbx;
 
       renderer.render(scene, camera);
+      setModelLoading(false);
     });
 
     function animate() {
@@ -227,6 +230,14 @@ export function FbxModelViewer({
       sx={{ width, height, position: "relative", overflow: "hidden" }}
       role="img"
       aria-label="3D model preview"
-    />
+    >
+      {modelLoading && (
+        <MatrixLoader
+          height="100%"
+          width="100%"
+          sx={{ position: "absolute", inset: 0, zIndex: 1, borderRadius: 0 }}
+        />
+      )}
+    </Box>
   );
 }
