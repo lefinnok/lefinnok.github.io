@@ -449,7 +449,108 @@ export function MatrixGrid({
   );
 }
 
-// ─── Spectrum bars ───────────────────────────────────────────────
+// ─── Vertical spectrum bars (for sidebar) ────────────────────────
+
+export function VerticalSpectrum({
+  values,
+  compare,
+  color = ACCENT,
+  compareColor = "#666",
+  height = 80,
+}: {
+  values: number[];
+  compare?: number[];
+  color?: string;
+  compareColor?: string;
+  height?: number;
+}) {
+  const allVals = [...values, ...(compare ?? [])];
+  const maxVal = Math.max(...allVals, 1);
+
+  return (
+    <Box>
+      <Box
+        sx={{
+          display: "flex",
+          gap: "3px",
+          justifyContent: "center",
+          alignItems: "flex-end",
+          height,
+        }}
+      >
+        {values.map((v, i) => {
+          const h = Math.max(2, (v / maxVal) * height);
+          const cmpH = compare
+            ? Math.max(2, ((compare[i] ?? 0) / maxVal) * height)
+            : 0;
+
+          return compare ? (
+            <Box
+              key={i}
+              sx={{ display: "flex", gap: "1px", alignItems: "flex-end" }}
+            >
+              <Box
+                sx={{
+                  width: 5,
+                  height: h,
+                  bgcolor: color,
+                  borderRadius: "1.5px 1.5px 0 0",
+                  transition: "height 0.15s ease-out",
+                }}
+              />
+              <Box
+                sx={{
+                  width: 5,
+                  height: cmpH,
+                  bgcolor: compareColor,
+                  borderRadius: "1.5px 1.5px 0 0",
+                }}
+              />
+            </Box>
+          ) : (
+            <Box
+              key={i}
+              sx={{
+                width: 8,
+                height: h,
+                bgcolor: color,
+                borderRadius: "1.5px 1.5px 0 0",
+                transition: "height 0.15s ease-out",
+              }}
+            />
+          );
+        })}
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          gap: "3px",
+          justifyContent: "center",
+          mt: "2px",
+        }}
+      >
+        {values.map((_, i) => (
+          <Typography
+            key={i}
+            sx={{
+              fontSize: 7,
+              color: "text.secondary",
+              fontFamily: "'Fira Code', monospace",
+              lineHeight: 1,
+              width: compare ? 11 : 8,
+              textAlign: "center",
+            }}
+          >
+            {"\u03bb"}
+            {i + 1}
+          </Typography>
+        ))}
+      </Box>
+    </Box>
+  );
+}
+
+// ─── Spectrum bars (horizontal, for explanation slides) ──────────
 
 export function SpectrumBars({
   values,

@@ -9,6 +9,8 @@ import {
   Chip,
   Alert,
   Link,
+  IconButton,
+  Divider,
 } from "@mui/material";
 import VideocamIcon from "@mui/icons-material/Videocam";
 import VideocamOffIcon from "@mui/icons-material/VideocamOff";
@@ -17,6 +19,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopIcon from "@mui/icons-material/Stop";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import FullscreenIcon from "@mui/icons-material/Fullscreen";
+import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
 import {
   type Landmark,
   type ReferenceGesture,
@@ -29,17 +33,10 @@ import {
   spectralSimilarity,
 } from "./graphAlgorithm";
 import { AlgorithmExplanation } from "./AlgorithmExplanation";
-import { SpectrumBars } from "./ExplanationVisuals";
+import { VerticalSpectrum } from "./ExplanationVisuals";
 
-type HandLandmarker = Awaited<
-  ReturnType<
-    typeof import("@mediapipe/tasks-vision") extends { HandLandmarker: infer T }
-      ? T extends { createFromOptions: (...args: unknown[]) => infer R }
-        ? () => R
-        : never
-      : never
-  >
->;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type HandLandmarker = any;
 
 const ACCENT = "#00e5ff";
 const ACCENT_DIM = "rgba(0, 229, 255, 0.4)";
@@ -75,7 +72,7 @@ const REFERENCES = [
 export default function GestureRecognitionDemo() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const demoRef = useRef<HTMLDivElement>(null);
 
   const [cameraActive, setCameraActive] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -87,6 +84,7 @@ export default function GestureRecognitionDemo() {
   const [handDetected, setHandDetected] = useState(false);
   const [showExplanation, setShowExplanation] = useState(false);
   const [liveSpectrum, setLiveSpectrum] = useState<number[] | null>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   // Refs for the animation loop (avoids stale closures)
   const handLandmarkerRef = useRef<HandLandmarker | null>(null);
@@ -112,6 +110,21 @@ export default function GestureRecognitionDemo() {
       streamRef.current?.getTracks().forEach((t) => t.stop());
       handLandmarkerRef.current?.close();
     };
+  }, []);
+
+  // Track fullscreen state
+  useEffect(() => {
+    const handler = () => setIsFullscreen(!!document.fullscreenElement);
+    document.addEventListener("fullscreenchange", handler);
+    return () => document.removeEventListener("fullscreenchange", handler);
+  }, []);
+
+  const toggleFullscreen = useCallback(() => {
+    if (!document.fullscreenElement) {
+      demoRef.current?.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
   }, []);
 
   const startCamera = useCallback(async () => {
@@ -224,7 +237,7 @@ export default function GestureRecognitionDemo() {
         const match = findBestMatch(spectrum, refsRef.current);
         if (match) {
           setCurrentMatch(match);
-          drawMatchLabel(ctx, match, canvas.width, canvas.height);
+          drawMatchLabel(ctx, match, landmarks, canvas.width, canvas.height);
         }
       }
     } else {
@@ -263,186 +276,294 @@ export default function GestureRecognitionDemo() {
     setReferences((prev) => prev.filter((r) => r.id !== id));
   }, []);
 
+  const liveVals = liveSpectrum?.slice(-5) ?? null;
+
   return (
     <Stack spacing={4}>
-      {/* Demo */}
+      {/* Main demo container (fullscreen target) */}
       <Paper
+        ref={demoRef}
         elevation={0}
         sx={{
-          p: 3,
-          border: "1px solid",
+          p: isFullscreen ? 2 : 3,
+          border: isFullscreen ? "none" : "1px solid",
           borderColor: "divider",
-          borderRadius: 3,
+          borderRadius: isFullscreen ? 0 : 3,
+          bgcolor: isFullscreen ? "#0a0a0a" : undefined,
+          ...(isFullscreen && {
+            display: "flex",
+            flexDirection: "column",
+            height: "100vh",
+          }),
         }}
       >
-        {/* Header with How It Works button */}
+        {/* Header */}
         <Stack
           direction="row"
           justifyContent="space-between"
-          alignItems="flex-start"
-          sx={{ mb: 1 }}
+          alignItems="center"
+          sx={{ mb: 1, flexShrink: 0 }}
         >
-          <Typography variant="h5">Gesture Recognition Demo</Typography>
-          <Button
-            size="small"
-            variant="outlined"
-            startIcon={<InfoOutlinedIcon />}
-            onClick={() => setShowExplanation(true)}
-            sx={{
-              color: ACCENT,
-              borderColor: ACCENT,
-              "&:hover": {
+          <Box>
+            <Typography variant={isFullscreen ? "h6" : "h5"}>
+              Gesture Recognition Demo
+            </Typography>
+            {!isFullscreen && (
+              <Typography variant="caption" color="text.secondary">
+                Teach the algorithm your gestures, then watch it recognize them
+                live.
+              </Typography>
+            )}
+          </Box>
+          <Stack direction="row" spacing={0.5}>
+            <Button
+              size="small"
+              variant="outlined"
+              startIcon={<InfoOutlinedIcon />}
+              onClick={() => setShowExplanation(true)}
+              sx={{
+                color: ACCENT,
                 borderColor: ACCENT,
-                bgcolor: "rgba(0,229,255,0.06)",
-              },
-              flexShrink: 0,
-            }}
-          >
-            How It Works
-          </Button>
+                "&:hover": {
+                  borderColor: ACCENT,
+                  bgcolor: "rgba(0,229,255,0.06)",
+                },
+                flexShrink: 0,
+              }}
+            >
+              How It Works
+            </Button>
+            <IconButton
+              size="small"
+              onClick={toggleFullscreen}
+              sx={{ color: "text.secondary" }}
+            >
+              {isFullscreen ? <FullscreenExitIcon /> : <FullscreenIcon />}
+            </IconButton>
+          </Stack>
         </Stack>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-          Teach the algorithm your hand gestures, then watch it recognize them
-          in real time using graph spectral analysis.
-        </Typography>
 
         {error && (
-          <Alert severity="error" sx={{ mb: 2 }}>
+          <Alert severity="error" sx={{ mb: 1, flexShrink: 0 }}>
             {error}
           </Alert>
         )}
 
-        {/* Camera viewport */}
+        {/* Main area: camera + analysis sidebar */}
         <Box
-          ref={containerRef}
           sx={{
-            position: "relative",
-            width: "100%",
-            aspectRatio: "4 / 3",
-            bgcolor: "#000",
-            borderRadius: 2,
-            overflow: "hidden",
-            mb: 3,
+            display: "flex",
+            gap: 1.5,
+            flex: isFullscreen ? 1 : undefined,
+            minHeight: isFullscreen ? 0 : undefined,
           }}
         >
-          <video ref={videoRef} playsInline muted style={{ display: "none" }} />
-          <canvas
-            ref={canvasRef}
-            style={{
-              width: "100%",
-              height: "100%",
-              display: cameraActive ? "block" : "none",
-              objectFit: "cover",
+          {/* Camera viewport — 4 parts */}
+          <Box
+            sx={{
+              flex: 4,
+              position: "relative",
+              bgcolor: "#000",
+              borderRadius: 2,
+              overflow: "hidden",
+              ...(!isFullscreen && { aspectRatio: "4 / 3" }),
+              ...(isFullscreen && { minHeight: 0 }),
             }}
-          />
+          >
+            <video ref={videoRef} playsInline muted style={{ display: "none" }} />
+            <canvas
+              ref={canvasRef}
+              style={{
+                width: "100%",
+                height: "100%",
+                display: cameraActive ? "block" : "none",
+                objectFit: "contain",
+              }}
+            />
 
-          {!cameraActive && (
+            {!cameraActive && (
+              <Box
+                sx={{
+                  position: "absolute",
+                  inset: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 2,
+                }}
+              >
+                <VideocamIcon sx={{ fontSize: 48, color: "text.secondary" }} />
+                <Button
+                  variant="outlined"
+                  startIcon={<VideocamIcon />}
+                  onClick={startCamera}
+                  disabled={loading}
+                >
+                  {loading ? "Starting..." : "Start Camera"}
+                </Button>
+              </Box>
+            )}
+          </Box>
+
+          {/* Analysis sidebar — 1 part */}
+          {cameraActive && (
             <Box
               sx={{
-                position: "absolute",
-                inset: 0,
-                display: "flex",
+                flex: 1,
+                minWidth: 120,
+                maxWidth: { xs: 160, md: 220 },
+                display: { xs: "none", sm: "flex" },
                 flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 2,
+                gap: 1,
+                overflow: "auto",
+                borderLeft: "1px solid",
+                borderColor: "divider",
+                pl: 1.5,
               }}
             >
-              <VideocamIcon sx={{ fontSize: 48, color: "text.secondary" }} />
-              <Button
-                variant="outlined"
-                startIcon={<VideocamIcon />}
-                onClick={startCamera}
-                disabled={loading}
+              <Typography
+                variant="overline"
+                sx={{ fontSize: 9, color: "text.secondary", lineHeight: 1.2 }}
               >
-                {loading ? "Starting..." : "Start Camera"}
-              </Button>
+                Spectral Analysis
+              </Typography>
+
+              {!liveVals ? (
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  sx={{ fontStyle: "italic", fontSize: 10 }}
+                >
+                  Show your hand to the camera.
+                </Typography>
+              ) : (
+                <>
+                  {/* Live hand spectrum */}
+                  <Box>
+                    <Typography
+                      variant="caption"
+                      fontWeight={600}
+                      sx={{ fontSize: 10, display: "block", mb: 0.5 }}
+                    >
+                      Current Hand
+                    </Typography>
+                    <VerticalSpectrum values={liveVals} height={60} />
+                  </Box>
+
+                  {/* Per-reference comparisons */}
+                  {references.length > 0 && (
+                    <>
+                      <Divider sx={{ opacity: 0.3 }} />
+                      {references.map((ref) => {
+                        const refVals = ref.spectrum.slice(-5);
+                        const dist = spectralSimilarity(
+                          liveSpectrum!,
+                          ref.spectrum,
+                        );
+                        const isMatch =
+                          recognizing && currentMatch?.referenceId === ref.id;
+
+                        return (
+                          <Box
+                            key={ref.id}
+                            sx={{
+                              p: 0.75,
+                              borderRadius: 1,
+                              border: "1px solid",
+                              borderColor: isMatch ? ACCENT : "transparent",
+                              bgcolor: isMatch
+                                ? "rgba(0,229,255,0.04)"
+                                : "transparent",
+                              transition: "all 0.2s",
+                            }}
+                          >
+                            <Stack
+                              direction="row"
+                              justifyContent="space-between"
+                              alignItems="center"
+                              sx={{ mb: 0.5 }}
+                            >
+                              <Typography
+                                variant="caption"
+                                fontWeight={600}
+                                sx={{ fontSize: 10 }}
+                              >
+                                {ref.label}
+                                {isMatch && (
+                                  <Typography
+                                    component="span"
+                                    sx={{
+                                      color: ACCENT,
+                                      fontSize: 8,
+                                      ml: 0.5,
+                                      fontWeight: 700,
+                                    }}
+                                  >
+                                    MATCH
+                                  </Typography>
+                                )}
+                              </Typography>
+                              <Typography
+                                sx={{
+                                  color: isMatch ? ACCENT : "text.secondary",
+                                  fontFamily: "'Fira Code', monospace",
+                                  fontSize: 8,
+                                }}
+                              >
+                                d={Math.round(dist).toLocaleString()}
+                              </Typography>
+                            </Stack>
+                            <VerticalSpectrum
+                              values={liveVals}
+                              compare={refVals}
+                              compareColor={isMatch ? "#666" : "#444"}
+                              height={45}
+                            />
+                          </Box>
+                        );
+                      })}
+                    </>
+                  )}
+                </>
+              )}
             </Box>
           )}
         </Box>
 
         {/* Controls */}
         {cameraActive && (
-          <Stack spacing={3}>
-            <Box>
-              <Typography variant="overline" color="text.secondary">
-                Step 1 — Capture Reference Gestures
-              </Typography>
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                sx={{ mb: 1.5 }}
-              >
-                Hold a hand gesture in view, type a label, and click Capture.
-              </Typography>
-              <Stack direction="row" spacing={1} alignItems="center">
-                <TextField
-                  size="small"
-                  placeholder='e.g. "Peace", "Fist"'
-                  value={captureLabel}
-                  onChange={(e) => setCaptureLabel(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") captureGesture();
-                  }}
-                  sx={{ flex: 1 }}
-                />
-                <Button
-                  variant="outlined"
-                  startIcon={<CameraAltIcon />}
-                  onClick={captureGesture}
-                  disabled={!handDetected || !captureLabel.trim()}
-                >
-                  Capture
-                </Button>
-              </Stack>
-            </Box>
-
-            {references.length > 0 && (
-              <Box>
-                <Typography variant="overline" color="text.secondary">
-                  Saved References ({references.length})
-                </Typography>
-                <Stack
-                  direction="row"
-                  flexWrap="wrap"
-                  gap={1}
-                  sx={{ mt: 0.5 }}
-                >
-                  {references.map((ref) => (
-                    <Chip
-                      key={ref.id}
-                      label={ref.label}
-                      variant="outlined"
-                      onDelete={() => removeReference(ref.id)}
-                      deleteIcon={<DeleteIcon fontSize="small" />}
-                      avatar={
-                        ref.thumbnail ? (
-                          <Box
-                            component="img"
-                            src={ref.thumbnail}
-                            sx={{
-                              width: 24,
-                              height: 24,
-                              borderRadius: "50%",
-                              objectFit: "cover",
-                            }}
-                          />
-                        ) : undefined
-                      }
-                      sx={{
-                        borderColor:
-                          recognizing && currentMatch?.referenceId === ref.id
-                            ? ACCENT
-                            : "divider",
-                      }}
-                    />
-                  ))}
-                </Stack>
-              </Box>
-            )}
-
+          <Stack spacing={1} sx={{ mt: 1.5, flexShrink: 0 }}>
+            {/* Capture row */}
             <Stack direction="row" spacing={1} alignItems="center">
+              <TextField
+                size="small"
+                placeholder='Label, e.g. "Peace"'
+                value={captureLabel}
+                onChange={(e) => setCaptureLabel(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") captureGesture();
+                }}
+                sx={{ flex: 1, maxWidth: 220 }}
+                slotProps={{
+                  input: { sx: { fontSize: 13, height: 34 } },
+                }}
+              />
               <Button
+                size="small"
+                variant="outlined"
+                startIcon={<CameraAltIcon />}
+                onClick={captureGesture}
+                disabled={!handDetected || !captureLabel.trim()}
+                sx={{ height: 34, fontSize: 12 }}
+              >
+                Capture
+              </Button>
+
+              <Divider orientation="vertical" flexItem sx={{ mx: 0.5 }} />
+
+              <Button
+                size="small"
                 variant={recognizing ? "contained" : "outlined"}
                 startIcon={recognizing ? <StopIcon /> : <PlayArrowIcon />}
                 onClick={() => {
@@ -451,17 +572,21 @@ export default function GestureRecognitionDemo() {
                 }}
                 disabled={references.length === 0}
                 color={recognizing ? "primary" : "inherit"}
+                sx={{ height: 34, fontSize: 12 }}
               >
-                {recognizing ? "Stop Recognition" : "Start Recognition"}
+                {recognizing ? "Stop" : "Recognize"}
               </Button>
 
               {recognizing && currentMatch && (
                 <Chip
-                  label={`Match: ${currentMatch.label} (${Math.round(currentMatch.similarity)})`}
+                  size="small"
+                  label={`${currentMatch.label} (${Math.round(currentMatch.similarity)})`}
                   sx={{
                     borderColor: ACCENT,
                     color: ACCENT,
                     fontFamily: "'Fira Code', monospace",
+                    fontSize: 11,
+                    height: 26,
                   }}
                   variant="outlined"
                 />
@@ -469,22 +594,64 @@ export default function GestureRecognitionDemo() {
 
               <Box sx={{ flex: 1 }} />
 
-              <Button
+              <IconButton
                 size="small"
-                startIcon={<VideocamOffIcon />}
                 onClick={stopCamera}
-                color="inherit"
                 sx={{ color: "text.secondary" }}
+                title="Stop Camera"
               >
-                Stop Camera
-              </Button>
+                <VideocamOffIcon fontSize="small" />
+              </IconButton>
             </Stack>
 
-            {references.length === 0 && (
+            {/* Saved references */}
+            {references.length > 0 ? (
+              <Stack direction="row" flexWrap="wrap" gap={0.5} alignItems="center">
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  sx={{ fontSize: 10, mr: 0.5 }}
+                >
+                  Saved:
+                </Typography>
+                {references.map((ref) => (
+                  <Chip
+                    key={ref.id}
+                    label={ref.label}
+                    size="small"
+                    variant="outlined"
+                    onDelete={() => removeReference(ref.id)}
+                    deleteIcon={<DeleteIcon sx={{ fontSize: 14 }} />}
+                    avatar={
+                      ref.thumbnail ? (
+                        <Box
+                          component="img"
+                          src={ref.thumbnail}
+                          sx={{
+                            width: 20,
+                            height: 20,
+                            borderRadius: "50%",
+                            objectFit: "cover",
+                          }}
+                        />
+                      ) : undefined
+                    }
+                    sx={{
+                      height: 24,
+                      fontSize: 11,
+                      borderColor:
+                        recognizing && currentMatch?.referenceId === ref.id
+                          ? ACCENT
+                          : "divider",
+                    }}
+                  />
+                ))}
+              </Stack>
+            ) : (
               <Typography
-                variant="body2"
+                variant="caption"
                 color="text.secondary"
-                sx={{ fontStyle: "italic" }}
+                sx={{ fontStyle: "italic", fontSize: 11 }}
               >
                 Capture at least one reference gesture to enable recognition.
               </Typography>
@@ -493,16 +660,7 @@ export default function GestureRecognitionDemo() {
         )}
       </Paper>
 
-      {/* Live spectral analysis panel */}
-      {cameraActive && (
-        <LiveAnalysisPanel
-          liveSpectrum={liveSpectrum}
-          references={references}
-          currentMatchId={recognizing ? currentMatch?.referenceId ?? null : null}
-        />
-      )}
-
-      {/* References — always visible on page */}
+      {/* References — always visible on page below demo */}
       <Paper
         elevation={0}
         sx={{
@@ -543,130 +701,6 @@ export default function GestureRecognitionDemo() {
         onClose={() => setShowExplanation(false)}
       />
     </Stack>
-  );
-}
-
-// ─── Live analysis panel ─────────────────────────────────────────
-
-function LiveAnalysisPanel({
-  liveSpectrum,
-  references,
-  currentMatchId,
-}: {
-  liveSpectrum: number[] | null;
-  references: ReferenceGesture[];
-  currentMatchId: number | null;
-}) {
-  // Extract only the 5 non-trivial eigenvalues (last 5 of the 21)
-  const liveVals = liveSpectrum?.slice(-5) ?? null;
-
-  return (
-    <Paper
-      elevation={0}
-      sx={{
-        p: 3,
-        border: "1px solid",
-        borderColor: "divider",
-        borderRadius: 3,
-      }}
-    >
-      <Typography variant="overline" color="text.secondary" sx={{ mb: 2, display: "block" }}>
-        Live Spectral Analysis
-      </Typography>
-
-      {!liveVals ? (
-        <Typography variant="body2" color="text.secondary" sx={{ fontStyle: "italic" }}>
-          Show your hand to the camera to see the live eigenvalue fingerprint.
-        </Typography>
-      ) : (
-        <Stack spacing={3}>
-          {/* Live hand spectrum */}
-          <Box>
-            <Typography variant="body2" fontWeight={600} sx={{ mb: 1 }}>
-              Current Hand
-            </Typography>
-            <SpectrumBars values={liveVals} label="Live eigenvalues" />
-          </Box>
-
-          {/* Per-reference comparison */}
-          {references.length > 0 && (
-            <Box>
-              <Typography variant="overline" color="text.secondary" sx={{ mb: 1, display: "block" }}>
-                Reference Comparison
-              </Typography>
-              <Box
-                sx={{
-                  display: "grid",
-                  gridTemplateColumns: {
-                    xs: "1fr",
-                    sm: "repeat(auto-fill, minmax(260px, 1fr))",
-                  },
-                  gap: 2,
-                }}
-              >
-                {references.map((ref) => {
-                  const refVals = ref.spectrum.slice(-5);
-                  const dist = spectralSimilarity(liveSpectrum!, ref.spectrum);
-                  const isMatch = ref.id === currentMatchId;
-
-                  return (
-                    <Box
-                      key={ref.id}
-                      sx={{
-                        p: 2,
-                        border: "1px solid",
-                        borderColor: isMatch ? ACCENT : "divider",
-                        borderRadius: 1.5,
-                        bgcolor: isMatch
-                          ? "rgba(0,229,255,0.04)"
-                          : "transparent",
-                        transition: "all 0.2s",
-                      }}
-                    >
-                      <Stack
-                        direction="row"
-                        justifyContent="space-between"
-                        alignItems="center"
-                        sx={{ mb: 1.5 }}
-                      >
-                        <Typography variant="body2" fontWeight={600}>
-                          {ref.label}
-                          {isMatch && (
-                            <Typography
-                              component="span"
-                              variant="caption"
-                              sx={{ color: ACCENT, ml: 1 }}
-                            >
-                              MATCH
-                            </Typography>
-                          )}
-                        </Typography>
-                        <Typography
-                          variant="caption"
-                          sx={{
-                            color: isMatch ? ACCENT : "text.secondary",
-                            fontFamily: "'Fira Code', monospace",
-                          }}
-                        >
-                          d = {Math.round(dist).toLocaleString()}
-                        </Typography>
-                      </Stack>
-                      <SpectrumBars
-                        values={liveVals}
-                        label="Live"
-                        compare={refVals}
-                        compareLabel={ref.label}
-                        compareColor={isMatch ? ACCENT : "#666"}
-                      />
-                    </Box>
-                  );
-                })}
-              </Box>
-            </Box>
-          )}
-        </Stack>
-      )}
-    </Paper>
   );
 }
 
@@ -719,28 +753,70 @@ function drawHand(
   }
 }
 
-/** Draw the current match label on the canvas. */
+/** Draw the current match label anchored to the wrist with a connecting line. */
 function drawMatchLabel(
   ctx: CanvasRenderingContext2D,
   match: MatchResult,
+  landmarks: Landmark[],
   w: number,
-  _h: number,
+  h: number,
 ) {
+  const wrist = landmarks[0];
+  const wx = (1 - wrist.x) * w; // mirrored
+  const wy = wrist.y * h;
+
+  // Position label offset from wrist — above if there's room, below otherwise
+  const labelAbove = wy > 80;
+  const offsetY = labelAbove ? -60 : 60;
+  // Nudge horizontally toward center to avoid clipping at edges
+  const nudgeX = wx < w * 0.3 ? 40 : wx > w * 0.7 ? -40 : 0;
+  const lx = wx + nudgeX;
+  const ly = wy + offsetY;
+
   const text = match.label;
   const score = Math.round(match.similarity);
 
   ctx.save();
-  ctx.font = "bold 28px Inter, sans-serif";
+
+  // Connecting line: wrist → label
+  ctx.beginPath();
+  ctx.moveTo(wx, wy);
+  ctx.lineTo(lx, ly + (labelAbove ? 12 : -28));
+  ctx.strokeStyle = "rgba(0, 229, 255, 0.5)";
+  ctx.lineWidth = 1.5;
+  ctx.setLineDash([4, 4]);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Background pill behind text
+  ctx.font = "bold 22px Inter, sans-serif";
+  const labelW = ctx.measureText(text).width;
+  ctx.font = "12px 'Fira Code', monospace";
+  const scoreText = `d = ${score}`;
+  const scoreW = ctx.measureText(scoreText).width;
+  const pillW = Math.max(labelW, scoreW) + 24;
+  const pillH = 44;
+  const pillX = lx - pillW / 2;
+  const pillY = ly - (labelAbove ? pillH - 4 : -4);
+
+  ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
+  ctx.beginPath();
+  ctx.roundRect(pillX, pillY, pillW, pillH, 8);
+  ctx.fill();
+  ctx.strokeStyle = "rgba(0, 229, 255, 0.4)";
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  // Label text
   ctx.textAlign = "center";
-  ctx.shadowColor = "rgba(0, 0, 0, 0.7)";
-  ctx.shadowBlur = 8;
-
+  ctx.font = "bold 22px Inter, sans-serif";
   ctx.fillStyle = ACCENT;
-  ctx.fillText(text, w / 2, 40);
+  ctx.fillText(text, lx, pillY + 22);
 
-  ctx.font = "14px 'Fira Code', monospace";
+  // Score text
+  ctx.font = "12px 'Fira Code', monospace";
   ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
-  ctx.fillText(`similarity: ${score}`, w / 2, 60);
+  ctx.fillText(scoreText, lx, pillY + 38);
 
   ctx.restore();
 }
