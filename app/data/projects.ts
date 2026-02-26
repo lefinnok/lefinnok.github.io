@@ -89,7 +89,7 @@ export const projects: Project[] = [
       },
     ],
     model: { path: "/models/Transistor.fbx", cameraZ: 80, cameraY: -30 },
-    hasInteractiveDemo: false,
+    hasInteractiveDemo: true,
     demoComponentName: "TransistorSimulator",
   },
   {

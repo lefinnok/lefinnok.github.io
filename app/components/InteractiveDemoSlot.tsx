@@ -10,6 +10,10 @@ const DEMO_COMPONENTS: Record<
     () =>
       import("~/components/demos/gesture-recognition/GestureRecognitionDemo"),
   ),
+  TransistorSimulator: lazy(
+    () =>
+      import("~/components/demos/8bit-computer/TransistorSimulator"),
+  ),
 };
 
 interface InteractiveDemoSlotProps {
