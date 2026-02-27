@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Box } from "@mui/material";
 import * as THREE from "three";
-import { FBXLoader } from "three-stdlib";
+import { FBXLoader, OBJLoader } from "three-stdlib";
 import { useReducedMotion } from "~/hooks/useReducedMotion";
 import { MatrixLoader } from "~/components/MatrixLoader";
 import type { ProjectModelConfig } from "~/lib/types";
@@ -78,13 +78,14 @@ export function FbxModelViewer({
     let currentRotY = INITIAL_ROTATION;
     let currentRotX = 0;
 
-    const loader = new FBXLoader();
-    loader.load(config.path, (fbx) => {
-      const scale = config.scale ?? 0.1;
-      fbx.scale.set(scale, scale, scale);
-      fbx.rotation.y = INITIAL_ROTATION;
+    const isObj = config.path.toLowerCase().endsWith(".obj");
 
-      fbx.traverse((child) => {
+    const onModelLoaded = (group: THREE.Group) => {
+      const scale = config.scale ?? 0.1;
+      group.scale.set(scale, scale, scale);
+      group.rotation.y = INITIAL_ROTATION;
+
+      group.traverse((child) => {
         if ((child as THREE.Mesh).isMesh) {
           const mesh = child as THREE.Mesh;
           if (mesh.material) {
@@ -96,12 +97,20 @@ export function FbxModelViewer({
         }
       });
 
-      scene.add(fbx);
-      model = fbx;
+      scene.add(group);
+      model = group;
 
       renderer.render(scene, camera);
       setModelLoading(false);
-    });
+    };
+
+    if (isObj) {
+      const loader = new OBJLoader();
+      loader.load(config.path, onModelLoaded);
+    } else {
+      const loader = new FBXLoader();
+      loader.load(config.path, onModelLoaded);
+    }
 
     function animate() {
       animationId = requestAnimationFrame(animate);

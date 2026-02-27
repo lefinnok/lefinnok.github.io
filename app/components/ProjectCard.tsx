@@ -34,14 +34,16 @@ export function ProjectCard({ project }: ProjectCardProps) {
         to={`/projects/${project.slug}`}
         sx={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "stretch" }}
       >
-        <Box sx={{ height: 220, bgcolor: "background.default" }}>
-          <FbxModelViewer
-            config={project.model}
-            height={220}
-            rotationSpeed={0.003}
-            hovered={hovered}
-          />
-        </Box>
+        {project.model && (
+          <Box sx={{ height: 220, bgcolor: "background.default" }}>
+            <FbxModelViewer
+              config={project.model}
+              height={220}
+              rotationSpeed={0.003}
+              hovered={hovered}
+            />
+          </Box>
+        )}
         <CardContent sx={{ flex: 1 }}>
           <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1 }}>
             <Typography variant="h6" component="h3" sx={{ flex: 1 }}>

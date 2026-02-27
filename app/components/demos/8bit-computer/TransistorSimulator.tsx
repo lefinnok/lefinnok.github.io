@@ -4,7 +4,6 @@ import {
   Button,
   Typography,
   Paper,
-  TextField,
   Alert,
   Chip,
   Stack,
@@ -30,6 +29,8 @@ import { PROGRAMS_16, PROGRAMS_256, type SampleProgram } from "./engine/programs
 import { ArchitectureSvg } from "./views/ArchitectureSvg";
 import { ModuleDetailPanel } from "./views/ModuleDetailPanel";
 import { ControlBar } from "./controls/ControlBar";
+import { GuidedDemoPanel } from "./controls/GuidedDemoPanel";
+import { AssemblyEditor } from "./controls/AssemblyEditor";
 
 // ── Colors ──────────────────────────────────────────────────────
 
@@ -133,6 +134,9 @@ export default function TransistorSimulator() {
   const [speed, setSpeed] = useState(500);
   const [selectedModule, setSelectedModule] = useState<ModuleId | null>(null);
   const [viewMode, setViewMode] = useState<"diagram" | "dashboard">("diagram");
+  const [guidedProgram, setGuidedProgram] = useState<SampleProgram | null>(null);
+  const [narrationIndex, setNarrationIndex] = useState(0);
+  const [loadedProgram, setLoadedProgram] = useState<SampleProgram | null>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval>>(undefined);
   const { cpu, source, assembleErrors, ramSize } = state;
 
@@ -148,16 +152,35 @@ export default function TransistorSimulator() {
     return () => clearInterval(intervalRef.current);
   }, [running, speed, cpu.halted]);
 
+  // Guided mode: advance narration at checkpoints (auto-pause when running)
+  useEffect(() => {
+    if (!guidedProgram?.narration) return;
+    if (cpu.tState !== 0) return;
+
+    const narration = guidedProgram.narration;
+    const nextIdx = narrationIndex + 1;
+    if (nextIdx < narration.length && narration[nextIdx].pc === cpu.pc) {
+      setNarrationIndex(nextIdx);
+      if (running) setRunning(false);
+      if (narration[nextIdx].highlight) {
+        setSelectedModule(narration[nextIdx].highlight as ModuleId);
+      }
+    }
+  }, [cpu.tState, cpu.pc, cpu.cycleCount, running, guidedProgram, narrationIndex]);
+
   const handleAssemble = useCallback(() => {
     const result = assemble(source, ramSize);
     dispatch({ type: "LOAD", program: result.program, errors: result.errors });
     setRunning(false);
+    setGuidedProgram(null);
+    setLoadedProgram(null);
   }, [source, ramSize]);
 
   const handleReset = useCallback(() => {
     dispatch({ type: "RESET" });
     setRunning(false);
-  }, []);
+    if (guidedProgram) setNarrationIndex(0);
+  }, [guidedProgram]);
 
   const signals = activeSignalNames(cpu.controlWord);
   const tCount = tStateCount(ramSize);
@@ -312,6 +335,18 @@ export default function TransistorSimulator() {
                   ))}
                 </Stack>
               )}
+
+              {/* Guided demo narration bar */}
+              {guidedProgram?.narration && (
+                <GuidedDemoPanel
+                  program={guidedProgram}
+                  narrationIndex={narrationIndex}
+                  running={running}
+                  halted={cpu.halted}
+                  onContinue={() => setRunning(true)}
+                  onExit={() => setGuidedProgram(null)}
+                />
+              )}
             </>
           ) : (
             <DashboardView cpu={cpu} />
@@ -337,48 +372,65 @@ export default function TransistorSimulator() {
                 onSelect={(prog) => {
                   dispatch({ type: "LOAD_PROGRAM", program: prog });
                   setRunning(false);
+                  setGuidedProgram(null);
+                  setLoadedProgram(prog);
                 }}
               />
 
               {/* Assembly editor */}
               <SectionLabel>ASSEMBLY {ramSize === 256 && "(2-byte instructions)"}</SectionLabel>
-              <TextField
-                multiline
-                minRows={8}
-                maxRows={12}
+              <AssemblyEditor
                 value={source}
-                onChange={(e) =>
-                  dispatch({ type: "SET_SOURCE", source: e.target.value })
-                }
-                sx={{
-                  width: "100%",
-                  "& .MuiInputBase-root": {
-                    fontFamily: "'Fira Code', monospace",
-                    fontSize: 11,
-                    lineHeight: 1.6,
-                    bgcolor: "#141414",
-                    color: "rgba(255,255,255,0.8)",
-                  },
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "rgba(255,255,255,0.1)",
-                  },
+                onChange={(v) => {
+                  dispatch({ type: "SET_SOURCE", source: v });
+                  setLoadedProgram(null);
+                  setGuidedProgram(null);
                 }}
+                errors={assembleErrors}
               />
-              <Button
-                size="small"
-                variant="contained"
-                onClick={handleAssemble}
-                sx={{
-                  mt: 1,
-                  fontSize: 11,
-                  bgcolor: ACCENT,
-                  color: "#000",
-                  "&:hover": { bgcolor: "#ea580c" },
-                  textTransform: "none",
-                }}
-              >
-                Assemble & Load
-              </Button>
+              <Stack direction="row" spacing={1} sx={{ mt: 1 }}>
+                <Button
+                  size="small"
+                  variant="contained"
+                  onClick={handleAssemble}
+                  sx={{
+                    fontSize: 11,
+                    bgcolor: ACCENT,
+                    color: "#000",
+                    "&:hover": { bgcolor: "#ea580c" },
+                    textTransform: "none",
+                  }}
+                >
+                  Assemble & Load
+                </Button>
+                {loadedProgram?.narration && !guidedProgram && (
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    onClick={() => {
+                      dispatch({ type: "RESET" });
+                      setRunning(false);
+                      setGuidedProgram(loadedProgram);
+                      setNarrationIndex(0);
+                      if (loadedProgram.narration![0].highlight) {
+                        setSelectedModule(loadedProgram.narration![0].highlight as ModuleId);
+                      }
+                    }}
+                    sx={{
+                      fontSize: 11,
+                      borderColor: `${SECONDARY}50`,
+                      color: SECONDARY,
+                      textTransform: "none",
+                      "&:hover": {
+                        borderColor: SECONDARY,
+                        bgcolor: "rgba(0,229,255,0.08)",
+                      },
+                    }}
+                  >
+                    Guided Demo
+                  </Button>
+                )}
+              </Stack>
               {assembleErrors.length > 0 && (
                 <Alert severity="error" sx={{ mt: 1, fontSize: 11, py: 0 }}>
                   {assembleErrors.map((e, i) => (
@@ -762,10 +814,10 @@ function ProgramSelector({
               return (
                 <Chip
                   key={prog.id}
-                  label={prog.name}
+                  label={prog.narration ? `\u25B6 ${prog.name}` : prog.name}
                   size="small"
                   onClick={() => onSelect(prog)}
-                  title={prog.description}
+                  title={prog.narration ? `${prog.description} (Guided demo)` : prog.description}
                   sx={{
                     height: 22,
                     fontSize: 10,

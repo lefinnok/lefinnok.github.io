@@ -4,6 +4,7 @@ for the demo for the 8-bit computing system, I referenced heavily on the ben eat
 
 I think we should implement a full mips architechture with individual modules, which will be clickable, to expand further simulation modules of the detailed explaination of said module and how the design is
 
+- I think for 8-bit, for module detail, we should include a design diagram as well
 
 ===
 

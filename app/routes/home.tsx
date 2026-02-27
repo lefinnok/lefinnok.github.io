@@ -108,24 +108,26 @@ export default function Home() {
               mt: 2,
             }}
           >
-            <ScrollReveal delay={100}>
-              <Box
-                sx={{
-                  height: { xs: 250, md: 350 },
-                  bgcolor: "background.paper",
-                  borderRadius: 2,
-                  overflow: "hidden",
-                  border: "1px solid",
-                  borderColor: "divider",
-                }}
-              >
-                <FbxModelViewer
-                  config={featuredProject.model}
-                  height="100%"
-                  rotationSpeed={0.004}
-                />
-              </Box>
-            </ScrollReveal>
+            {featuredProject.model && (
+              <ScrollReveal delay={100}>
+                <Box
+                  sx={{
+                    height: { xs: 250, md: 350 },
+                    bgcolor: "background.paper",
+                    borderRadius: 2,
+                    overflow: "hidden",
+                    border: "1px solid",
+                    borderColor: "divider",
+                  }}
+                >
+                  <FbxModelViewer
+                    config={featuredProject.model}
+                    height="100%"
+                    rotationSpeed={0.004}
+                  />
+                </Box>
+              </ScrollReveal>
+            )}
 
             <ScrollReveal delay={200}>
               <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1 }}>

@@ -1,4 +1,4 @@
-import { type CpuState, type ModuleId, CS, activeModules } from "../engine/types";
+import { type CpuState, type ModuleId, CS, CS_NAMES, activeModules, OPCODE_NAMES, fetchLength } from "../engine/types";
 import { disassemble } from "../engine/cpu";
 import { ModuleBlock } from "./ModuleBlock";
 import { LedStrip, ledStripWidth } from "./LedStrip";
@@ -7,6 +7,10 @@ import { BusAnimation } from "./BusAnimation";
 const ACCENT = "#f97316";
 const BUS_COLOR = "#2a2a2a";
 const BUS_ACTIVE_COLOR = "#f97316";
+const ADDR_BUS_COLOR = "#38bdf8"; // sky blue — dedicated MAR→RAM address lines
+const INSTR_BUS_COLOR = "#a78bfa"; // purple — dedicated IR→Control opcode lines
+const CTRL_BUS_COLOR = "#4ade80"; // green — control signal distribution
+const SEC_BUS_X = 20; // x position for secondary bus lines (left margin)
 
 // ── Layout constants ────────────────────────────────────────────
 // SVG viewBox: 0 0 780 520
@@ -234,16 +238,97 @@ export function ArchitectureSvg({
         style={{ transition: "stroke 0.2s" }}
       />
 
-      {/* Control logic -> all modules (shown as a single line to bus) */}
-      <line
-        x1={MODULES.control.x + MODULES.control.w}
-        y1={MODULES.control.y + MODULES.control.h / 2}
-        x2={BUS_X - 10}
-        y2={MODULES.control.y + MODULES.control.h / 2}
-        stroke={`${BUS_COLOR}40`}
-        strokeWidth={1}
-        strokeDasharray="2,4"
-      />
+      {/* ── Control Bus (signal distribution to all modules) ── */}
+      {(() => {
+        const hasSignals = cw !== 0 && !cpu.halted;
+        const ctrlY = MODULES.control.y + MODULES.control.h / 2;
+        const ctrlRight = MODULES.control.x + MODULES.control.w;
+
+        // Active signal names
+        const signals: string[] = [];
+        for (let i = 0; i < CS_NAMES.length; i++) {
+          if (cw & (1 << i)) signals.push(CS_NAMES[i]);
+        }
+
+        // Which modules are receiving control signals
+        const leftIds = ["pc", "mar", "ram", "ir"] as const;
+        const rightIds = ["regA", "alu", "regB", "output"] as const;
+        const activeLeftTaps = leftIds
+          .filter((id) => active.has(id))
+          .map((id) => BUS_TAPS[id]);
+        const activeRightTaps = rightIds
+          .filter((id) => active.has(id))
+          .map((id) => BUS_TAPS[id]);
+
+        const lx = 165; // left branch x (between left modules and data bus)
+        const rx = 375; // right branch x (between data bus and right modules)
+
+        return (
+          <g>
+            {/* Horizontal control bus backbone */}
+            <line
+              x1={ctrlRight} y1={ctrlY}
+              x2={hasSignals ? 540 : BUS_X - 10} y2={ctrlY}
+              stroke={hasSignals ? `${CTRL_BUS_COLOR}45` : `${BUS_COLOR}40`}
+              strokeWidth={hasSignals ? 2.5 : 1.5}
+              strokeDasharray={hasSignals ? "5,4" : "2,4"}
+              style={{ transition: "stroke 0.3s" }}
+            />
+
+            {/* Active signals label */}
+            {hasSignals && (
+              <text
+                x={ctrlRight + 8} y={ctrlY - 7}
+                fill={CTRL_BUS_COLOR}
+                fontSize={7}
+                fontFamily="'Fira Code', monospace"
+                fontWeight={500}
+                opacity={0.8}
+              >
+                {signals.join(" | ")}
+              </text>
+            )}
+
+            {/* Left branch: vertical line to active left-side modules */}
+            {activeLeftTaps.length > 0 && (
+              <g>
+                <line
+                  x1={lx} y1={ctrlY}
+                  x2={lx} y2={Math.min(...activeLeftTaps)}
+                  stroke={`${CTRL_BUS_COLOR}30`}
+                  strokeWidth={1.5}
+                  strokeDasharray="3,4"
+                />
+                {activeLeftTaps.map((ty) => (
+                  <circle
+                    key={ty} cx={lx} cy={ty} r={3}
+                    fill={CTRL_BUS_COLOR} opacity={0.5}
+                  />
+                ))}
+              </g>
+            )}
+
+            {/* Right branch: vertical line to active right-side modules */}
+            {activeRightTaps.length > 0 && (
+              <g>
+                <line
+                  x1={rx} y1={Math.min(ctrlY, Math.min(...activeRightTaps))}
+                  x2={rx} y2={Math.max(ctrlY, Math.max(...activeRightTaps))}
+                  stroke={`${CTRL_BUS_COLOR}30`}
+                  strokeWidth={1.5}
+                  strokeDasharray="3,4"
+                />
+                {activeRightTaps.map((ty) => (
+                  <circle
+                    key={ty} cx={rx} cy={ty} r={3}
+                    fill={CTRL_BUS_COLOR} opacity={0.5}
+                  />
+                ))}
+              </g>
+            )}
+          </g>
+        );
+      })()}
 
       {/* Clock -> Control */}
       <line
@@ -263,6 +348,134 @@ export function ArchitectureSvg({
       >
         CLK
       </text>
+
+      {/* ── Address Bus (MAR → RAM dedicated address lines) ── */}
+      {(() => {
+        const addrActive = !!(cw & (CS.MI | CS.RO | CS.RI));
+        const color = addrActive ? ADDR_BUS_COLOR : `rgba(56,189,248,0.12)`;
+        const marBot = MODULES.mar.y + MODULES.mar.h;
+        const ramTop = MODULES.ram.y;
+        const midY = (marBot + ramTop) / 2;
+
+        return (
+          <g>
+            {/* Vertical connection */}
+            <line
+              x1={SEC_BUS_X} y1={marBot} x2={SEC_BUS_X} y2={ramTop}
+              stroke={color} strokeWidth={addrActive ? 2 : 1}
+              style={{ transition: "stroke 0.3s, stroke-width 0.3s" }}
+            />
+            {/* Horizontal ticks to module edges */}
+            <line
+              x1={SEC_BUS_X} y1={marBot} x2={MODULES.mar.x} y2={marBot}
+              stroke={color} strokeWidth={1}
+              style={{ transition: "stroke 0.3s" }}
+            />
+            <line
+              x1={SEC_BUS_X} y1={ramTop} x2={MODULES.ram.x} y2={ramTop}
+              stroke={color} strokeWidth={1}
+              style={{ transition: "stroke 0.3s" }}
+            />
+            {/* Down arrow at RAM end */}
+            <path
+              d={`M${SEC_BUS_X - 3},${ramTop - 5} L${SEC_BUS_X},${ramTop} L${SEC_BUS_X + 3},${ramTop - 5}`}
+              fill="none" stroke={color} strokeWidth={1}
+              style={{ transition: "stroke 0.3s" }}
+            />
+            {/* Rotated label */}
+            <text
+              x={8} y={midY}
+              textAnchor="middle"
+              transform={`rotate(-90, 8, ${midY})`}
+              fill={color}
+              fontSize={7}
+              fontFamily="'Fira Code', monospace"
+              fontWeight={addrActive ? 600 : 400}
+              style={{ transition: "fill 0.3s" }}
+            >
+              ADDR
+            </text>
+            {/* Glow when active */}
+            {addrActive && (
+              <line
+                x1={SEC_BUS_X} y1={marBot} x2={SEC_BUS_X} y2={ramTop}
+                stroke={ADDR_BUS_COLOR} strokeWidth={4} opacity={0.15}
+              />
+            )}
+          </g>
+        );
+      })()}
+
+      {/* ── Instruction Bus (IR opcode → Control Logic) ───── */}
+      {(() => {
+        const fl = fetchLength(cpu.ramSize);
+        const instrActive = cpu.tState >= fl && !cpu.halted;
+        const color = instrActive ? INSTR_BUS_COLOR : `rgba(167,139,250,0.12)`;
+        const irBot = MODULES.ir.y + MODULES.ir.h;
+        const ctlTop = MODULES.control.y;
+        const midY = (irBot + ctlTop) / 2;
+
+        return (
+          <g>
+            {/* Vertical connection */}
+            <line
+              x1={SEC_BUS_X} y1={irBot} x2={SEC_BUS_X} y2={ctlTop}
+              stroke={color} strokeWidth={instrActive ? 2 : 1}
+              style={{ transition: "stroke 0.3s, stroke-width 0.3s" }}
+            />
+            {/* Horizontal ticks to module edges */}
+            <line
+              x1={SEC_BUS_X} y1={irBot} x2={MODULES.ir.x} y2={irBot}
+              stroke={color} strokeWidth={1}
+              style={{ transition: "stroke 0.3s" }}
+            />
+            <line
+              x1={SEC_BUS_X} y1={ctlTop} x2={MODULES.control.x} y2={ctlTop}
+              stroke={color} strokeWidth={1}
+              style={{ transition: "stroke 0.3s" }}
+            />
+            {/* Down arrow at Control end */}
+            <path
+              d={`M${SEC_BUS_X - 3},${ctlTop - 5} L${SEC_BUS_X},${ctlTop} L${SEC_BUS_X + 3},${ctlTop - 5}`}
+              fill="none" stroke={color} strokeWidth={1}
+              style={{ transition: "stroke 0.3s" }}
+            />
+            {/* Rotated label */}
+            <text
+              x={8} y={midY - 6}
+              textAnchor="middle"
+              transform={`rotate(-90, 8, ${midY - 6})`}
+              fill={color}
+              fontSize={7}
+              fontFamily="'Fira Code', monospace"
+              fontWeight={instrActive ? 600 : 400}
+              style={{ transition: "fill 0.3s" }}
+            >
+              INSTR
+            </text>
+            {/* Decoded opcode when active */}
+            {instrActive && (
+              <>
+                <text
+                  x={SEC_BUS_X} y={midY + 8}
+                  textAnchor="middle"
+                  fill={INSTR_BUS_COLOR}
+                  fontSize={6}
+                  fontFamily="'Fira Code', monospace"
+                  fontWeight={600}
+                >
+                  {OPCODE_NAMES[(cpu.regIR >> 4) & 0xf] ?? "?"}
+                </text>
+                {/* Glow when active */}
+                <line
+                  x1={SEC_BUS_X} y1={irBot} x2={SEC_BUS_X} y2={ctlTop}
+                  stroke={INSTR_BUS_COLOR} strokeWidth={4} opacity={0.15}
+                />
+              </>
+            )}
+          </g>
+        );
+      })()}
 
       {/* ── Module blocks ────────────────────────────────────── */}
 
@@ -468,6 +681,26 @@ export function ArchitectureSvg({
         controlWord={cpu.controlWord}
         stepKey={`${cpu.cycleCount}-${cpu.tState}`}
       />
+
+      {/* ── Bus legend ────────────────────────────────────────── */}
+      <g>
+        <circle cx={540} cy={BUS_BOTTOM + 7} r={3} fill={ACCENT} />
+        <text x={548} y={BUS_BOTTOM + 10} fill="rgba(255,255,255,0.3)" fontSize={7} fontFamily="'Fira Code', monospace">
+          Data
+        </text>
+        <circle cx={580} cy={BUS_BOTTOM + 7} r={3} fill={ADDR_BUS_COLOR} />
+        <text x={588} y={BUS_BOTTOM + 10} fill="rgba(255,255,255,0.3)" fontSize={7} fontFamily="'Fira Code', monospace">
+          Address
+        </text>
+        <circle cx={640} cy={BUS_BOTTOM + 7} r={3} fill={INSTR_BUS_COLOR} />
+        <text x={648} y={BUS_BOTTOM + 10} fill="rgba(255,255,255,0.3)" fontSize={7} fontFamily="'Fira Code', monospace">
+          Instruction
+        </text>
+        <circle cx={720} cy={BUS_BOTTOM + 7} r={3} fill={CTRL_BUS_COLOR} />
+        <text x={728} y={BUS_BOTTOM + 10} fill="rgba(255,255,255,0.3)" fontSize={7} fontFamily="'Fira Code', monospace">
+          Control
+        </text>
+      </g>
 
       {/* ── Halted overlay ───────────────────────────────────── */}
       {cpu.halted && (

@@ -166,6 +166,92 @@ export const projects: Project[] = [
     ],
     model: { path: "/models/SpaceDef.fbx", cameraZ: 26, cameraY: 0 },
     hasInteractiveDemo: false,
+    itchEmbed: {
+      id: 290045,
+      title: "Space Saver by Lefinno",
+      url: "https://lefinno.itch.io/space-saver",
+    },
+  },
+  {
+    slug: "ld58-eccentricity",
+    title: "Eccentricity",
+    shortDescription:
+      "A steampunk strategy roguelike about building the ultimate power grid. Originally developed for Ludum Dare 58.",
+    longDescription:
+      "A steampunk strategy roguelike about building the ultimate power grid. Collect, combine, and configure eccentric machines to generate surging power, discover bizarre synergies, and meet ever-rising quotas. Originally developed as a game jam entry for Ludum Dare 58, now being developed into a full release.",
+    tags: [
+      "game-development",
+      "game-design",
+      "strategy",
+      "roguelike",
+      "steampunk",
+      "ludum-dare",
+    ],
+    date: "2025",
+    sortOrder: 7,
+    featured: false,
+    ongoing: true,
+    model: { path: "/models/dynamo.obj", cameraZ: 3.8, cameraY: -0.9, scale: 2.2 },
+    links: [
+      {
+        label: "Steam Store",
+        url: "https://store.steampowered.com/app/4191840/Eccentricity/",
+        type: "external",
+      },
+      {
+        label: "Jam Listing",
+        url: "https://ldjam.com/events/ludum-dare/58/eccentricity/",
+        type: "external",
+      },
+      {
+        label: "Jam Version",
+        url: "https://lefinno.itch.io/eccentricity",
+        type: "play",
+      },
+    ],
+    hasInteractiveDemo: false,
+    steamAppId: 4191840,
+    itchEmbed: {
+      id: 3940261,
+      title: "Eccentricity by Lefinno",
+      url: "https://lefinno.itch.io/eccentricity",
+    },
+  },
+  {
+    slug: "ggj26-binmin",
+    title: "[GGJ26] Binmin",
+    shortDescription:
+      "A game jam game developed for Global Game Jam 2026.",
+    longDescription:
+      "A game jam game developed for Global Game Jam 2026.",
+    tags: [
+      "game-development",
+      "game-design",
+      "game-jam",
+      "global-game-jam",
+    ],
+    date: "January 2026",
+    sortOrder: 8,
+    featured: false,
+    ongoing: false,
+    links: [
+      {
+        label: "Project Listing",
+        url: "https://globalgamejam.org/games/2026/binmin-0",
+        type: "external",
+      },
+      {
+        label: "Play the Game",
+        url: "https://lefinno.itch.io/binmin",
+        type: "play",
+      },
+    ],
+    hasInteractiveDemo: false,
+    itchEmbed: {
+      id: 4245498,
+      title: "Binmin by Lefinno",
+      url: "https://lefinno.itch.io/binmin",
+    },
   },
   {
     slug: "retro-handheld",

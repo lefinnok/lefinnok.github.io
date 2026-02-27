@@ -22,9 +22,15 @@ export interface Project {
   featured: boolean;
   ongoing: boolean;
   links: ProjectLink[];
-  model: ProjectModelConfig;
+  model?: ProjectModelConfig;
   hasInteractiveDemo: boolean;
   demoComponentName?: string;
+  itchEmbed?: {
+    id: number;
+    title: string;
+    url: string;
+  };
+  steamAppId?: number;
 }
 
 export type SkillCategory =

@@ -68,26 +68,28 @@ export default function ProjectDetail() {
           mb: 6,
         }}
       >
-        <ScrollReveal sx={{ height: "100%" }}>
-          <Box
-            sx={{
-              height: { xs: 300, md: "100%" },
-              minHeight: { md: 300 },
-              bgcolor: "background.paper",
-              borderRadius: 2,
-              overflow: "hidden",
-              border: "1px solid",
-              borderColor: "divider",
-            }}
-          >
-            <FbxModelViewer
-              config={project.model}
-              height="100%"
-              rotationSpeed={0.004}
-              followMouse
-            />
-          </Box>
-        </ScrollReveal>
+        {project.model && (
+          <ScrollReveal sx={{ height: "100%" }}>
+            <Box
+              sx={{
+                height: { xs: 300, md: "100%" },
+                minHeight: { md: 300 },
+                bgcolor: "background.paper",
+                borderRadius: 2,
+                overflow: "hidden",
+                border: "1px solid",
+                borderColor: "divider",
+              }}
+            >
+              <FbxModelViewer
+                config={project.model}
+                height="100%"
+                rotationSpeed={0.004}
+                followMouse
+              />
+            </Box>
+          </ScrollReveal>
+        )}
 
         <ScrollReveal delay={100}>
           <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1 }}>
@@ -163,6 +165,39 @@ export default function ProjectDetail() {
           </Stack>
         </ScrollReveal>
       </Box>
+
+      {(project.steamAppId || project.itchEmbed) && (
+        <ScrollReveal>
+          <Stack spacing={2} sx={{ mb: 6 }}>
+            {project.steamAppId && (
+              <Box>
+                <iframe
+                  frameBorder="0"
+                  src={`https://store.steampowered.com/widget/${project.steamAppId}/`}
+                  width="646"
+                  height="190"
+                  style={{ maxWidth: "100%" }}
+                />
+              </Box>
+            )}
+            {project.itchEmbed && (
+              <Box>
+                <iframe
+                  frameBorder="0"
+                  src={`https://itch.io/embed/${project.itchEmbed.id}?dark=true`}
+                  width="552"
+                  height="167"
+                  style={{ maxWidth: "100%" }}
+                >
+                  <a href={project.itchEmbed.url}>
+                    {project.itchEmbed.title}
+                  </a>
+                </iframe>
+              </Box>
+            )}
+          </Stack>
+        </ScrollReveal>
+      )}
 
       <Box id="interactive-demo">
         <InteractiveDemoSlot
