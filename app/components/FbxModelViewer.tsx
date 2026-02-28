@@ -88,12 +88,12 @@ export function FbxModelViewer({
       group.traverse((child) => {
         if ((child as THREE.Mesh).isMesh) {
           const mesh = child as THREE.Mesh;
-          if (mesh.material) {
-            const mat = mesh.material as THREE.MeshStandardMaterial;
-            mat.color = new THREE.Color(0xffffff);
-            mat.emissive = new THREE.Color(0x111111);
-            mat.wireframe = true;
-          }
+          const wireframeMat = new THREE.MeshStandardMaterial({
+            color: 0xffffff,
+            emissive: 0x111111,
+            wireframe: true,
+          });
+          mesh.material = wireframeMat;
         }
       });
 

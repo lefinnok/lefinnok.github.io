@@ -191,7 +191,7 @@ export const projects: Project[] = [
     sortOrder: 7,
     featured: false,
     ongoing: true,
-    model: { path: "/models/dynamo.obj", cameraZ: 3.8, cameraY: -0.9, scale: 2.2 },
+    model: { path: "/models/dynamo.obj", cameraZ: 3.8, cameraY: 0, scale: 1.6 },
     links: [
       {
         label: "Steam Store",
@@ -234,6 +234,7 @@ export const projects: Project[] = [
     sortOrder: 8,
     featured: false,
     ongoing: false,
+    model: { path: "/models/mask.obj", cameraZ: 6, cameraY: 3, scale: 1.5 },
     links: [
       {
         label: "Project Listing",
@@ -244,6 +245,11 @@ export const projects: Project[] = [
         label: "Play the Game",
         url: "https://lefinno.itch.io/binmin",
         type: "play",
+      },
+      {
+        label: "Model Credit: stoat256 (CC BY)",
+        url: "https://sketchfab.com/3d-models/sculptjanuary-day-2-mask-f724283439084d13a77efa41a105d320",
+        type: "external",
       },
     ],
     hasInteractiveDemo: false,

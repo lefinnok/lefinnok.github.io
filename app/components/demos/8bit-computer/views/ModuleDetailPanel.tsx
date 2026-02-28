@@ -1,5 +1,7 @@
-import { Box, Chip, Divider, IconButton, Stack, Typography } from "@mui/material";
+import { useState } from "react";
+import { Box, Chip, Collapse, Divider, IconButton, Stack, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import {
   type CpuState,
   type ModuleId,
@@ -607,6 +609,20 @@ const MODULE_TITLES: Record<ModuleId, string> = {
   output: "Output Display",
 };
 
+const MODULE_EXPLANATIONS: Record<ModuleId, string> = {
+  regA: "The primary accumulator. Stores one operand for ALU operations. Built from 8 D flip-flops that latch data from the bus on the AI signal\u2019s rising edge.",
+  regB: "The secondary operand register. Feeds directly into the ALU\u2019s B input. Unlike Register A, it cannot output back to the bus.",
+  alu: "Arithmetic Logic Unit. Combines Register A and B using addition or subtraction (two\u2019s complement). The EO signal puts the result on the bus. Also sets the Carry and Zero flags.",
+  ram: "Random Access Memory. Stores both program instructions and data in the same address space. The MAR selects which address to read (RO) or write (RI).",
+  pc: "Tracks the address of the next instruction to fetch. Increments each fetch cycle (CE) and can be loaded directly from the bus for jumps (J).",
+  mar: "Memory Address Register. Holds the address that RAM reads from or writes to. Loaded from the bus via MI \u2014 acts as the bridge between the data bus and the address bus.",
+  ir: "Holds the current instruction being executed. The upper 4 bits (opcode) feed into Control Logic to determine which signals to activate. The lower 4 bits (operand) can be output to the bus via IO.",
+  control: "The brain of the CPU. Takes the opcode from IR and the current T-state, then looks up the control word in microcode ROM. Each bit of the 16-bit control word activates a specific signal (MI, RO, AI, etc.).",
+  clock: "Generates the timing signal that drives each T-state step. Each instruction takes multiple T-states: a fetch cycle followed by an execute cycle.",
+  keyboard: "Input peripheral (placeholder). Would allow external data to be loaded onto the bus.",
+  output: "Latches a value from the bus when the OI signal is active and displays it as a decimal number. This is how the computer communicates results to the user.",
+};
+
 // ── Main panel ──────────────────────────────────────────────────
 
 interface ModuleDetailPanelProps {
@@ -616,16 +632,51 @@ interface ModuleDetailPanelProps {
 }
 
 export function ModuleDetailPanel({ moduleId, cpu, onClose }: ModuleDetailPanelProps) {
+  const [showInfo, setShowInfo] = useState(false);
+
   return (
     <Box>
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 1 }}>
-        <Typography sx={{ fontFamily: MONO, fontSize: 12, color: SECONDARY, fontWeight: 600 }}>
-          {MODULE_TITLES[moduleId]}
-        </Typography>
+        <Stack direction="row" alignItems="center" spacing={0.5}>
+          <Typography sx={{ fontFamily: MONO, fontSize: 12, color: SECONDARY, fontWeight: 600 }}>
+            {MODULE_TITLES[moduleId]}
+          </Typography>
+          <IconButton
+            size="small"
+            onClick={() => setShowInfo((v) => !v)}
+            sx={{
+              p: 0.25,
+              color: showInfo ? SECONDARY : "rgba(255,255,255,0.25)",
+              "&:hover": { color: SECONDARY },
+            }}
+          >
+            <InfoOutlinedIcon sx={{ fontSize: 14 }} />
+          </IconButton>
+        </Stack>
         <IconButton size="small" onClick={onClose} sx={{ color: "rgba(255,255,255,0.3)", p: 0.25 }}>
           <CloseIcon sx={{ fontSize: 14 }} />
         </IconButton>
       </Stack>
+
+      <Collapse in={showInfo}>
+        <Box
+          sx={{
+            mb: 1.5,
+            pl: 1,
+            borderLeft: `2px solid ${SECONDARY}40`,
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: 11,
+              color: "rgba(255,255,255,0.6)",
+              lineHeight: 1.6,
+            }}
+          >
+            {MODULE_EXPLANATIONS[moduleId]}
+          </Typography>
+        </Box>
+      </Collapse>
 
       {moduleId === "regA" && <RegisterPanel cpu={cpu} reg="A" />}
       {moduleId === "regB" && <RegisterPanel cpu={cpu} reg="B" />}
