@@ -14,6 +14,7 @@ import {
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import MemoryIcon from "@mui/icons-material/Memory";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { createInitialState, stepCpu, stepInstruction, disassemble } from "./engine/cpu";
 import { assemble } from "./engine/assembler";
 import {
@@ -31,6 +32,7 @@ import { ModuleDetailPanel } from "./views/ModuleDetailPanel";
 import { ControlBar } from "./controls/ControlBar";
 import { GuidedDemoPanel } from "./controls/GuidedDemoPanel";
 import { AssemblyEditor } from "./controls/AssemblyEditor";
+import { ArchitectureExplanation } from "./views/ArchitectureExplanation";
 
 // ── Colors ──────────────────────────────────────────────────────
 
@@ -137,6 +139,7 @@ export default function TransistorSimulator() {
   const [guidedProgram, setGuidedProgram] = useState<SampleProgram | null>(null);
   const [narrationIndex, setNarrationIndex] = useState(0);
   const [loadedProgram, setLoadedProgram] = useState<SampleProgram | null>(null);
+  const [showExplanation, setShowExplanation] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval>>(undefined);
   const { cpu, source, assembleErrors, ramSize } = state;
 
@@ -200,16 +203,37 @@ export default function TransistorSimulator() {
     >
       {/* Header + view toggle + RAM mode */}
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 1.5, flexWrap: "wrap", gap: 1 }}>
-        <Typography
-          variant="h6"
-          sx={{
-            fontFamily: "'Fira Code', monospace",
-            fontSize: 14,
-            color: "rgba(255,255,255,0.7)",
-          }}
-        >
-          8-Bit Computer Simulator
-        </Typography>
+        <Stack direction="row" spacing={1} alignItems="center">
+          <Typography
+            variant="h6"
+            sx={{
+              fontFamily: "'Fira Code', monospace",
+              fontSize: 14,
+              color: "rgba(255,255,255,0.7)",
+            }}
+          >
+            8-Bit Computer Simulator
+          </Typography>
+          <Button
+            size="small"
+            variant="outlined"
+            startIcon={<InfoOutlinedIcon />}
+            onClick={() => setShowExplanation(true)}
+            sx={{
+              color: SECONDARY,
+              borderColor: SECONDARY,
+              fontSize: 11,
+              textTransform: "none",
+              py: 0.25,
+              "&:hover": {
+                borderColor: SECONDARY,
+                bgcolor: "rgba(0,229,255,0.06)",
+              },
+            }}
+          >
+            How It Works
+          </Button>
+        </Stack>
         <Stack direction="row" spacing={1} alignItems="center">
           {/* RAM size toggle */}
           <ToggleButtonGroup
@@ -492,6 +516,12 @@ export default function TransistorSimulator() {
           </Box>
         )}
       </Typography>
+
+      {/* How It Works explanation dialog */}
+      <ArchitectureExplanation
+        open={showExplanation}
+        onClose={() => setShowExplanation(false)}
+      />
     </Paper>
   );
 }
