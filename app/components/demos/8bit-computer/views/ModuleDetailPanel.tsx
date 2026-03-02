@@ -2,6 +2,18 @@ import { useState } from "react";
 import { Box, Chip, Collapse, Divider, IconButton, Stack, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import ElectricalServicesIcon from "@mui/icons-material/ElectricalServices";
+import {
+  RegisterCircuit,
+  AluCircuit,
+  ClockCircuit,
+  PcCircuit,
+  IrCircuit,
+  RamCircuit,
+  ControlCircuit,
+  KeyboardCircuit,
+  OutputCircuit,
+} from "./ModuleCircuitDiagrams";
 import {
   type CpuState,
   type ModuleId,
@@ -631,8 +643,25 @@ interface ModuleDetailPanelProps {
   onClose: () => void;
 }
 
+const MODULE_CIRCUITS: Record<ModuleId, React.ComponentType> = {
+  regA: RegisterCircuit,
+  regB: RegisterCircuit,
+  alu: AluCircuit,
+  ram: RamCircuit,
+  pc: PcCircuit,
+  mar: RegisterCircuit,
+  ir: IrCircuit,
+  control: ControlCircuit,
+  clock: ClockCircuit,
+  keyboard: KeyboardCircuit,
+  output: OutputCircuit,
+};
+
 export function ModuleDetailPanel({ moduleId, cpu, onClose }: ModuleDetailPanelProps) {
-  const [showInfo, setShowInfo] = useState(false);
+  const [showInfo, setShowInfo] = useState(true);
+  const [showCircuit, setShowCircuit] = useState(true);
+
+  const CircuitDiagram = MODULE_CIRCUITS[moduleId];
 
   return (
     <Box>
@@ -649,8 +678,21 @@ export function ModuleDetailPanel({ moduleId, cpu, onClose }: ModuleDetailPanelP
               color: showInfo ? SECONDARY : "rgba(255,255,255,0.25)",
               "&:hover": { color: SECONDARY },
             }}
+            title="Module description"
           >
             <InfoOutlinedIcon sx={{ fontSize: 14 }} />
+          </IconButton>
+          <IconButton
+            size="small"
+            onClick={() => setShowCircuit((v) => !v)}
+            sx={{
+              p: 0.25,
+              color: showCircuit ? "#fbbf24" : "rgba(255,255,255,0.25)",
+              "&:hover": { color: "#fbbf24" },
+            }}
+            title="Circuit schematic"
+          >
+            <ElectricalServicesIcon sx={{ fontSize: 14 }} />
           </IconButton>
         </Stack>
         <IconButton size="small" onClick={onClose} sx={{ color: "rgba(255,255,255,0.3)", p: 0.25 }}>
@@ -675,6 +717,30 @@ export function ModuleDetailPanel({ moduleId, cpu, onClose }: ModuleDetailPanelP
           >
             {MODULE_EXPLANATIONS[moduleId]}
           </Typography>
+        </Box>
+      </Collapse>
+
+      <Collapse in={showCircuit}>
+        <Box
+          sx={{
+            mb: 1.5,
+            p: 1,
+            borderRadius: 1,
+            bgcolor: "rgba(251,191,36,0.04)",
+            border: "1px solid rgba(251,191,36,0.15)",
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: 9,
+              color: "rgba(251,191,36,0.6)",
+              fontFamily: MONO,
+              mb: 0.75,
+            }}
+          >
+            CIRCUIT SCHEMATIC
+          </Typography>
+          <CircuitDiagram />
         </Box>
       </Collapse>
 

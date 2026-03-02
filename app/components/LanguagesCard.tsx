@@ -4,11 +4,13 @@ import {
   Typography,
   Box,
   Collapse,
+  Button,
   IconButton,
 } from "@mui/material";
 import CodeIcon from "@mui/icons-material/Code";
+import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import CloseFullscreenIcon from "@mui/icons-material/CloseFullscreen";
-import OpenInFullIcon from "@mui/icons-material/OpenInFull";
+import { LANGUAGE_DOMAINS } from "~/data/languages";
 import { LanguagesDiagram } from "./LanguagesDiagram";
 
 interface LanguagesCardProps {
@@ -21,10 +23,7 @@ export function LanguagesCard({
   onToggleExpanded,
 }: LanguagesCardProps) {
   return (
-    <Card
-      sx={{ cursor: expanded ? "default" : "pointer" }}
-      onClick={expanded ? undefined : onToggleExpanded}
-    >
+    <Card>
       <CardContent>
         {/* Header — matches SkillCard layout */}
         <Box
@@ -43,20 +42,15 @@ export function LanguagesCard({
               Languages & Frameworks
             </Typography>
           </Box>
-          <IconButton
-            size="small"
-            onClick={(e) => {
-              e.stopPropagation();
-              onToggleExpanded();
-            }}
-            sx={{ color: "text.secondary" }}
-          >
-            {expanded ? (
+          {expanded && (
+            <IconButton
+              size="small"
+              onClick={onToggleExpanded}
+              sx={{ color: "text.secondary" }}
+            >
               <CloseFullscreenIcon fontSize="small" />
-            ) : (
-              <OpenInFullIcon fontSize="small" />
-            )}
-          </IconButton>
+            </IconButton>
+          )}
         </Box>
 
         <Typography
@@ -66,36 +60,88 @@ export function LanguagesCard({
         >
           {expanded
             ? "Hover a component to highlight its language domain."
-            : "What I use each language for, shown as a project architecture."}
+            : "Languages I use most commonly and what I reach for them for."}
         </Typography>
 
-        {/* Collapsed preview */}
+        {/* Collapsed: language list */}
         {!expanded && (
-          <Box
-            sx={{
-              position: "relative",
-              maxHeight: 160,
-              overflow: "hidden",
-            }}
-          >
-            <LanguagesDiagram />
-            {/* Fade-out gradient at bottom */}
-            <Box
+          <>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 0.75 }}>
+              {LANGUAGE_DOMAINS.map((domain) => (
+                <Box
+                  key={domain.id}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                    py: 0.5,
+                    px: 0.75,
+                    borderRadius: 1,
+                    "&:hover": { bgcolor: "rgba(255,255,255,0.03)" },
+                  }}
+                >
+                  {/* Language icon */}
+                  <Box
+                    component={domain.icon}
+                    sx={{
+                      fontSize: 16,
+                      color: domain.color,
+                      flexShrink: 0,
+                    }}
+                  />
+
+                  {/* Language name */}
+                  <Typography
+                    variant="body2"
+                    sx={{ minWidth: 0, whiteSpace: "nowrap" }}
+                  >
+                    {domain.label}
+                  </Typography>
+
+                  {/* Use case */}
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{
+                      flex: 1,
+                      fontSize: "0.75rem",
+                      textAlign: "right",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {domain.useCase}
+                  </Typography>
+                </Box>
+              ))}
+            </Box>
+
+            {/* Expand button */}
+            <Button
+              size="small"
+              variant="outlined"
+              startIcon={<AccountTreeIcon />}
+              onClick={onToggleExpanded}
               sx={{
-                position: "absolute",
-                bottom: 0,
-                left: 0,
-                right: 0,
-                height: 60,
-                background:
-                  "linear-gradient(transparent, #141414)",
-                pointerEvents: "none",
+                mt: 2,
+                width: "100%",
+                fontSize: 12,
+                textTransform: "none",
+                color: "text.secondary",
+                borderColor: "divider",
+                "&:hover": {
+                  borderColor: "text.secondary",
+                  bgcolor: "rgba(255,255,255,0.03)",
+                },
               }}
-            />
-          </Box>
+            >
+              How I'd use them in a project
+            </Button>
+          </>
         )}
 
-        {/* Expanded full diagram */}
+        {/* Expanded: full architecture diagram */}
         <Collapse in={expanded} unmountOnExit>
           <Box sx={{ mt: 1 }}>
             <LanguagesDiagram />

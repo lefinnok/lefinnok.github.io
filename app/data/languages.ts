@@ -1,3 +1,13 @@
+import type { IconType } from "react-icons";
+import {
+  SiPython,
+  SiCplusplus,
+  SiTypescript,
+  SiRust,
+  SiGo,
+  SiGodotengine,
+} from "react-icons/si";
+
 // ── Language Domains (color groupings) ──────────────────────────
 
 export interface LanguageDomain {
@@ -5,44 +15,51 @@ export interface LanguageDomain {
   label: string;
   useCase: string;
   color: string;
+  icon: IconType;
 }
 
 export const LANGUAGE_DOMAINS: LanguageDomain[] = [
   {
-    id: "react-ts",
-    label: "React / TypeScript",
-    useCase: "Frontend & UI",
-    color: "#38bdf8",
-  },
-  {
-    id: "go",
-    label: "Go",
-    useCase: "General Services",
-    color: "#00e5ff",
-  },
-  {
-    id: "rust",
-    label: "Rust",
-    useCase: "Critical Services",
-    color: "#f97316",
-  },
-  {
     id: "python",
     label: "Python",
-    useCase: "Scripting & ML",
+    useCase: "Scripting & prototyping",
     color: "#4ade80",
+    icon: SiPython,
   },
   {
     id: "cpp",
     label: "C / C++",
-    useCase: "Firmware & Algorithms",
+    useCase: "Algorithms & firmware",
     color: "#a78bfa",
+    icon: SiCplusplus,
+  },
+  {
+    id: "react-ts",
+    label: "React / Node / TypeScript",
+    useCase: "Frontend & UI",
+    color: "#38bdf8",
+    icon: SiTypescript,
+  },
+  {
+    id: "rust",
+    label: "Rust",
+    useCase: "Critical services",
+    color: "#f97316",
+    icon: SiRust,
+  },
+  {
+    id: "go",
+    label: "Go",
+    useCase: "General services",
+    color: "#00e5ff",
+    icon: SiGo,
   },
   {
     id: "gdscript",
     label: "GDScript / C#",
-    useCase: "Game Development",
+    useCase: "Game development",
     color: "#f472b6",
+    icon: SiGodotengine,
   },
 ];
 
