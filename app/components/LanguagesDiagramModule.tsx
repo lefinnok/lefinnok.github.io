@@ -1,3 +1,5 @@
+import type { IconType } from "react-icons";
+
 const BG = "#111111";
 const BORDER_DEFAULT = "#2a2a2a";
 
@@ -9,6 +11,7 @@ interface LanguageModuleProps {
   w: number;
   h: number;
   color: string;
+  icon: IconType;
   highlighted: boolean;
   dimmed: boolean;
   onMouseEnter: () => void;
@@ -23,6 +26,7 @@ export function LanguagesDiagramModule({
   w,
   h,
   color,
+  icon: Icon,
   highlighted,
   dimmed,
   onMouseEnter,
@@ -32,6 +36,10 @@ export function LanguagesDiagramModule({
   const glowFilter = highlighted
     ? `drop-shadow(0 0 8px ${color}60)`
     : "none";
+
+  const iconSize = 14;
+  const iconX = x + 6;
+  const iconY = sublabel ? y + 6 : y + (h - iconSize) / 2;
 
   return (
     <g
@@ -59,9 +67,18 @@ export function LanguagesDiagramModule({
         }}
       />
 
-      {/* Label */}
+      {/* Language icon */}
+      <foreignObject x={iconX} y={iconY} width={iconSize} height={iconSize}>
+        <Icon
+          size={iconSize}
+          color={highlighted ? color : "rgba(255,255,255,0.4)"}
+          style={{ display: "block", transition: "color 0.2s" }}
+        />
+      </foreignObject>
+
+      {/* Label — shifted right to make room for icon */}
       <text
-        x={x + w / 2}
+        x={x + iconSize + 12 + (w - iconSize - 12) / 2}
         y={sublabel ? y + 22 : y + h / 2 + 4}
         textAnchor="middle"
         fill={highlighted ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.7)"}
@@ -76,7 +93,7 @@ export function LanguagesDiagramModule({
       {/* Sublabel (language) */}
       {sublabel && (
         <text
-          x={x + w / 2}
+          x={x + iconSize + 12 + (w - iconSize - 12) / 2}
           y={y + 38}
           textAnchor="middle"
           fill={highlighted ? `${color}cc` : "rgba(255,255,255,0.35)"}

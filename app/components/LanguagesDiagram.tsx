@@ -234,22 +234,26 @@ export function LanguagesDiagram() {
       })}
 
       {/* Module blocks */}
-      {ARCH_MODULES.map((mod) => (
-        <LanguagesDiagramModule
-          key={mod.id}
-          label={mod.label}
-          sublabel={mod.sublabel}
-          x={mod.x}
-          y={mod.y}
-          w={mod.w}
-          h={mod.h}
-          color={domainColor(mod.domainId)}
-          highlighted={isHighlighted(mod.domainId)}
-          dimmed={isDimmed(mod.domainId)}
-          onMouseEnter={() => setHoveredDomain(mod.domainId)}
-          onMouseLeave={() => setHoveredDomain(null)}
-        />
-      ))}
+      {ARCH_MODULES.map((mod) => {
+        const domain = DOMAIN_MAP[mod.domainId];
+        return (
+          <LanguagesDiagramModule
+            key={mod.id}
+            label={mod.label}
+            sublabel={mod.sublabel}
+            x={mod.x}
+            y={mod.y}
+            w={mod.w}
+            h={mod.h}
+            color={domain.color}
+            icon={domain.icon}
+            highlighted={isHighlighted(mod.domainId)}
+            dimmed={isDimmed(mod.domainId)}
+            onMouseEnter={() => setHoveredDomain(mod.domainId)}
+            onMouseLeave={() => setHoveredDomain(null)}
+          />
+        );
+      })}
 
       {/* Legend */}
       {(() => {
@@ -257,12 +261,14 @@ export function LanguagesDiagram() {
         const totalW = VB_W - 80;
         const spacing = totalW / count;
         const startX = 40 + spacing / 2;
+        const iconSize = 12;
 
         return LANGUAGE_DOMAINS.map((domain, i) => {
           const cx = startX + i * spacing;
           const highlighted = hoveredDomain === domain.id;
           const dimmed =
             hoveredDomain !== null && hoveredDomain !== domain.id;
+          const Icon = domain.icon;
 
           return (
             <g
@@ -275,16 +281,20 @@ export function LanguagesDiagram() {
                 transition: "opacity 0.2s",
               }}
             >
-              <circle
-                cx={cx - 30}
-                cy={VB_H - 18}
-                r={4}
-                fill={domain.color}
-                opacity={highlighted ? 1 : 0.7}
-                style={{ transition: "opacity 0.2s" }}
-              />
+              <foreignObject
+                x={cx - 32}
+                y={VB_H - 26}
+                width={iconSize}
+                height={iconSize}
+              >
+                <Icon
+                  size={iconSize}
+                  color={highlighted ? domain.color : "rgba(255,255,255,0.5)"}
+                  style={{ display: "block", transition: "color 0.2s" }}
+                />
+              </foreignObject>
               <text
-                x={cx - 22}
+                x={cx - 16}
                 y={VB_H - 22}
                 fill={
                   highlighted
@@ -298,7 +308,7 @@ export function LanguagesDiagram() {
                 {domain.label}
               </text>
               <text
-                x={cx - 22}
+                x={cx - 16}
                 y={VB_H - 12}
                 fill={
                   highlighted
