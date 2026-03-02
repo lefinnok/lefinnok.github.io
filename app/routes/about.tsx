@@ -4,6 +4,7 @@ export const meta: Route.MetaFunction = () => [
   { title: "About — Lefinno Kwok" },
 ];
 
+import { useState } from "react";
 import {
   Container,
   Typography,
@@ -15,6 +16,7 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import LinkIcon from "@mui/icons-material/Link";
 import { ScrollReveal } from "~/components/ScrollReveal";
 import { SkillCard } from "~/components/SkillCard";
+import { LanguagesCard } from "~/components/LanguagesCard";
 import { bio } from "~/data/bio";
 import { skillGroups } from "~/data/skills";
 
@@ -24,6 +26,8 @@ const SOCIAL_ICONS: Record<string, React.ReactNode> = {
 };
 
 export default function About() {
+  const [languagesExpanded, setLanguagesExpanded] = useState(false);
+
   return (
     <Container maxWidth="lg" sx={{ py: 8 }}>
       {/* Bio Section */}
@@ -91,11 +95,29 @@ export default function About() {
             gap: 3,
           }}
         >
-          {skillGroups.map((group, i) => (
-            <ScrollReveal key={group.id} delay={150 + i * 80}>
-              <SkillCard group={group} />
-            </ScrollReveal>
-          ))}
+          {/* Languages card — spans full width when expanded */}
+          <ScrollReveal
+            delay={150}
+            sx={{
+              gridColumn: languagesExpanded ? "1 / -1" : undefined,
+            }}
+          >
+            <LanguagesCard
+              expanded={languagesExpanded}
+              onToggleExpanded={() =>
+                setLanguagesExpanded((prev) => !prev)
+              }
+            />
+          </ScrollReveal>
+
+          {/* Other skill categories */}
+          {skillGroups
+            .filter((g) => g.id !== "languages-frameworks")
+            .map((group, i) => (
+              <ScrollReveal key={group.id} delay={230 + i * 80}>
+                <SkillCard group={group} />
+              </ScrollReveal>
+            ))}
         </Box>
       </ScrollReveal>
     </Container>

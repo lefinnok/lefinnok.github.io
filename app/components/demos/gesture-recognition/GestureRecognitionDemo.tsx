@@ -113,41 +113,30 @@ export default function GestureRecognitionDemo() {
     };
   }, []);
 
-  // Track fullscreen state
+  // Lock body scroll when fullscreen overlay is active
   useEffect(() => {
-    const handler = () =>
-      setIsFullscreen(
-        !!(document.fullscreenElement ?? (document as any).webkitFullscreenElement),
-      );
-    document.addEventListener("fullscreenchange", handler);
-    document.addEventListener("webkitfullscreenchange", handler);
-    return () => {
-      document.removeEventListener("fullscreenchange", handler);
-      document.removeEventListener("webkitfullscreenchange", handler);
-    };
-  }, []);
-
-  const toggleFullscreen = useCallback(async () => {
-    try {
-      if (!document.fullscreenElement) {
-        const el = demoRef.current;
-        if (el) {
-          await (
-            el.requestFullscreen?.() ??
-            (el as any).webkitRequestFullscreen?.() ??
-            (el as any).msRequestFullscreen?.()
-          );
-        }
-      } else {
-        await (
-          document.exitFullscreen?.() ??
-          (document as any).webkitExitFullscreen?.() ??
-          (document as any).msExitFullscreen?.()
-        );
-      }
-    } catch {
-      // Fullscreen not supported or denied
+    if (isFullscreen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
     }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isFullscreen]);
+
+  // Escape key exits fullscreen
+  useEffect(() => {
+    if (!isFullscreen) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsFullscreen(false);
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [isFullscreen]);
+
+  const toggleFullscreen = useCallback(() => {
+    setIsFullscreen((prev) => !prev);
   }, []);
 
   const startCamera = useCallback(async () => {
@@ -312,11 +301,14 @@ export default function GestureRecognitionDemo() {
           border: isFullscreen ? "none" : "1px solid",
           borderColor: "divider",
           borderRadius: isFullscreen ? 0 : 3,
-          bgcolor: isFullscreen ? "#0a0a0a" : undefined,
+          bgcolor: "#0a0a0a",
           ...(isFullscreen && {
+            position: "fixed",
+            inset: 0,
+            zIndex: 1300,
             display: "flex",
             flexDirection: "column",
-            height: "100vh",
+            overflow: "auto",
           }),
         }}
       >

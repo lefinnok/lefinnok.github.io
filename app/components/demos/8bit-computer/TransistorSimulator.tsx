@@ -8,6 +8,7 @@ import {
   Chip,
   Stack,
   Divider,
+  IconButton,
   ToggleButton,
   ToggleButtonGroup,
 } from "@mui/material";
@@ -15,6 +16,8 @@ import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import MemoryIcon from "@mui/icons-material/Memory";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import FullscreenIcon from "@mui/icons-material/Fullscreen";
+import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
 import { createInitialState, stepCpu, stepInstruction, disassemble } from "./engine/cpu";
 import { assemble } from "./engine/assembler";
 import {
@@ -140,6 +143,7 @@ export default function TransistorSimulator() {
   const [narrationIndex, setNarrationIndex] = useState(0);
   const [loadedProgram, setLoadedProgram] = useState<SampleProgram | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval>>(undefined);
   const { cpu, source, assembleErrors, ramSize } = state;
 
@@ -171,6 +175,28 @@ export default function TransistorSimulator() {
     }
   }, [cpu.tState, cpu.pc, cpu.cycleCount, running, guidedProgram, narrationIndex]);
 
+  // Lock body scroll when fullscreen overlay is active
+  useEffect(() => {
+    if (isFullscreen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isFullscreen]);
+
+  // Escape key exits fullscreen
+  useEffect(() => {
+    if (!isFullscreen) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsFullscreen(false);
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [isFullscreen]);
+
   const handleAssemble = useCallback(() => {
     const result = assemble(source, ramSize);
     dispatch({ type: "LOAD", program: result.program, errors: result.errors });
@@ -194,11 +220,18 @@ export default function TransistorSimulator() {
       elevation={0}
       sx={{
         bgcolor: "#0a0a0a",
-        border: "1px solid",
+        border: isFullscreen ? "none" : "1px solid",
         borderColor: "divider",
-        borderRadius: 2,
-        p: { xs: 1.5, md: 3 },
-        overflow: "hidden",
+        borderRadius: isFullscreen ? 0 : 2,
+        p: { xs: 1.5, md: isFullscreen ? 2 : 3 },
+        overflow: isFullscreen ? "auto" : "hidden",
+        ...(isFullscreen && {
+          position: "fixed",
+          inset: 0,
+          zIndex: 1300,
+          display: "flex",
+          flexDirection: "column",
+        }),
       }}
     >
       {/* Header + view toggle + RAM mode */}
@@ -233,6 +266,14 @@ export default function TransistorSimulator() {
           >
             How It Works
           </Button>
+          <IconButton
+            size="small"
+            onClick={() => setIsFullscreen((prev) => !prev)}
+            sx={{ color: "text.secondary" }}
+            title={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
+          >
+            {isFullscreen ? <FullscreenExitIcon /> : <FullscreenIcon />}
+          </IconButton>
         </Stack>
         <Stack direction="row" spacing={1} alignItems="center">
           {/* RAM size toggle */}
@@ -329,6 +370,7 @@ export default function TransistorSimulator() {
           display: "flex",
           gap: 2,
           flexDirection: { xs: "column", lg: "row" },
+          ...(isFullscreen && { flex: 1, minHeight: 0 }),
         }}
       >
         {/* Primary view — diagram or dashboard */}

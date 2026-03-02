@@ -302,17 +302,20 @@ function FetchExecuteDiagram() {
     { label: "T4", desc: "Execute step 3", color: ORANGE },
   ];
 
+  const boxW = 64;
+  const spacing = 78;
+
   return (
-    <svg viewBox="0 0 300 100" width="100%" style={{ maxWidth: 300 }}>
+    <svg viewBox="0 0 400 100" width="100%" style={{ maxWidth: 400 }}>
       {steps.map((s, i) => {
-        const x = i * 58 + 10;
+        const x = i * spacing + 10;
         const isFetch = i < 2;
         return (
           <g key={i}>
             <rect
               x={x}
               y={10}
-              width={50}
+              width={boxW}
               height={50}
               rx={4}
               fill={isFetch ? "rgba(0,229,255,0.08)" : "rgba(249,115,22,0.08)"}
@@ -320,23 +323,23 @@ function FetchExecuteDiagram() {
               strokeWidth={1}
               opacity={0.8}
             />
-            <text x={x + 25} y={32} fill={s.color} fontSize={8} fontFamily={MONO} textAnchor="middle">
+            <text x={x + boxW / 2} y={32} fill={s.color} fontSize={8} fontFamily={MONO} textAnchor="middle">
               {s.label}
             </text>
-            <text x={x + 25} y={50} fill="rgba(255,255,255,0.5)" fontSize={7} fontFamily={MONO} textAnchor="middle">
+            <text x={x + boxW / 2} y={50} fill="rgba(255,255,255,0.5)" fontSize={7} fontFamily={MONO} textAnchor="middle">
               {s.desc}
             </text>
             {i < steps.length - 1 && (
-              <text x={x + 55} y={38} fill="rgba(255,255,255,0.3)" fontSize={10}>→</text>
+              <text x={x + boxW + 3} y={38} fill="rgba(255,255,255,0.3)" fontSize={10}>→</text>
             )}
           </g>
         );
       })}
       {/* Labels */}
-      <rect x={10} y={70} width={108} height={18} rx={3} fill="rgba(0,229,255,0.06)" stroke={ACCENT} strokeWidth={0.5} />
-      <text x={64} y={83} fill={ACCENT} fontSize={8} fontFamily={MONO} textAnchor="middle">FETCH (universal)</text>
-      <rect x={126} y={70} width={166} height={18} rx={3} fill="rgba(249,115,22,0.06)" stroke={ORANGE} strokeWidth={0.5} />
-      <text x={209} y={83} fill={ORANGE} fontSize={8} fontFamily={MONO} textAnchor="middle">EXECUTE (per instruction)</text>
+      <rect x={10} y={70} width={142} height={18} rx={3} fill="rgba(0,229,255,0.06)" stroke={ACCENT} strokeWidth={0.5} />
+      <text x={81} y={83} fill={ACCENT} fontSize={8} fontFamily={MONO} textAnchor="middle">FETCH (universal)</text>
+      <rect x={166} y={70} width={220} height={18} rx={3} fill="rgba(249,115,22,0.06)" stroke={ORANGE} strokeWidth={0.5} />
+      <text x={276} y={83} fill={ORANGE} fontSize={8} fontFamily={MONO} textAnchor="middle">EXECUTE (per instruction)</text>
     </svg>
   );
 }
