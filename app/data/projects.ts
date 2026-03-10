@@ -21,16 +21,17 @@ export const projects: Project[] = [
     date: "Q1 2025",
     sortOrder: 1,
     featured: true,
-    ongoing: true,
+    ongoing: false,
     links: [
       {
-        label: "Visit Project",
-        url: "https://hku202425fyp24050-rcexv.kinsta.app/",
-        type: "demo",
+        label: "GitHub",
+        url: "https://github.com/lefinnok/HKU202425FYP_24050",
+        type: "github",
       },
     ],
     model: { path: "/models/uml_generator.fbx", cameraZ: 60, cameraY: 0 },
-    hasInteractiveDemo: false,
+    hasInteractiveDemo: true,
+    demoComponentName: "UmlGeneratorDemo",
   },
   {
     slug: "nass-ocelli",
