@@ -14,6 +14,10 @@ const DEMO_COMPONENTS: Record<
     () =>
       import("~/components/demos/8bit-computer/TransistorSimulator"),
   ),
+  UmlGeneratorDemo: lazy(
+    () =>
+      import("~/components/demos/uml-generator/UmlGeneratorDemo"),
+  ),
 };
 
 interface InteractiveDemoSlotProps {
