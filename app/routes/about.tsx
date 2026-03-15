@@ -17,6 +17,7 @@ import LinkIcon from "@mui/icons-material/Link";
 import { ScrollReveal } from "~/components/ScrollReveal";
 import { SkillCard } from "~/components/SkillCard";
 import { LanguagesCard } from "~/components/LanguagesCard";
+import { HardwareCard } from "~/components/HardwareCard";
 import { bio } from "~/data/bio";
 import { skillGroups } from "~/data/skills";
 
@@ -27,6 +28,7 @@ const SOCIAL_ICONS: Record<string, React.ReactNode> = {
 
 export default function About() {
   const [languagesExpanded, setLanguagesExpanded] = useState(false);
+  const [hardwareExpanded, setHardwareExpanded] = useState(false);
 
   return (
     <Container maxWidth="lg" sx={{ py: 8 }}>
@@ -110,9 +112,28 @@ export default function About() {
             />
           </ScrollReveal>
 
+          {/* Hardware card — spans full width when expanded */}
+          <ScrollReveal
+            delay={190}
+            sx={{
+              gridColumn: hardwareExpanded ? "1 / -1" : undefined,
+            }}
+          >
+            <HardwareCard
+              expanded={hardwareExpanded}
+              onToggleExpanded={() =>
+                setHardwareExpanded((prev) => !prev)
+              }
+            />
+          </ScrollReveal>
+
           {/* Other skill categories */}
           {skillGroups
-            .filter((g) => g.id !== "languages-frameworks")
+            .filter(
+              (g) =>
+                g.id !== "languages-frameworks" &&
+                g.id !== "hardware-embedded"
+            )
             .map((group, i) => (
               <ScrollReveal key={group.id} delay={230 + i * 80}>
                 <SkillCard group={group} />
