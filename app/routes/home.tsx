@@ -1,24 +1,87 @@
+import { lazy, Suspense } from "react";
 import type { Route } from "./+types/home";
+import { Container, Typography, Box, Button, Stack } from "@mui/material";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { Link } from "react-router";
+import { ScrollReveal } from "~/components/ScrollReveal";
+import { HeroShowcase, type ShowcaseSlide } from "~/components/homepage/HeroShowcase";
+import { SkillDomains } from "~/components/homepage/SkillDomains";
+import { LanguagesDiagram } from "~/components/LanguagesDiagram";
+import { HardwarePipelineDiagram } from "~/components/HardwarePipelineDiagram";
 
 export const meta: Route.MetaFunction = () => [
   { title: "Lefinno Kwok — Portfolio" },
 ];
 
-import {
-  Container,
-  Typography,
-  Box,
-  Button,
-  Stack,
-  Chip,
-} from "@mui/material";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { Link } from "react-router";
-import { ScrollReveal } from "~/components/ScrollReveal";
-import { FbxModelViewer } from "~/components/FbxModelViewer";
-import { projects } from "~/data/projects";
+// Direct import for lightweight components
+import GestureSkeletonPreview from "~/components/homepage/GestureSkeletonPreview";
+import ComputerAutoDemo from "~/components/homepage/ComputerAutoDemo";
 
-const featuredProject = projects.find((p) => p.featured) ?? projects[0];
+// Lazy-load heavier demo components (Three.js)
+const CnnViz3D = lazy(() =>
+  import("~/components/demos/ml-playground/views/CnnViz3D").then((m) => ({
+    default: m.CnnViz3D,
+  }))
+);
+
+function SlideLoading() {
+  return (
+    <Box
+      sx={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        color: "text.secondary",
+        fontFamily: "'Fira Code', monospace",
+        fontSize: "0.7rem",
+      }}
+    >
+      Loading...
+    </Box>
+  );
+}
+
+const SLIDES: ShowcaseSlide[] = [
+  {
+    content: <ComputerAutoDemo />,
+    tagline: "How my custom CPU executes",
+    linkTo: "/projects/8-bit-transistor-computer",
+  },
+  {
+    content: <GestureSkeletonPreview />,
+    tagline: "How I approach gesture recognition",
+    linkTo: "/projects/gesture-recognition",
+  },
+  {
+    content: (
+      <Box sx={{ width: "100%", height: "100%", p: 1, overflow: "hidden" }}>
+        <LanguagesDiagram />
+      </Box>
+    ),
+    tagline: "How I architect full-stack apps",
+    linkTo: "/about",
+  },
+  {
+    content: (
+      <Box sx={{ width: "100%", height: "100%", p: 1, overflow: "hidden" }}>
+        <HardwarePipelineDiagram />
+      </Box>
+    ),
+    tagline: "How I design hardware products",
+    linkTo: "/projects/retro-handheld",
+  },
+  {
+    content: (
+      <Suspense fallback={<SlideLoading />}>
+        <CnnViz3D height={280} />
+      </Suspense>
+    ),
+    tagline: "How I visualize neural inference",
+    linkTo: "/about",
+  },
+];
 
 export default function Home() {
   return (
@@ -26,236 +89,90 @@ export default function Home() {
       {/* Hero */}
       <Box
         sx={{
-          minHeight: "80vh",
+          minHeight: "50vh",
           display: "flex",
           alignItems: "center",
+          py: { xs: 4, md: 0 },
         }}
       >
         <Container maxWidth="lg">
-          <ScrollReveal>
-            <Typography
-              variant="overline"
-              color="text.secondary"
-              display="block"
-              sx={{ mb: 2, fontSize: "0.9rem" }}
-            >
-              Portfolio
-            </Typography>
-            <Typography
-              variant="h1"
-              sx={{
-                fontSize: { xs: "2.5rem", sm: "3.5rem", md: "4.5rem" },
-                mb: 2,
-                lineHeight: 1.1,
-              }}
-            >
-              Lefinno Kwok
-            </Typography>
-            <Typography
-              variant="h5"
-              color="text.secondary"
-              sx={{
-                mb: 4,
-                maxWidth: 600,
-                fontWeight: 400,
-                lineHeight: 1.5,
-              }}
-            >
-              Building things that bridge hardware and software — from 8-bit
-              computers to AI-powered web applications.
-            </Typography>
-            <Stack direction="row" spacing={2}>
-              <Button
-                component={Link}
-                to="/projects"
-                variant="outlined"
-                endIcon={<ArrowForwardIcon />}
-              >
-                View Projects
-              </Button>
-              <Button
-                component={Link}
-                to="/about"
-                variant="text"
-                sx={{ color: "text.secondary" }}
-              >
-                About Me
-              </Button>
-            </Stack>
-          </ScrollReveal>
-        </Container>
-      </Box>
-
-      {/* Featured Project */}
-      <Box sx={{ py: 8, borderTop: 1, borderColor: "divider" }}>
-        <Container maxWidth="lg">
-          <ScrollReveal>
-            <Typography
-              variant="overline"
-              color="text.secondary"
-              display="block"
-              sx={{ mb: 1, fontSize: "0.85rem" }}
-            >
-              {featuredProject.ongoing ? "Ongoing Project" : "Featured Project"}
-            </Typography>
-          </ScrollReveal>
-
           <Box
             sx={{
               display: "grid",
-              gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
-              gap: 6,
-              mt: 2,
+              gridTemplateColumns: { xs: "1fr", md: "5fr 7fr" },
+              gap: { xs: 4, md: 6 },
+              alignItems: "center",
             }}
           >
-            {featuredProject.model && (
-              <ScrollReveal delay={100}>
-                <Box
-                  sx={{
-                    height: { xs: 250, md: 350 },
-                    bgcolor: "background.paper",
-                    borderRadius: 2,
-                    overflow: "hidden",
-                    border: "1px solid",
-                    borderColor: "divider",
-                  }}
-                >
-                  <FbxModelViewer
-                    config={featuredProject.model}
-                    height="100%"
-                    rotationSpeed={0.004}
-                  />
-                </Box>
-              </ScrollReveal>
-            )}
-
-            <ScrollReveal delay={200}>
-              <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1 }}>
-                <Typography variant="h4" component="h2">
-                  {featuredProject.title}
-                </Typography>
-                {featuredProject.ongoing && (
-                  <Chip label="Ongoing" size="small" variant="outlined" />
-                )}
-              </Stack>
+            {/* Left: Name + tagline */}
+            <ScrollReveal>
               <Typography
                 variant="overline"
                 color="text.secondary"
                 display="block"
-                sx={{ mb: 2 }}
+                sx={{ mb: 2, fontSize: "0.9rem" }}
               >
-                {featuredProject.date}
+                Portfolio
               </Typography>
               <Typography
-                variant="body1"
-                color="text.secondary"
-                sx={{ mb: 3, lineHeight: 1.7 }}
+                variant="h1"
+                sx={{
+                  fontSize: { xs: "2.5rem", sm: "3rem", md: "4rem" },
+                  mb: 2,
+                  lineHeight: 1.1,
+                }}
               >
-                {featuredProject.longDescription}
+                Lefinno Kwok
               </Typography>
-              <Button
-                component={Link}
-                to={`/projects/${featuredProject.slug}`}
-                variant="outlined"
-                size="small"
-                endIcon={<ArrowForwardIcon />}
+              <Typography
+                variant="h5"
+                color="text.secondary"
+                sx={{
+                  mb: 4,
+                  maxWidth: 480,
+                  fontWeight: 400,
+                  lineHeight: 1.5,
+                  fontSize: { xs: "1rem", md: "1.15rem" },
+                }}
               >
-                Learn More
-              </Button>
+                Building things that bridge hardware and software — from 8-bit
+                computers to AI-powered web applications.
+              </Typography>
+              <Stack direction="row" spacing={2}>
+                <Button
+                  component={Link}
+                  to="/projects"
+                  variant="outlined"
+                  endIcon={<ArrowForwardIcon />}
+                >
+                  View Projects
+                </Button>
+                <Button
+                  component={Link}
+                  to="/about"
+                  variant="text"
+                  sx={{ color: "text.secondary" }}
+                >
+                  About Me
+                </Button>
+              </Stack>
+            </ScrollReveal>
+
+            {/* Right: Cycling showcase */}
+            <ScrollReveal delay={200}>
+              <Box sx={{ px: { xs: 0, md: 4 } }}>
+                <HeroShowcase slides={SLIDES} />
+              </Box>
             </ScrollReveal>
           </Box>
         </Container>
       </Box>
 
-      {/* Quick Links */}
+      {/* Skill Domains */}
       <Box sx={{ py: 8, borderTop: 1, borderColor: "divider" }}>
         <Container maxWidth="lg">
           <ScrollReveal>
-            <Box
-              sx={{
-                display: "grid",
-                gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr 1fr" },
-                gap: 3,
-              }}
-            >
-              <Box
-                component={Link}
-                to="/projects"
-                sx={{
-                  p: 4,
-                  border: "1px solid",
-                  borderColor: "divider",
-                  borderRadius: 2,
-                  textDecoration: "none",
-                  color: "text.primary",
-                  transition:
-                    "border-color 0.2s ease, transform 0.2s ease",
-                  "&:hover": {
-                    borderColor: "rgba(255,255,255,0.3)",
-                    transform: "translateY(-2px)",
-                  },
-                }}
-              >
-                <Typography variant="h6" sx={{ mb: 1 }}>
-                  Projects
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Explore the full catalogue of things I've built.
-                </Typography>
-              </Box>
-              <Box
-                component={Link}
-                to="/about"
-                sx={{
-                  p: 4,
-                  border: "1px solid",
-                  borderColor: "divider",
-                  borderRadius: 2,
-                  textDecoration: "none",
-                  color: "text.primary",
-                  transition:
-                    "border-color 0.2s ease, transform 0.2s ease",
-                  "&:hover": {
-                    borderColor: "rgba(255,255,255,0.3)",
-                    transform: "translateY(-2px)",
-                  },
-                }}
-              >
-                <Typography variant="h6" sx={{ mb: 1 }}>
-                  About
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Skills, experience, and what drives me.
-                </Typography>
-              </Box>
-              <Box
-                component="a"
-                href="https://linktr.ee/lefinno"
-                target="_blank"
-                rel="noopener noreferrer"
-                sx={{
-                  p: 4,
-                  border: "1px solid",
-                  borderColor: "divider",
-                  borderRadius: 2,
-                  textDecoration: "none",
-                  color: "text.primary",
-                  transition:
-                    "border-color 0.2s ease, transform 0.2s ease",
-                  "&:hover": {
-                    borderColor: "rgba(255,255,255,0.3)",
-                    transform: "translateY(-2px)",
-                  },
-                }}
-              >
-                <Typography variant="h6" sx={{ mb: 1 }}>
-                  Contact
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Get in touch via Linktree.
-                </Typography>
-              </Box>
-            </Box>
+            <SkillDomains />
           </ScrollReveal>
         </Container>
       </Box>
