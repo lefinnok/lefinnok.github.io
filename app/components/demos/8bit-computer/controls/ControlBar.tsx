@@ -104,6 +104,7 @@ export function ControlBar({
         disabled={halted}
         startIcon={<SkipNextIcon sx={{ fontSize: 16 }} />}
         sx={btnSx}
+        data-tutorial="step-btn"
       >
         Step
       </Button>
@@ -124,6 +125,7 @@ export function ControlBar({
           borderColor: running ? ACCENT : "rgba(255,255,255,0.2)",
           color: running ? ACCENT : "rgba(255,255,255,0.7)",
         }}
+        data-tutorial="run-btn"
       >
         {running ? "Pause" : "Run"}
       </Button>

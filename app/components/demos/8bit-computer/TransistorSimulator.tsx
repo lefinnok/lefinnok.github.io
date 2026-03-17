@@ -1,4 +1,4 @@
-import { useReducer, useCallback, useState, useRef, useEffect } from "react";
+import { useReducer, useCallback, useState, useRef, useEffect, useMemo } from "react";
 import {
   Box,
   Button,
@@ -16,6 +16,7 @@ import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import MemoryIcon from "@mui/icons-material/Memory";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
 import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
 import { createInitialState, stepCpu, stepInstruction, disassemble } from "./engine/cpu";
@@ -36,6 +37,8 @@ import { ControlBar } from "./controls/ControlBar";
 import { GuidedDemoPanel } from "./controls/GuidedDemoPanel";
 import { AssemblyEditor } from "./controls/AssemblyEditor";
 import { ArchitectureExplanation } from "./views/ArchitectureExplanation";
+import { useTutorial, type TutorialStep } from "~/components/tutorial/useTutorial";
+import { TutorialSpotlight } from "~/components/tutorial/TutorialSpotlight";
 
 // ── Colors ──────────────────────────────────────────────────────
 
@@ -131,6 +134,95 @@ function activeSignalNames(controlWord: number): string[] {
   return names;
 }
 
+// ── Tutorial steps ──────────────────────────────────────────────
+
+const TUTORIAL_STEPS: TutorialStep[] = [
+  {
+    id: "welcome",
+    title: "Welcome",
+    content:
+      "This tutorial walks you through running a program on a custom 8-bit CPU built from transistors.",
+    advance: "manual",
+  },
+  {
+    id: "architecture",
+    target: "architecture-diagram",
+    title: "CPU Architecture",
+    content:
+      "This diagram shows the CPU modules — registers, ALU, buses, and control unit. Data flows between them.",
+    placement: "right",
+    advance: "manual",
+  },
+  {
+    id: "editor",
+    target: "assembly-editor",
+    title: "Assembly Editor",
+    content: "Programs are written in assembly language on the right panel.",
+    placement: "left",
+    advance: "manual",
+  },
+  {
+    id: "select-program",
+    target: "program-selector",
+    title: "Load a Program",
+    content: "Select 'Count Up' from the Examples dropdown.",
+    placement: "left",
+    advance: "auto",
+  },
+  {
+    id: "assemble",
+    target: "assemble-btn",
+    title: "Assemble & Load",
+    content:
+      "Click 'Assemble & Load' to compile the code into machine instructions.",
+    placement: "left",
+    advance: "auto",
+  },
+  {
+    id: "ram",
+    target: "ram-grid",
+    title: "RAM Contents",
+    content:
+      "The RAM grid shows your compiled program in binary. Each row is one memory address.",
+    placement: "left",
+    advance: "manual",
+  },
+  {
+    id: "step",
+    target: "step-btn",
+    title: "Step Through",
+    content:
+      "Click 'Step' to execute one complete instruction. Watch the diagram light up.",
+    placement: "bottom",
+    advance: "auto",
+  },
+  {
+    id: "data-flow",
+    target: "architecture-diagram",
+    title: "Data Flow",
+    content:
+      "The highlighted paths show active control signals. Each instruction takes multiple T-states.",
+    placement: "right",
+    advance: "manual",
+  },
+  {
+    id: "run",
+    target: "run-btn",
+    title: "Run Continuously",
+    content:
+      "Click 'Run' to execute at full speed. Use the speed slider to adjust.",
+    placement: "bottom",
+    advance: "auto",
+  },
+  {
+    id: "done",
+    title: "Tutorial Complete",
+    content:
+      "Try modifying the code or loading different programs. Click 'How It Works' to learn about the architecture in detail.",
+    advance: "manual",
+  },
+];
+
 // ── Component ───────────────────────────────────────────────────
 
 export default function TransistorSimulator() {
@@ -146,6 +238,55 @@ export default function TransistorSimulator() {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval>>(undefined);
   const { cpu, source, assembleErrors, ramSize } = state;
+
+  // Tutorial
+  const tutorial = useTutorial(TUTORIAL_STEPS);
+  const prevSourceRef = useRef(source);
+  const prevCycleRef = useRef(cpu.cycleCount);
+  const [assembleCount, setAssembleCount] = useState(0);
+  const prevAssembleRef = useRef(0);
+
+  // Auto-advance tutorial on state changes
+  useEffect(() => {
+    if (!tutorial.active || !tutorial.currentStep) return;
+    const stepId = tutorial.currentStep.id;
+
+    // Step 4: "select-program" → source changed
+    if (stepId === "select-program" && source !== prevSourceRef.current) {
+      tutorial.next();
+    }
+    prevSourceRef.current = source;
+  }, [tutorial, source]);
+
+  useEffect(() => {
+    if (!tutorial.active || !tutorial.currentStep) return;
+    const stepId = tutorial.currentStep.id;
+
+    // Step 5: "assemble" → assemble button was clicked
+    if (stepId === "assemble" && assembleCount > prevAssembleRef.current) {
+      tutorial.next();
+    }
+    prevAssembleRef.current = assembleCount;
+  }, [tutorial, assembleCount]);
+
+  useEffect(() => {
+    if (!tutorial.active || !tutorial.currentStep) return;
+    const stepId = tutorial.currentStep.id;
+
+    // Step 7: "step" → cycleCount increased
+    if (stepId === "step" && cpu.cycleCount > prevCycleRef.current) {
+      tutorial.next();
+    }
+    prevCycleRef.current = cpu.cycleCount;
+  }, [tutorial, cpu.cycleCount]);
+
+  useEffect(() => {
+    if (!tutorial.active || !tutorial.currentStep) return;
+    // Step 9: "run" → running became true
+    if (tutorial.currentStep.id === "run" && running) {
+      tutorial.next();
+    }
+  }, [tutorial, running]);
 
   // Auto-run
   useEffect(() => {
@@ -203,6 +344,7 @@ export default function TransistorSimulator() {
     setRunning(false);
     setGuidedProgram(null);
     setLoadedProgram(null);
+    setAssembleCount((c) => c + 1);
   }, [source, ramSize]);
 
   const handleReset = useCallback(() => {
@@ -218,6 +360,7 @@ export default function TransistorSimulator() {
   return (
     <Paper
       elevation={0}
+      data-tutorial-demo
       sx={{
         bgcolor: "#0a0a0a",
         border: isFullscreen ? "none" : "1px solid",
@@ -265,6 +408,25 @@ export default function TransistorSimulator() {
             }}
           >
             How It Works
+          </Button>
+          <Button
+            size="small"
+            variant="outlined"
+            startIcon={<PlayCircleOutlineIcon />}
+            onClick={tutorial.start}
+            sx={{
+              color: SECONDARY,
+              borderColor: SECONDARY,
+              fontSize: 11,
+              textTransform: "none",
+              py: 0.25,
+              "&:hover": {
+                borderColor: SECONDARY,
+                bgcolor: "rgba(0,229,255,0.06)",
+              },
+            }}
+          >
+            How to Play
           </Button>
           <IconButton
             size="small"
@@ -374,7 +536,7 @@ export default function TransistorSimulator() {
         }}
       >
         {/* Primary view — diagram or dashboard */}
-        <Box sx={{ flex: 3, minWidth: 0 }}>
+        <Box sx={{ flex: 3, minWidth: 0 }} data-tutorial="architecture-diagram">
           {viewMode === "diagram" ? (
             <>
               <ArchitectureSvg
@@ -433,32 +595,37 @@ export default function TransistorSimulator() {
             <>
               {/* Program selector — all programs, auto-switches mode */}
               <SectionLabel>EXAMPLES</SectionLabel>
-              <ProgramSelector
-                currentSource={source}
-                onSelect={(prog) => {
-                  dispatch({ type: "LOAD_PROGRAM", program: prog });
-                  setRunning(false);
-                  setGuidedProgram(null);
-                  setLoadedProgram(prog);
-                }}
-              />
+              <Box data-tutorial="program-selector">
+                <ProgramSelector
+                  currentSource={source}
+                  onSelect={(prog) => {
+                    dispatch({ type: "LOAD_PROGRAM", program: prog });
+                    setRunning(false);
+                    setGuidedProgram(null);
+                    setLoadedProgram(prog);
+                  }}
+                />
+              </Box>
 
               {/* Assembly editor */}
               <SectionLabel>ASSEMBLY {ramSize === 256 && "(2-byte instructions)"}</SectionLabel>
-              <AssemblyEditor
-                value={source}
-                onChange={(v) => {
-                  dispatch({ type: "SET_SOURCE", source: v });
-                  setLoadedProgram(null);
-                  setGuidedProgram(null);
-                }}
-                errors={assembleErrors}
-              />
+              <Box data-tutorial="assembly-editor">
+                <AssemblyEditor
+                  value={source}
+                  onChange={(v) => {
+                    dispatch({ type: "SET_SOURCE", source: v });
+                    setLoadedProgram(null);
+                    setGuidedProgram(null);
+                  }}
+                  errors={assembleErrors}
+                />
+              </Box>
               <Stack direction="row" spacing={1} sx={{ mt: 1 }}>
                 <Button
                   size="small"
                   variant="contained"
                   onClick={handleAssemble}
+                  data-tutorial="assemble-btn"
                   sx={{
                     fontSize: 11,
                     bgcolor: ACCENT,
@@ -509,7 +676,9 @@ export default function TransistorSimulator() {
               <SectionLabel sx={{ mt: 2 }}>
                 RAM ({ramSize === 256 ? "256" : "16"} x 8)
               </SectionLabel>
-              <RamGrid cpu={cpu} />
+              <Box data-tutorial="ram-grid">
+                <RamGrid cpu={cpu} />
+              </Box>
 
               {/* Output history */}
               {cpu.outputHistory.length > 0 && (
@@ -564,6 +733,16 @@ export default function TransistorSimulator() {
         open={showExplanation}
         onClose={() => setShowExplanation(false)}
       />
+
+      {/* Tutorial spotlight overlay */}
+      {tutorial.active && (
+        <TutorialSpotlight
+          steps={TUTORIAL_STEPS}
+          stepIndex={tutorial.stepIndex}
+          onNext={tutorial.next}
+          onExit={tutorial.exit}
+        />
+      )}
     </Paper>
   );
 }

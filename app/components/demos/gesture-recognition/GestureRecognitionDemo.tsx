@@ -19,6 +19,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopIcon from "@mui/icons-material/Stop";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
 import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
 import {
@@ -35,6 +36,8 @@ import {
 import { AlgorithmExplanation } from "./AlgorithmExplanation";
 import { VerticalSpectrum } from "./ExplanationVisuals";
 import { MatrixLoader } from "~/components/MatrixLoader";
+import { useTutorial, type TutorialStep } from "~/components/tutorial/useTutorial";
+import { TutorialSpotlight } from "~/components/tutorial/TutorialSpotlight";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type HandLandmarker = any;
@@ -70,6 +73,92 @@ const REFERENCES = [
   },
 ];
 
+// ── Tutorial steps ──────────────────────────────────────────────
+
+const TUTORIAL_STEPS: TutorialStep[] = [
+  {
+    id: "welcome",
+    title: "Welcome",
+    content:
+      "This tutorial will guide you through capturing hand gestures and teaching the system to recognize them.",
+    advance: "manual",
+  },
+  {
+    id: "start-camera",
+    target: "start-camera",
+    title: "Start Camera",
+    content: "Click 'Start Camera' to turn on your webcam.",
+    placement: "bottom",
+    advance: "auto",
+  },
+  {
+    id: "show-hand",
+    target: "camera-viewport",
+    title: "Show Your Hand",
+    content:
+      "Hold your hand up to the camera. A skeleton overlay will appear when detected.",
+    placement: "right",
+    advance: "auto",
+  },
+  {
+    id: "spectral",
+    target: "spectral-sidebar",
+    title: "Spectral Analysis",
+    content:
+      "This shows the eigenvalue signature of your hand pose. Different gestures produce different patterns.",
+    placement: "left",
+    advance: "manual",
+  },
+  {
+    id: "label",
+    target: "label-input",
+    title: "Name Your Gesture",
+    content:
+      "Type a name for your current gesture, like 'Peace'. Click Next when you're done.",
+    placement: "bottom",
+    advance: "manual",
+  },
+  {
+    id: "capture",
+    target: "capture-btn",
+    title: "Capture Gesture",
+    content: "Click 'Capture' to save this gesture as a reference.",
+    placement: "bottom",
+    advance: "auto",
+  },
+  {
+    id: "capture-another",
+    title: "Capture Another Gesture",
+    content:
+      "Show a different hand pose, type a new label, and capture it. Recognition needs at least two references.",
+    advance: "auto",
+  },
+  {
+    id: "recognize",
+    target: "recognize-btn",
+    title: "Start Recognition",
+    content: "Click 'Recognize' to start live gesture matching.",
+    placement: "bottom",
+    advance: "auto",
+  },
+  {
+    id: "try-gestures",
+    target: "match-result",
+    title: "Try Your Gestures",
+    content:
+      "Show your captured poses — the system matches your hand's spectrum to saved references in real-time.",
+    placement: "bottom",
+    advance: "manual",
+  },
+  {
+    id: "done",
+    title: "Tutorial Complete",
+    content:
+      "Experiment with different gestures. Click 'How It Works' to learn about the spectral graph algorithm.",
+    advance: "manual",
+  },
+];
+
 export default function GestureRecognitionDemo() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -96,6 +185,30 @@ export default function GestureRecognitionDemo() {
   const recognizingRef = useRef(false);
   const nextIdRef = useRef(1);
   const frameCountRef = useRef(0);
+
+  // Tutorial
+  const tutorial = useTutorial(TUTORIAL_STEPS);
+  const prevRefsLenRef = useRef(references.length);
+
+  // Auto-advance tutorial on state changes
+  useEffect(() => {
+    if (!tutorial.active || !tutorial.currentStep) return;
+    const stepId = tutorial.currentStep.id;
+
+    if (stepId === "start-camera" && cameraActive) tutorial.next();
+    if (stepId === "show-hand" && handDetected) tutorial.next();
+    // "capture": first reference captured
+    if (stepId === "capture" && references.length > prevRefsLenRef.current) {
+      tutorial.next();
+    }
+    // "capture-another": second reference captured (>= 2 total)
+    if (stepId === "capture-another" && references.length >= 2 && references.length > prevRefsLenRef.current) {
+      tutorial.next();
+    }
+    if (stepId === "recognize" && recognizing) tutorial.next();
+
+    prevRefsLenRef.current = references.length;
+  }, [tutorial, cameraActive, handDetected, references.length, recognizing]);
 
   useEffect(() => {
     refsRef.current = references;
@@ -295,6 +408,7 @@ export default function GestureRecognitionDemo() {
       {/* Main demo container (fullscreen target) */}
       <Paper
         ref={demoRef}
+        data-tutorial-demo
         elevation={0}
         sx={{
           p: isFullscreen ? 2 : 3,
@@ -348,6 +462,23 @@ export default function GestureRecognitionDemo() {
             >
               How It Works
             </Button>
+            <Button
+              size="small"
+              variant="outlined"
+              startIcon={<PlayCircleOutlineIcon />}
+              onClick={tutorial.start}
+              sx={{
+                color: ACCENT,
+                borderColor: ACCENT,
+                "&:hover": {
+                  borderColor: ACCENT,
+                  bgcolor: "rgba(0,229,255,0.06)",
+                },
+                flexShrink: 0,
+              }}
+            >
+              How to Play
+            </Button>
             <IconButton
               size="small"
               onClick={toggleFullscreen}
@@ -375,6 +506,7 @@ export default function GestureRecognitionDemo() {
         >
           {/* Camera viewport — 4 parts */}
           <Box
+            data-tutorial="camera-viewport"
             sx={{
               flex: 4,
               position: "relative",
@@ -430,6 +562,7 @@ export default function GestureRecognitionDemo() {
                   startIcon={<VideocamIcon />}
                   onClick={startCamera}
                   disabled={loading}
+                  data-tutorial="start-camera"
                   sx={{ zIndex: 1 }}
                 >
                   {loading ? "Starting..." : "Start Camera"}
@@ -441,6 +574,7 @@ export default function GestureRecognitionDemo() {
           {/* Analysis sidebar — 1 part */}
           {cameraActive && (
             <Box
+              data-tutorial="spectral-sidebar"
               sx={{
                 flex: 1,
                 minWidth: 120,
@@ -576,6 +710,7 @@ export default function GestureRecognitionDemo() {
                 onKeyDown={(e) => {
                   if (e.key === "Enter") captureGesture();
                 }}
+                data-tutorial="label-input"
                 sx={{ flex: 1, maxWidth: 220 }}
                 slotProps={{
                   input: { sx: { fontSize: 13, height: 34 } },
@@ -587,6 +722,7 @@ export default function GestureRecognitionDemo() {
                 startIcon={<CameraAltIcon />}
                 onClick={captureGesture}
                 disabled={!handDetected || !captureLabel.trim()}
+                data-tutorial="capture-btn"
                 sx={{ height: 34, fontSize: 12 }}
               >
                 Capture
@@ -603,6 +739,7 @@ export default function GestureRecognitionDemo() {
                   if (recognizing) setCurrentMatch(null);
                 }}
                 disabled={references.length === 0}
+                data-tutorial="recognize-btn"
                 sx={{
                   height: 34,
                   fontSize: 12,
@@ -623,20 +760,22 @@ export default function GestureRecognitionDemo() {
                 {recognizing ? "Stop" : "Recognize"}
               </Button>
 
-              {recognizing && currentMatch && (
-                <Chip
-                  size="small"
-                  label={`${currentMatch.label} (${Math.round(currentMatch.similarity)})`}
-                  sx={{
-                    borderColor: ACCENT,
-                    color: ACCENT,
-                    fontFamily: "'Fira Code', monospace",
-                    fontSize: 11,
-                    height: 26,
-                  }}
-                  variant="outlined"
-                />
-              )}
+              <Box data-tutorial="match-result" sx={{ display: "inline-flex" }}>
+                {recognizing && currentMatch && (
+                  <Chip
+                    size="small"
+                    label={`${currentMatch.label} (${Math.round(currentMatch.similarity)})`}
+                    sx={{
+                      borderColor: ACCENT,
+                      color: ACCENT,
+                      fontFamily: "'Fira Code', monospace",
+                      fontSize: 11,
+                      height: 26,
+                    }}
+                    variant="outlined"
+                  />
+                )}
+              </Box>
 
               <Box sx={{ flex: 1 }} />
 
@@ -652,7 +791,7 @@ export default function GestureRecognitionDemo() {
 
             {/* Saved references */}
             {references.length > 0 ? (
-              <Stack direction="row" flexWrap="wrap" gap={0.5} alignItems="center">
+              <Stack direction="row" flexWrap="wrap" gap={0.5} alignItems="center" data-tutorial="saved-references">
                 <Typography
                   variant="caption"
                   color="text.secondary"
@@ -746,6 +885,16 @@ export default function GestureRecognitionDemo() {
         open={showExplanation}
         onClose={() => setShowExplanation(false)}
       />
+
+      {/* Tutorial spotlight overlay */}
+      {tutorial.active && (
+        <TutorialSpotlight
+          steps={TUTORIAL_STEPS}
+          stepIndex={tutorial.stepIndex}
+          onNext={tutorial.next}
+          onExit={tutorial.exit}
+        />
+      )}
     </Stack>
   );
 }
