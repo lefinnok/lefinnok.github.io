@@ -1,6 +1,8 @@
 /**
  * Constants for the individual-node CNN 3D visualization.
  * Layout: left (input) → right (output) along X-axis, no rotation.
+ *
+ * Input → Conv → Pool → Conv → Pool → Dense(128) → Softmax(10) → Decision
  */
 
 // ── Input grid (28×28 spheres) ──────────────────────────────────
@@ -35,11 +37,18 @@ export const INNER_LAYERS: InnerLayerDef[] = [
   { id: "dense", label: "Dense", nodeCount: 128, grid: [8, 16], xPos: 4.0, color: 0x4ade80, radius: 0.035, spacing: 0.10, deltaIndex: 6 },
 ];
 
-// ── Output spheres (10 digits) ──────────────────────────────────
+// ── Softmax layer (10 probability nodes) ────────────────────────
 
-export const OUTPUT_COUNT = 10;
-export const OUTPUT_SPACING = 0.30;
-export const OUTPUT_RADIUS = 0.12;
-export const OUTPUT_X = 6.0;
-export const OUTPUT_COLOR = 0xf97316;
-export const OUTPUT_DELTA_INDEX = 7;
+export const SOFTMAX_COUNT = 10;
+export const SOFTMAX_SPACING = 0.28;
+export const SOFTMAX_RADIUS = 0.08;
+export const SOFTMAX_X = 5.5;
+export const SOFTMAX_COLOR = 0xf97316;
+export const SOFTMAX_DIM_COLOR = [0.25, 0.12, 0.05] as const;
+export const SOFTMAX_DELTA_INDEX = 7;
+
+// ── Decision node (single argmax output) ────────────────────────
+
+export const DECISION_RADIUS = 0.18;
+export const DECISION_X = 7.0;
+export const DECISION_COLOR = 0xf97316;

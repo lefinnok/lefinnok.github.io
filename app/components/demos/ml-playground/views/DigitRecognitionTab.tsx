@@ -282,7 +282,7 @@ export function DigitRecognitionTab({ state, tfReady, dispatch }: Props) {
           predictions={state.predictions}
           weightDeltas={state.weightDeltas}
           gradientMagnitudes={state.gradientMagnitudes}
-          height={300}
+          height={340}
         />
       </Box>
     </Box>
