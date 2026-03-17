@@ -1,3 +1,39 @@
+// ── Training Presets ─────────────────────────────────────────────
+
+export type TrainingPresetId = "quick" | "balanced" | "full";
+
+export interface TrainingPreset {
+  id: TrainingPresetId;
+  name: string;
+  samples: number;
+  epochs: number;
+  description: string;
+}
+
+export const TRAINING_PRESETS: TrainingPreset[] = [
+  {
+    id: "quick",
+    name: "Quick",
+    samples: 2_000,
+    epochs: 5,
+    description: "2K samples, 5 epochs — fast demo (~30s)",
+  },
+  {
+    id: "balanced",
+    name: "Balanced",
+    samples: 5_000,
+    epochs: 8,
+    description: "5K samples, 8 epochs — recommended (~1-2 min)",
+  },
+  {
+    id: "full",
+    name: "Full",
+    samples: 8_000,
+    epochs: 12,
+    description: "8K samples, 12 epochs — best local accuracy (~2-4 min)",
+  },
+];
+
 // ── Training Metrics ─────────────────────────────────────────────
 
 export type TrainingPhase =
@@ -8,7 +44,7 @@ export type TrainingPhase =
   | "trained"
   | "error";
 
-export type DigitMode = "pretrained" | "training";
+export type DigitMode = "pretrained" | "selecting-preset" | "training";
 
 export interface TrainingMetrics {
   phase: TrainingPhase;
@@ -33,6 +69,7 @@ export interface LayerVizData {
 
 export interface DigitState {
   mode: DigitMode;
+  selectedPreset: TrainingPresetId | null;
   metrics: TrainingMetrics;
   predictions: number[] | null; // length 10 softmax probs
   sampleResults: { predicted: number; actual: number }[];
@@ -79,6 +116,8 @@ export type MlDemoAction =
   | { type: "TF_READY" }
   // Digit recognition
   | { type: "DIGIT_MODE"; mode: DigitMode }
+  | { type: "DIGIT_SELECT_PRESET"; preset: TrainingPresetId }
+  | { type: "DIGIT_START_TRAINING" }
   | { type: "DIGIT_PHASE"; phase: TrainingPhase; error?: string }
   | { type: "DIGIT_LOAD_PROGRESS"; progress: number }
   | {
@@ -110,6 +149,7 @@ export const INITIAL_STATE: MlDemoState = {
   tfReady: false,
   digit: {
     mode: "pretrained",
+    selectedPreset: null,
     metrics: {
       phase: "idle",
       loadProgress: 0,

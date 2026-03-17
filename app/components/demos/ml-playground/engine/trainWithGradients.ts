@@ -2,8 +2,11 @@ import * as tf from "@tensorflow/tfjs";
 import type { MnistData } from "./mnistLoader";
 import type { LayerVizData } from "./types";
 
-const BATCH_SIZE = 128;
-const TOTAL_EPOCHS = 10;
+export interface TrainConfig {
+  epochs: number;
+  maxSamples?: number;
+  batchSize?: number;
+}
 
 export interface TrainStepData {
   epoch: number;
@@ -23,17 +26,22 @@ export interface TrainStepData {
 export async function trainWithGradientTracking(
   model: tf.LayersModel,
   data: MnistData,
+  config: TrainConfig,
   onStep: (step: TrainStepData) => void,
   onBatchProgress?: (batch: number, totalBatches: number) => void
 ): Promise<void> {
+  const batchSize = config.batchSize ?? 128;
+  const totalEpochs = config.epochs;
   const optimizer = model.optimizer as tf.Optimizer;
-  const numSamples = data.trainImages.shape[0];
-  const numBatches = Math.ceil(numSamples / BATCH_SIZE);
+  const numSamples = config.maxSamples
+    ? Math.min(config.maxSamples, data.trainImages.shape[0])
+    : data.trainImages.shape[0];
+  const numBatches = Math.ceil(numSamples / batchSize);
 
   // Snapshot weights at start for delta computation
   let prevWeights = await snapshotWeights(model);
 
-  for (let epoch = 0; epoch < TOTAL_EPOCHS; epoch++) {
+  for (let epoch = 0; epoch < totalEpochs; epoch++) {
     // Shuffle indices
     const indices = tf.util.createShuffledIndices(numSamples);
     let epochLoss = 0;
@@ -44,9 +52,9 @@ export async function trainWithGradientTracking(
     let lastGrads: Record<string, Float32Array> = {};
 
     for (let b = 0; b < numBatches; b++) {
-      const start = b * BATCH_SIZE;
-      const end = Math.min(start + BATCH_SIZE, numSamples);
-      const batchSize = end - start;
+      const start = b * batchSize;
+      const end = Math.min(start + batchSize, numSamples);
+      const actualBatchSize = end - start;
 
       // Gather batch indices
       const batchIndices = Array.from(indices.slice(start, end));
@@ -66,7 +74,7 @@ export async function trainWithGradientTracking(
 
       // Accumulate loss
       const lossVal = lossTensor.dataSync()[0];
-      epochLoss += lossVal * batchSize;
+      epochLoss += lossVal * actualBatchSize;
 
       // Compute accuracy
       const preds = model.predict(batchX) as tf.Tensor;
@@ -77,7 +85,7 @@ export async function trainWithGradientTracking(
         .sum()
         .dataSync()[0];
       epochCorrect += correct;
-      epochTotal += batchSize;
+      epochTotal += actualBatchSize;
 
       // Save last batch gradients for per-layer visualization
       if (b === numBatches - 1) {
@@ -241,5 +249,3 @@ function computeLayerGradients(
 
   return results;
 }
-
-export { TOTAL_EPOCHS };

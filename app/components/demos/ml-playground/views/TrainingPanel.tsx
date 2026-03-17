@@ -7,9 +7,10 @@ const FONT = "'Fira Code', monospace";
 interface Props {
   metrics: TrainingMetrics;
   mode: DigitMode;
+  presetName?: string;
 }
 
-export function TrainingPanel({ metrics, mode }: Props) {
+export function TrainingPanel({ metrics, mode, presetName }: Props) {
   const { phase, loadProgress, epoch, totalEpochs, lossHistory, accuracyHistory } =
     metrics;
 
@@ -118,6 +119,24 @@ export function TrainingPanel({ metrics, mode }: Props) {
             formatValue={(v) => `${(v * 100).toFixed(1)}%`}
           />
         </Box>
+      )}
+
+      {/* Post-training comparison note */}
+      {phase === "trained" && mode === "training" && presetName && (
+        <Typography
+          variant="body2"
+          sx={{
+            fontFamily: FONT,
+            fontSize: "0.65rem",
+            color: "text.secondary",
+            mt: 1,
+            lineHeight: 1.4,
+          }}
+        >
+          Trained locally with preset: {presetName}. The pretrained model was
+          trained on the full 60K MNIST dataset and will generally achieve
+          higher accuracy.
+        </Typography>
       )}
     </Box>
   );

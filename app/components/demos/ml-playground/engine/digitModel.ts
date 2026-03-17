@@ -4,7 +4,6 @@ import type { LayerVizData } from "./types";
 
 const IMG_SIZE = 28;
 const NUM_CLASSES = 10;
-const TOTAL_EPOCHS = 10;
 const BATCH_SIZE = 128;
 const PRETRAINED_MODEL_URL = "/models/mnist/model.json";
 
@@ -60,10 +59,11 @@ export function createDigitModel(): tf.LayersModel {
 export async function trainDigitModel(
   model: tf.LayersModel,
   data: MnistData,
-  onEpochEnd: (epoch: number, loss: number, accuracy: number) => void
+  onEpochEnd: (epoch: number, loss: number, accuracy: number) => void,
+  epochs = 10
 ): Promise<void> {
   await model.fit(data.trainImages, data.trainLabels, {
-    epochs: TOTAL_EPOCHS,
+    epochs,
     batchSize: BATCH_SIZE,
     validationSplit: 0.1,
     shuffle: true,
@@ -206,4 +206,3 @@ export function evaluateSamples(
   return results;
 }
 
-export { TOTAL_EPOCHS };

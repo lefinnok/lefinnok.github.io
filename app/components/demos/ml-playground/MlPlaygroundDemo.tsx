@@ -4,7 +4,7 @@ import type {
   MlDemoState,
   MlDemoAction,
 } from "./engine/types";
-import { INITIAL_STATE } from "./engine/types";
+import { INITIAL_STATE, TRAINING_PRESETS } from "./engine/types";
 import { DigitRecognitionTab } from "./views/DigitRecognitionTab";
 import { PlaygroundTab } from "./views/PlaygroundTab";
 
@@ -86,6 +86,36 @@ function reducer(state: MlDemoState, action: MlDemoAction): MlDemoState {
         digit: {
           ...INITIAL_STATE.digit,
           mode: action.mode,
+          selectedPreset:
+            action.mode === "selecting-preset" ? "balanced" : null,
+        },
+      };
+    case "DIGIT_SELECT_PRESET":
+      return {
+        ...state,
+        digit: {
+          ...state.digit,
+          selectedPreset: action.preset,
+          metrics: {
+            ...state.digit.metrics,
+            totalEpochs: TRAINING_PRESETS.find(
+              (p) => p.id === action.preset
+            )!.epochs,
+          },
+        },
+      };
+    case "DIGIT_START_TRAINING":
+      return {
+        ...state,
+        digit: {
+          ...state.digit,
+          mode: "training",
+          metrics: {
+            ...INITIAL_STATE.digit.metrics,
+            totalEpochs: TRAINING_PRESETS.find(
+              (p) => p.id === state.digit.selectedPreset
+            )!.epochs,
+          },
         },
       };
     case "DIGIT_ACTIVATIONS":

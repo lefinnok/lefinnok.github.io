@@ -1,7 +1,15 @@
 import { useRef, useState, useEffect, useCallback, type Dispatch } from "react";
-import { Box, Typography, Button } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@mui/material";
 import ModelTrainingIcon from "@mui/icons-material/ModelTraining";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import type { DigitState, MlDemoAction } from "../engine/types";
+import { TRAINING_PRESETS } from "../engine/types";
 import { loadMnistData, disposeMnistData } from "../engine/mnistLoader";
 import type { MnistData } from "../engine/mnistLoader";
 import {
@@ -71,8 +79,9 @@ export function DigitRecognitionTab({ state, tfReady, dispatch }: Props) {
 
   // Train from scratch when user requests it
   useEffect(() => {
-    if (!tfReady || state.mode !== "training") return;
+    if (!tfReady || state.mode !== "training" || !state.selectedPreset) return;
 
+    const preset = TRAINING_PRESETS.find((p) => p.id === state.selectedPreset)!;
     let cancelled = false;
 
     (async () => {
@@ -95,21 +104,26 @@ export function DigitRecognitionTab({ state, tfReady, dispatch }: Props) {
         const model = createDigitModel();
         modelRef.current = model;
 
-        await trainWithGradientTracking(model, data, (step) => {
-          if (!cancelled) {
-            dispatch({
-              type: "DIGIT_EPOCH",
-              epoch: step.epoch,
-              loss: step.loss,
-              accuracy: step.accuracy,
-            });
-            dispatch({
-              type: "DIGIT_WEIGHT_UPDATE",
-              deltas: step.layerDeltas,
-              gradients: step.layerGradients,
-            });
+        await trainWithGradientTracking(
+          model,
+          data,
+          { epochs: preset.epochs, maxSamples: preset.samples },
+          (step) => {
+            if (!cancelled) {
+              dispatch({
+                type: "DIGIT_EPOCH",
+                epoch: step.epoch,
+                loss: step.loss,
+                accuracy: step.accuracy,
+              });
+              dispatch({
+                type: "DIGIT_WEIGHT_UPDATE",
+                deltas: step.layerDeltas,
+                gradients: step.layerGradients,
+              });
+            }
           }
-        });
+        );
 
         if (cancelled) return;
 
@@ -131,7 +145,7 @@ export function DigitRecognitionTab({ state, tfReady, dispatch }: Props) {
       cancelled = true;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tfReady, state.mode]);
+  }, [tfReady, state.mode, state.selectedPreset]);
 
   // Cleanup on unmount
   useEffect(() => {
@@ -188,19 +202,49 @@ export function DigitRecognitionTab({ state, tfReady, dispatch }: Props) {
     // Clear local drawing state
     setInputPixels(null);
     activationsRef.current = null;
-    dispatch({ type: "DIGIT_MODE", mode: "training" });
+    dispatch({ type: "DIGIT_MODE", mode: "selecting-preset" });
+  }, [dispatch]);
+
+  const handleConfirmTraining = useCallback(() => {
+    dispatch({ type: "DIGIT_START_TRAINING" });
   }, [dispatch]);
 
   const isTrained = state.metrics.phase === "trained";
   const isTrainingMode = state.mode === "training";
+  const isSelectingPreset = state.mode === "selecting-preset";
+  const activePreset = state.selectedPreset
+    ? TRAINING_PRESETS.find((p) => p.id === state.selectedPreset)
+    : null;
+
+  const tbs = {
+    textTransform: "none" as const,
+    fontSize: "0.7rem",
+    fontFamily: FONT,
+    py: 0.75,
+    px: 1.5,
+    color: "text.secondary",
+    borderColor: "#2a2a2a",
+    "&.Mui-selected": {
+      color: "text.primary",
+      bgcolor: "rgba(255,255,255,0.06)",
+    },
+  };
 
   return (
     <Box>
       {/* Training section */}
-      <TrainingPanel metrics={state.metrics} mode={state.mode} />
+      <TrainingPanel
+        metrics={state.metrics}
+        mode={state.mode}
+        presetName={
+          activePreset
+            ? `${activePreset.name} (${activePreset.samples.toLocaleString()} samples, ${activePreset.epochs} epochs)`
+            : undefined
+        }
+      />
 
       {/* Train your Own Model button */}
-      {isTrained && !isTrainingMode && (
+      {isTrained && !isTrainingMode && !isSelectingPreset && (
         <Box sx={{ mt: 1.5 }}>
           <Button
             size="small"
@@ -221,6 +265,93 @@ export function DigitRecognitionTab({ state, tfReady, dispatch }: Props) {
           >
             Train your Own Model
           </Button>
+        </Box>
+      )}
+
+      {/* Preset selection panel */}
+      {isSelectingPreset && (
+        <Box sx={{ mt: 1.5 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              fontFamily: FONT,
+              fontSize: "0.75rem",
+              color: "text.primary",
+              mb: 1,
+            }}
+          >
+            Choose training preset
+          </Typography>
+          <Typography
+            variant="body2"
+            sx={{
+              fontFamily: FONT,
+              fontSize: "0.65rem",
+              color: "text.secondary",
+              mb: 1.5,
+              lineHeight: 1.5,
+              maxWidth: 480,
+            }}
+          >
+            Local training runs in your browser on a 10K-image subset of MNIST.
+            The pretrained model was trained on the full 60K dataset, so local
+            accuracy will be lower. Choose a preset based on your device.
+          </Typography>
+
+          <ToggleButtonGroup
+            exclusive
+            size="small"
+            value={state.selectedPreset}
+            onChange={(_, v) =>
+              v && dispatch({ type: "DIGIT_SELECT_PRESET", preset: v })
+            }
+          >
+            {TRAINING_PRESETS.map((p) => (
+              <ToggleButton key={p.id} value={p.id} sx={tbs}>
+                <Box sx={{ textAlign: "left" }}>
+                  <Box sx={{ fontWeight: 600 }}>{p.name}</Box>
+                  <Box sx={{ fontSize: "0.6rem", opacity: 0.6 }}>
+                    {p.description}
+                  </Box>
+                </Box>
+              </ToggleButton>
+            ))}
+          </ToggleButtonGroup>
+
+          <Box sx={{ mt: 1.5, display: "flex", gap: 1 }}>
+            <Button
+              variant="contained"
+              size="small"
+              startIcon={<PlayArrowIcon />}
+              onClick={handleConfirmTraining}
+              disabled={!state.selectedPreset}
+              sx={{
+                textTransform: "none",
+                fontSize: "0.75rem",
+                fontFamily: FONT,
+                bgcolor: "#f97316",
+                "&:hover": { bgcolor: "#ea580c" },
+              }}
+            >
+              Start Training
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() =>
+                dispatch({ type: "DIGIT_MODE", mode: "pretrained" })
+              }
+              sx={{
+                textTransform: "none",
+                fontSize: "0.75rem",
+                fontFamily: FONT,
+                color: "text.secondary",
+                borderColor: "divider",
+              }}
+            >
+              Cancel
+            </Button>
+          </Box>
         </Box>
       )}
 
