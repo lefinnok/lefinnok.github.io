@@ -8,6 +8,9 @@ export default defineConfig({
   ssr: {
     noExternal: [/^@mui\//, /^@emotion\//],
   },
+  optimizeDeps: {
+    include: ["@tensorflow/tfjs"],
+  },
   environments: {
     client: {
       build: {
@@ -15,6 +18,7 @@ export default defineConfig({
           output: {
             manualChunks: {
               three: ["three", "three-stdlib"],
+              tensorflow: ["@tensorflow/tfjs"],
             },
           },
         },

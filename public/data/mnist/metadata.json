@@ -1,0 +1,7 @@
+{
+  "totalImages": 10000,
+  "imageSize": 28,
+  "gridCols": 100,
+  "gridRows": 100,
+  "format": "png_sprite"
+}

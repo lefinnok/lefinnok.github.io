@@ -6,7 +6,9 @@
     "build": "react-router build",
     "postbuild": "cp build/client/__spa-fallback.html build/client/404.html",
     "dev": "react-router dev",
-    "typecheck": "react-router typegen && tsc"
+    "typecheck": "react-router typegen && tsc",
+    "prepare:mnist": "node scripts/prepare-mnist.mjs",
+    "train:mnist": "node scripts/train-mnist-model.mjs"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -15,6 +17,7 @@
     "@mui/icons-material": "^6.4.0",
     "@mui/material": "^6.4.0",
     "@react-router/node": "7.12.0",
+    "@tensorflow/tfjs": "^4.22.0",
     "isbot": "^5",
     "katex": "^0.16.33",
     "mermaid": "^11.12.3",
@@ -28,12 +31,14 @@
   },
   "devDependencies": {
     "@react-router/dev": "7.12.0",
+    "@tensorflow/tfjs-node": "^4.22.0",
     "@types/katex": "^0.16.8",
     "@types/node": "^22",
     "@types/pako": "^2.0.4",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@types/three": "^0.170.0",
+    "sharp": "^0.34.5",
     "typescript": "^5.9.2",
     "vite": "^7.1.7",
     "vite-tsconfig-paths": "^5.1.4"

@@ -18,6 +18,7 @@ import { ScrollReveal } from "~/components/ScrollReveal";
 import { SkillCard } from "~/components/SkillCard";
 import { LanguagesCard } from "~/components/LanguagesCard";
 import { HardwareCard } from "~/components/HardwareCard";
+import { MlaiCard } from "~/components/MlaiCard";
 import { bio } from "~/data/bio";
 import { skillGroups } from "~/data/skills";
 
@@ -29,6 +30,7 @@ const SOCIAL_ICONS: Record<string, React.ReactNode> = {
 export default function About() {
   const [languagesExpanded, setLanguagesExpanded] = useState(false);
   const [hardwareExpanded, setHardwareExpanded] = useState(false);
+  const [mlaiExpanded, setMlaiExpanded] = useState(false);
 
   return (
     <Container maxWidth="lg" sx={{ py: 8 }}>
@@ -127,12 +129,28 @@ export default function About() {
             />
           </ScrollReveal>
 
+          {/* ML/AI card — spans full width when expanded */}
+          <ScrollReveal
+            delay={220}
+            sx={{
+              gridColumn: mlaiExpanded ? "1 / -1" : undefined,
+            }}
+          >
+            <MlaiCard
+              expanded={mlaiExpanded}
+              onToggleExpanded={() =>
+                setMlaiExpanded((prev) => !prev)
+              }
+            />
+          </ScrollReveal>
+
           {/* Other skill categories */}
           {skillGroups
             .filter(
               (g) =>
                 g.id !== "languages-frameworks" &&
-                g.id !== "hardware-embedded"
+                g.id !== "hardware-embedded" &&
+                g.id !== "ai-ml-cv"
             )
             .map((group, i) => (
               <ScrollReveal key={group.id} delay={230 + i * 80}>
