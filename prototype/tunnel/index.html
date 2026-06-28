@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>LEFINNO // VAULT &mdash; 2047</title>
+  <meta name="viewport" content="width=1440"/>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Lenis smooth scroll -->
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
+</head>
+<body>
+
+  <!-- ─── STATUS MICRO BAR ─── -->
+  <div class="statusbar">
+    <span>VAULT &middot; v2.47.0 &middot; BUILD 0x4A1F</span>
+    <span id="statusbar-coord">SCROLL: Z 0</span>
+    <span class="pulse-text">SYS: NOMINAL</span>
+  </div>
+
+  <!-- ─── HUD FRAME (L-bracket corners) ─── -->
+  <div class="hud-frame">
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
+  </div>
+
+  <!-- ─── HUD TOP STRIP ─── -->
+  <div class="hud-top">
+    <div class="hud-logo">
+      <div class="big">LEFINNO // VAULT</div>
+      <div class="sub">CREATOR &middot; HARDWARE &times; SOFTWARE</div>
+      <div class="sub"><b>&bull;</b> TRANSMITTING FROM 2047</div>
+    </div>
+
+    <div class="hud-nav">
+      <a href="#" class="active">INDEX</a>
+      <a href="#">WORK</a>
+      <a href="#">ABOUT</a>
+      <a href="#">CONTACT</a>
+    </div>
+
+    <div class="hud-meta">
+      <span class="live"><span class="dot"></span><span id="hud-clock">00:00:00 UTC</span></span>
+      <span class="coord-line" id="hud-coord">Z: 0</span>
+      <span class="vel-line">VEL: <span id="hud-velocity">0</span></span>
+      <span class="fps-line">FPS: <span id="hud-fps">60</span></span>
+    </div>
+  </div>
+
+  <!-- ─── BOTTOM CAPTION BAR ─── -->
+  <div class="bottom-bar">
+    <span>LEFINNO // CREATOR &middot; HARDWARE &times; SOFTWARE</span>
+  </div>
+
+  <!-- ─── SCROLL PROXY (gives document height for Lenis) ─── -->
+  <div class="scroll-proxy"></div>
+
+  <!-- ─── 3D VIEWPORT (fixed, no scroll) ─── -->
+  <div class="viewport">
+    <div class="world"></div>
+  </div>
+
+  <!-- ─── MODAL OVERLAY ─── -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-content" id="modal-content"></div>
+  </div>
+
+  <!-- ─── GRAIN ─── -->
+  <div class="grain"></div>
+
+  <!-- ─── CUSTOM CURSOR ─── -->
+  <div class="cursor" id="cursor">
+    <div class="cursor-ring"></div>
+    <div class="cursor-crosshair"></div>
+    <div class="cursor-dot"></div>
+  </div>
+
+  <!-- ─── Three.js (CDN, for 3D hand model) ─── -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.170.0/examples/jsm/"
+    }
+  }
+  </script>
+
+  <!-- ─── SCRIPTS (ES modules) ─── -->
+  <script type="module" src="tunnel.js"></script>
+
+</body>
+</html>

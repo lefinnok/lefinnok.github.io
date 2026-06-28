@@ -1,0 +1,1125 @@
+/* styles.css — All styles for the 3D tunnel portfolio prototype */
+
+:root {
+  --bg: #050505;
+  --surface: #0c0c0c;
+  --line: #1a1a1a;
+  --ink: #eaeaea;
+  --dim: #7a7a7a;
+  --dimmer: #4a4a4a;
+  --accent: #ff5a1f;
+}
+
+/* ─── RESET ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Archivo", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  cursor: none;
+  width: 100%;
+}
+html { height: 100%; }
+body { min-height: 100%; }
+a { color: inherit; text-decoration: none; }
+button { background: none; border: none; color: inherit; font: inherit; cursor: none; }
+
+/* ─── SCROLL PROXY (document-level, gives page height) ─── */
+.scroll-proxy {
+  height: 20000px;
+  width: 1px;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+/* ─── VIEWPORT (fixed, no scroll — pure 3D camera) ─── */
+.viewport {
+  position: fixed;
+  inset: 0;
+  perspective: 1000px;
+  perspective-origin: 50% 50%;
+  overflow: hidden;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ─── WORLD (3D container, fixed inside viewport) ─── */
+.world {
+  position: fixed;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: translateZ(0px);
+  will-change: transform;
+  pointer-events: none;
+}
+
+/* ─── TUNNEL ITEMS (positioned in 3D space) ─── */
+.tunnel-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  pointer-events: auto;
+}
+
+/* ─── HERO TITLE ─── */
+.hero-title {
+  position: relative;
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.hero-title h1 {
+  font-family: "Archivo", sans-serif;
+  font-weight: 900;
+  font-size: clamp(120px, 18vw, 280px);
+  line-height: 0.82;
+  letter-spacing: -0.045em;
+  color: var(--ink);
+  mix-blend-mode: difference;
+  white-space: nowrap;
+}
+.hero-title h1 .stroke {
+  -webkit-text-stroke: 1.5px var(--ink);
+  color: transparent;
+}
+.hero-title h1 em {
+  font-style: normal;
+  color: var(--accent);
+  font-family: "Archivo", sans-serif;
+}
+
+.hero-tagline {
+  text-align: center;
+  margin: 32px auto 0;
+  font-family: "Archivo", sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--dim);
+  line-height: 1.4;
+  max-width: 500px;
+}
+.hero-tagline em {
+  color: var(--accent);
+  font-style: normal;
+}
+
+.hero-meta {
+  display: flex;
+  gap: 48px;
+  justify-content: center;
+  margin-top: 28px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--dimmer);
+  text-transform: uppercase;
+}
+.hero-meta span b {
+  color: var(--dim);
+  font-weight: 500;
+}
+
+.hero-scroll-hint {
+  margin-top: 64px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--dimmer);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  animation: hintPulse 2s ease-in-out infinite;
+}
+.hero-scroll-hint::before,
+.hero-scroll-hint::after {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: var(--dimmer);
+}
+@keyframes hintPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* HUD numerics around hero */
+.hero-hud-num {
+  position: absolute;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--dimmer);
+  line-height: 1.6;
+  white-space: nowrap;
+}
+.hero-hud-num b {
+  color: var(--accent);
+  font-weight: 500;
+}
+.hero-hud-num.left {
+  left: -380px;
+  top: -60px;
+  text-align: left;
+}
+.hero-hud-num.right {
+  right: -380px;
+  top: -60px;
+  text-align: right;
+}
+.hero-hud-num.bottom-left {
+  left: -380px;
+  bottom: -20px;
+  text-align: left;
+}
+
+/* ─── FLOATING ZONE LABELS ─── */
+.zone-label {
+  font-family: "Archivo", sans-serif;
+  font-weight: 900;
+  font-size: 15vw;
+  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.15);
+  color: transparent;
+  mix-blend-mode: overlay;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ─── PROJECT CARDS ─── */
+.card {
+  width: 360px;
+  height: 480px;
+  background: rgba(12, 12, 12, 0.85);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5), 0 20px 50px rgba(0, 0, 0, 0.6);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  pointer-events: auto;
+  cursor: none;
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.4s ease-out;
+}
+.card::before,
+.card::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 1px solid transparent;
+  transition: width 0.3s, height 0.3s, border-color 0.3s;
+}
+.card::before {
+  top: -1px;
+  left: -1px;
+  border-top-color: var(--ink);
+  border-left-color: var(--ink);
+}
+.card::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom-color: var(--ink);
+  border-right-color: var(--ink);
+}
+.card:hover::before,
+.card:hover::after {
+  width: 100%;
+  height: 100%;
+  border-color: var(--accent);
+}
+.card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 30px rgba(255, 90, 31, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.5);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.card-id {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--dimmer);
+}
+.accent-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--accent);
+}
+.card-title {
+  font-family: "Archivo", sans-serif;
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+.card-blurb {
+  font-size: 14px;
+  color: var(--dim);
+  line-height: 1.6;
+  font-family: "Archivo", sans-serif;
+  font-weight: 400;
+}
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.card-tag {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--dimmer);
+  padding: 3px 8px;
+  border: 1px solid var(--line);
+  text-transform: uppercase;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--dimmer);
+  text-transform: uppercase;
+  border-top: 1px solid var(--line);
+  padding-top: 1rem;
+}
+
+/* ─── ARCHIVE PANEL ─── */
+.archive-panel {
+  width: 700px;
+  background: rgba(12, 12, 12, 0.88);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 2.5rem;
+  pointer-events: auto;
+  cursor: none;
+  transition: transform 0.4s ease-out;
+}
+.archive-panel-title {
+  font-family: "Archivo", sans-serif;
+  font-weight: 900;
+  font-size: 32px;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.archive-panel-sub {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--dimmer);
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+}
+.archive-row {
+  display: grid;
+  grid-template-columns: 40px 1fr 60px 140px;
+  gap: 16px;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+  align-items: center;
+  transition: background 0.2s;
+  pointer-events: auto;
+  cursor: none;
+}
+.archive-row:last-child {
+  border-bottom: 1px solid var(--line);
+}
+.archive-row:hover {
+  background: rgba(255, 90, 31, 0.03);
+}
+.archive-row:hover .archive-row-title {
+  color: var(--accent);
+}
+.archive-row-num {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  color: var(--dimmer);
+  letter-spacing: 0.1em;
+}
+.archive-row-title {
+  font-family: "Archivo", sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.archive-row-year {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  color: var(--dimmer);
+  letter-spacing: 0.1em;
+  text-align: right;
+}
+.archive-row-domain {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  color: var(--dim);
+  letter-spacing: 0.08em;
+  text-align: right;
+}
+
+/* ─── ABOUT PANEL ─── */
+.about-panel {
+  width: 600px;
+  background: rgba(12, 12, 12, 0.88);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 3rem;
+  pointer-events: auto;
+  cursor: none;
+  transition: transform 0.4s ease-out;
+}
+.about-panel-title {
+  font-family: "Archivo", sans-serif;
+  font-weight: 900;
+  font-size: 48px;
+  letter-spacing: -0.03em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.about-panel-title em {
+  color: var(--accent);
+  font-style: normal;
+}
+.about-panel-sub {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--dimmer);
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+}
+.about-panel-body {
+  font-family: "Archivo", sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--dim);
+  max-width: 520px;
+}
+.about-panel-body em {
+  color: var(--ink);
+  font-style: normal;
+}
+.about-panel-stats {
+  display: flex;
+  gap: 48px;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+.about-panel-stat {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--dimmer);
+  text-transform: uppercase;
+  line-height: 1.6;
+}
+.about-panel-stat b {
+  font-weight: 500;
+  color: var(--ink);
+  font-size: 24px;
+  display: block;
+  font-family: "Archivo", sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+/* ─── CONTACT PANEL ─── */
+.contact-panel {
+  width: 600px;
+  text-align: center;
+  pointer-events: auto;
+  cursor: none;
+}
+.contact-title {
+  font-family: "Archivo", sans-serif;
+  font-weight: 900;
+  font-size: 48px;
+  letter-spacing: -0.03em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.contact-title em {
+  color: var(--accent);
+  font-style: normal;
+}
+.contact-sub {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--dimmer);
+  margin-bottom: 2.5rem;
+  text-transform: uppercase;
+}
+.contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 3rem;
+}
+.contact-link {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--dim);
+  text-transform: uppercase;
+  padding: 12px 24px;
+  border: 1px solid var(--line);
+  transition: border-color 0.3s, color 0.3s, box-shadow 0.3s;
+  pointer-events: auto;
+  cursor: none;
+}
+.contact-link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 20px rgba(255, 90, 31, 0.15);
+}
+.contact-end {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--dimmer);
+  text-transform: uppercase;
+  margin-top: 2rem;
+}
+
+/* ─── HAND WIREFRAME (gesture recognition 3D viz, standalone) ─── */
+.hand-wireframe-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  width: 420px;
+  height: 520px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: rgba(12, 12, 12, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.hand-wireframe-container canvas {
+  display: block;
+  max-height: calc(100% - 40px);
+  width: auto;
+  aspect-ratio: 4 / 5;
+  max-width: 100%;
+}
+
+/* ─── 3D hand variant (WebGL canvas fills container) ─── */
+.hand-wireframe-container.hand-3d {
+  justify-content: flex-end;
+}
+.hand-wireframe-container.hand-3d .hand-3d-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: calc(100% - 36px) !important;
+}
+
+/* HUD corner labels (overlaid on 3D canvas) */
+.hand-hud {
+  position: absolute;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--dimmer);
+  text-transform: uppercase;
+  z-index: 2;
+  pointer-events: none;
+  line-height: 1.5;
+}
+.hand-hud.tl { top: 14px; left: 14px; }
+.hand-hud.tr { top: 14px; right: 14px; text-align: right; }
+.hand-hud.bl { bottom: 44px; left: 14px; }
+
+.hand-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--dimmer);
+  text-transform: uppercase;
+  padding: 8px 0;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  z-index: 2;
+  flex-shrink: 0;
+}
+.hand-label-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--accent);
+  animation: pulse 1.4s ease-in-out infinite;
+  flex-shrink: 0;
+  display: inline-block;
+}
+.hand-label-text {
+  color: var(--dimmer);
+}
+
+/* ─── FLOATING PROJECT TITLE (decorative big text, deep in 3D space) ─── */
+.project-title-float {
+  font-family: "Archivo", sans-serif;
+  font-weight: 900;
+  font-size: clamp(40px, 6vw, 100px);
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.1);
+  color: transparent;
+  mix-blend-mode: overlay;
+  white-space: nowrap;
+  text-transform: uppercase;
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -0.03em;
+  line-height: 0.85;
+}
+
+/* ─── PROJECT VISUAL (standalone 3D element for projects without live demos) ─── */
+.project-visual {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 480px;
+  height: 380px;
+  border: 1px solid var(--line);
+  background: rgba(12, 12, 12, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  overflow: hidden;
+}
+.project-visual .visual-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+}
+.project-visual .visual-meta {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--dimmer);
+  text-transform: uppercase;
+}
+.project-visual .visual-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.project-visual .visual-reticle {
+  width: 80px;
+  height: 80px;
+  border: 1px solid var(--dimmer);
+  border-radius: 50%;
+  position: relative;
+}
+.project-visual .visual-reticle::before,
+.project-visual .visual-reticle::after {
+  content: '';
+  position: absolute;
+  background: var(--dimmer);
+}
+.project-visual .visual-reticle::before {
+  top: 50%;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+}
+.project-visual .visual-reticle::after {
+  left: 50%;
+  top: 15%;
+  bottom: 15%;
+  width: 1px;
+}
+.project-visual .visual-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--dimmer);
+  text-transform: uppercase;
+}
+
+/* ─── FOCUS STATE (item in camera sweet spot) ─── */
+.tunnel-item.focused .card {
+  border-color: rgba(255, 90, 31, 0.3);
+  box-shadow: 0 0 40px rgba(255, 90, 31, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.5), 0 20px 50px rgba(0, 0, 0, 0.6);
+}
+.tunnel-item.focused .archive-panel,
+.tunnel-item.focused .about-panel {
+  border-color: rgba(255, 90, 31, 0.2);
+  box-shadow: 0 0 40px rgba(255, 90, 31, 0.06);
+}
+
+/* ─── STAR PARTICLES ─── */
+.star {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform, opacity;
+  transition: border-radius 0.2s;
+}
+.world.streaking .star {
+  border-radius: 1px;
+}
+
+/* ─── HUD FRAME (L-bracket corners) ─── */
+.hud-frame {
+  position: fixed;
+  inset: 16px;
+  pointer-events: none;
+  z-index: 50;
+}
+.hud-frame .corner {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--ink);
+  opacity: 0.8;
+}
+.hud-frame .tl { top: 0; left: 0; border-right: none; border-bottom: none; }
+.hud-frame .tr { top: 0; right: 0; border-left: none; border-bottom: none; }
+.hud-frame .bl { bottom: 0; left: 0; border-right: none; border-top: none; }
+.hud-frame .br { bottom: 0; right: 0; border-left: none; border-top: none; }
+
+/* ─── TOP STATUS BAR ─── */
+.statusbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 60;
+  display: flex;
+  justify-content: space-between;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  padding: 6px 16px;
+  color: var(--dimmer);
+  border-bottom: 1px solid var(--line);
+  background: var(--bg);
+  text-transform: uppercase;
+}
+.statusbar .pulse-text {
+  color: var(--accent);
+}
+
+/* ─── BOTTOM CAPTION BAR ─── */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 60;
+  display: flex;
+  justify-content: center;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  padding: 6px 16px;
+  color: var(--dimmer);
+  border-top: 1px solid var(--line);
+  background: var(--bg);
+  text-transform: uppercase;
+}
+
+/* ─── HUD TOP STRIP ─── */
+.hud-top {
+  position: fixed;
+  top: 28px;
+  left: 28px;
+  right: 28px;
+  z-index: 40;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  pointer-events: none;
+}
+.hud-top > * { pointer-events: auto; }
+
+.hud-logo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  line-height: 1.3;
+}
+.hud-logo .big {
+  font-family: "Archivo", sans-serif;
+  font-weight: 900;
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+}
+.hud-logo .sub {
+  color: var(--dim);
+  font-size: 10px;
+}
+.hud-logo .sub b {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.hud-nav {
+  display: flex;
+  gap: 4px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  background: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  pointer-events: auto;
+}
+.hud-nav a {
+  padding: 6px 14px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dim);
+  cursor: none;
+  transition: color 0.2s, background 0.2s;
+}
+.hud-nav a.active {
+  color: var(--bg);
+  background: var(--accent);
+}
+.hud-nav a:hover:not(.active) {
+  color: var(--ink);
+}
+
+.hud-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--dim);
+}
+.hud-meta .live {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink);
+}
+.hud-meta .dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 14px var(--accent);
+  animation: pulse 1.4s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.3); }
+}
+.hud-meta .coord-line {
+  font-size: 10px;
+  color: var(--dimmer);
+}
+.hud-meta .vel-line {
+  font-size: 10px;
+  color: var(--dimmer);
+}
+.hud-meta .fps-line {
+  font-size: 10px;
+  color: var(--dimmer);
+}
+
+/* ─── GRAIN + SCANLINES ─── */
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.12;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.7'/></svg>");
+}
+
+/* ─── CUSTOM CURSOR ─── */
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+}
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.cursor-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--ink);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s, border-color 0.2s;
+}
+.cursor-crosshair {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 48px;
+  opacity: 0.4;
+  transition: width 0.2s, height 0.2s, opacity 0.2s;
+}
+.cursor-crosshair::before,
+.cursor-crosshair::after {
+  content: '';
+  position: absolute;
+  background: var(--ink);
+}
+.cursor-crosshair::before {
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+}
+.cursor-crosshair::after {
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+}
+
+/* ─── MODAL OVERLAY ─── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  z-index: 200;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow-y: auto;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+  cursor: none;
+}
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-content {
+  width: 100%;
+  max-width: 700px;
+  padding: 6vh 2rem 4vh;
+  position: relative;
+  transform: translateY(20px);
+  transition: transform 0.35s ease;
+}
+.modal-overlay.active .modal-content {
+  transform: translateY(0);
+}
+
+.modal-close {
+  position: absolute;
+  top: 6vh;
+  right: 0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  color: var(--dim);
+  padding: 8px 12px;
+  cursor: none;
+  transition: color 0.2s;
+  pointer-events: auto;
+  z-index: 10;
+}
+.modal-close:hover {
+  color: var(--accent);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.modal-id {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--dimmer);
+}
+.modal-domain {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+.modal-title {
+  font-family: "Archivo", sans-serif;
+  font-weight: 900;
+  font-size: clamp(32px, 5vw, 56px);
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.modal-year {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--dimmer);
+  margin-bottom: 2rem;
+}
+
+.modal-media {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+.modal-media-placeholder {
+  width: 100%;
+  height: 320px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--dimmer);
+}
+
+.modal-detail {
+  font-family: "Archivo", sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--dim);
+  margin-bottom: 2rem;
+}
+.modal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 2rem;
+}
+.modal-tag {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--dim);
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  text-transform: uppercase;
+}
+.modal-links {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 3rem;
+}
+.modal-link {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--accent);
+  transition: color 0.2s;
+  pointer-events: auto;
+  cursor: none;
+}
+.modal-link:hover {
+  color: var(--accent);
+}
+
+.modal-end {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--dimmer);
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+  text-transform: uppercase;
+}
+
+/* ─── BACKGROUND GRID (hero) ─── */
+.bg-grid {
+  position: absolute;
+  width: 2000px;
+  height: 2000px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.15;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, black 20%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, black 20%, transparent 80%);
+}

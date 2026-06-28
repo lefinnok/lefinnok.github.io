@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import LinkIcon from "@mui/icons-material/Link";
+import { FiMail } from "react-icons/fi";
 import { ScrollReveal } from "~/components/ScrollReveal";
 import { SkillCard } from "~/components/SkillCard";
 import { LanguagesCard } from "~/components/LanguagesCard";
@@ -24,6 +25,7 @@ import { skillGroups } from "~/data/skills";
 
 const SOCIAL_ICONS: Record<string, React.ReactNode> = {
   GitHub: <GitHubIcon fontSize="small" />,
+  Email: <FiMail size={18} />,
   Link: <LinkIcon fontSize="small" />,
 };
 

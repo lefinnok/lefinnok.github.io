@@ -14,5 +14,6 @@ export default {
     "/projects/ggj26-binmin",
     "/projects/retro-handheld",
     "/about",
+    "/contact",
   ],
 } satisfies Config;

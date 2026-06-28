@@ -20,6 +20,7 @@ const NAV_ITEMS = [
   { label: "Home", to: "/" },
   { label: "Projects", to: "/projects" },
   { label: "About", to: "/about" },
+  { label: "Contact", to: "/contact" },
 ];
 
 export function Navbar() {

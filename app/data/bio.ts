@@ -10,7 +10,7 @@ export const bio: Bio = {
     "My projects reflect my curiosity — from building an 8-bit transistor computer from scratch, to developing gesture recognition systems, to creating tools that leverage large language models for diagram generation.",
   ],
   socialLinks: [
-    { platform: "Linktree", url: "https://linktr.ee/lefinno", icon: "Link" },
+    { platform: "Email", url: "mailto:lefinnokwok@gmail.com", icon: "Email" },
     {
       platform: "GitHub",
       url: "https://github.com/lefinnok",

@@ -176,6 +176,35 @@ export default function Home() {
           </ScrollReveal>
         </Container>
       </Box>
+
+      {/* Contact */}
+      <Box sx={{ py: 8, borderTop: 1, borderColor: "divider" }}>
+        <Container maxWidth="md">
+          <ScrollReveal>
+            <Box sx={{ textAlign: "center" }}>
+              <Typography variant="h4" component="h2" sx={{ mb: 2 }}>
+                Get in Touch
+              </Typography>
+              <Typography
+                variant="body1"
+                color="text.secondary"
+                sx={{ mb: 3, lineHeight: 1.8 }}
+              >
+                Have a question, want to collaborate, or just say hello?
+                Feel free to reach out.
+              </Typography>
+              <Button
+                component={Link}
+                to="/contact"
+                variant="outlined"
+                endIcon={<ArrowForwardIcon />}
+              >
+                lefinnokwok@gmail.com
+              </Button>
+            </Box>
+          </ScrollReveal>
+        </Container>
+      </Box>
     </>
   );
 }
