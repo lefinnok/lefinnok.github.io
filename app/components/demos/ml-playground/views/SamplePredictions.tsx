@@ -23,7 +23,7 @@ export function SamplePredictions({ samples }: Props) {
           mb: 0.5,
         }}
       >
-        Test samples — {accuracy}% correct ({correct}/{samples.length})
+        Test samples: {accuracy}% correct ({correct}/{samples.length})
       </Typography>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
         {samples.map((s, i) => {

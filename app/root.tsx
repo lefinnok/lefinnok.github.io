@@ -18,11 +18,11 @@ import { Footer } from "./components/Footer";
 import "./app.css";
 
 export const meta: Route.MetaFunction = () => [
-  { title: "Lefinno Kwok — Portfolio" },
+  { title: "Lefinno Kwok | Portfolio" },
   {
     name: "description",
     content:
-      "Portfolio of Lefinno Kwok — developer and creator building things that bridge hardware and software.",
+      "Portfolio of Lefinno Kwok, developer and creator building things that bridge hardware and software.",
   },
   { name: "theme-color", content: "#0a0a0a" },
 ];

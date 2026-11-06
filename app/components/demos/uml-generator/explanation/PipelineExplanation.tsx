@@ -123,7 +123,7 @@ function Slide0() {
         input closer to a rendered diagram.
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-        The pipeline runs entirely in your browser — no backend server is
+        The pipeline runs entirely in your browser. No backend server is
         needed. The only external calls are to{" "}
         <strong>OpenRouter</strong> (for the LLM) and{" "}
         <strong>PlantUML&rsquo;s public server</strong> (for rendering).
@@ -168,11 +168,11 @@ function Slide2() {
       </Typography>
       <Box component="ul" sx={{ pl: 2, mb: 2, "& li": { mb: 0.5 } }}>
         <Typography component="li" variant="body2" color="text.secondary">
-          <strong>System prompt</strong> — defines the assistant&rsquo;s role,
+          <strong>System prompt</strong>: defines the assistant&rsquo;s role,
           output format rules, and PlantUML conventions
         </Typography>
         <Typography component="li" variant="body2" color="text.secondary">
-          <strong>User prompt</strong> — includes the diagram type, current
+          <strong>User prompt</strong>: includes the diagram type, current
           PlantUML code (if any), recent conversation context, and the new
           request
         </Typography>

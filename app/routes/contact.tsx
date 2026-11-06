@@ -4,7 +4,7 @@ import { FiMail } from "react-icons/fi";
 import { ScrollReveal } from "~/components/ScrollReveal";
 
 export const meta: Route.MetaFunction = () => [
-  { title: "Contact — Lefinno Kwok" },
+  { title: "Contact | Lefinno Kwok" },
 ];
 
 export default function Contact() {

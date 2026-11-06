@@ -1,7 +1,7 @@
 import type { Route } from "./+types/about";
 
 export const meta: Route.MetaFunction = () => [
-  { title: "About — Lefinno Kwok" },
+  { title: "About | Lefinno Kwok" },
 ];
 
 import { useState } from "react";

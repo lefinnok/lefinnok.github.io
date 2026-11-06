@@ -168,7 +168,7 @@ export function RegisterCircuit() {
       <SigLabel x={187} y={150} text="GND" color={DIM} />
 
       {/* Note */}
-      <Caption x={140} y={165} text="Report §4, Appendix 1 — BC548B NPN transistors" />
+      <Caption x={140} y={165} text="Report §4, Appendix 1: BC548B NPN transistors" />
     </svg>
   );
 }
@@ -231,7 +231,7 @@ export function AluCircuit() {
 
       {/* ×8 note */}
       <Caption x={240} y={188} text="×8 bits" />
-      <Caption x={140} y={198} text="Report §7 — Novel 11-transistor design" />
+      <Caption x={140} y={198} text="Report §7: Novel 11-transistor design" />
 
       {/* +5V */}
       <SigLabel x={80} y={30} text="+5V" color="#fbbf24" />
@@ -311,7 +311,7 @@ export function ClockCircuit() {
       />
       <SigLabel x={65} y={165} text="~2 Hz square wave" color={DIM} />
 
-      <Caption x={140} y={178} text="Report §5, Appendix 3 — Astable Multivibrator" />
+      <Caption x={140} y={178} text="Report §5, Appendix 3: Astable Multivibrator" />
     </svg>
   );
 }
@@ -371,7 +371,7 @@ export function PcCircuit() {
       <Arrow x1={250} y1={55} x2={270} y2={55} color={ORANGE} />
       <SigLabel x={277} y={57} text="BUS" color={ORANGE} />
 
-      <Caption x={140} y={137} text="Master-Slave JK Flip-Flop — BC548B" />
+      <Caption x={140} y={137} text="Master-Slave JK Flip-Flop: BC548B" />
     </svg>
   );
 }
@@ -418,7 +418,7 @@ export function IrCircuit() {
         IO: Output operand (lower nibble) to bus
       </text>
 
-      <Caption x={140} y={145} text="Report §4 — Same D-FF design as registers" />
+      <Caption x={140} y={145} text="Report §4: Same D-FF design as registers" />
     </svg>
   );
 }
@@ -460,7 +460,7 @@ export function RamCircuit() {
         bus resistance issues at final assembly stage
       </text>
 
-      <Caption x={140} y={137} text="Report §9 — Planned but not physically built" />
+      <Caption x={140} y={137} text="Report §9: Planned but not physically built" />
     </svg>
   );
 }
@@ -528,7 +528,7 @@ export function ControlCircuit() {
         Programmed via Arduino + shift register
       </text>
 
-      <Caption x={140} y={157} text="Report §8 — AT28C16-15PC EEPROM" />
+      <Caption x={140} y={157} text="Report §8: AT28C16-15PC EEPROM" />
     </svg>
   );
 }
@@ -590,7 +590,7 @@ export function KeyboardCircuit() {
         (Blender)
       </text>
 
-      <Caption x={140} y={167} text="Report §6 — Logitech MK270R matrix decode" />
+      <Caption x={140} y={167} text="Report §6: Logitech MK270R matrix decode" />
     </svg>
   );
 }
@@ -641,7 +641,7 @@ export function OutputCircuit() {
         Latches bus value on OI signal, displays as decimal
       </text>
 
-      <Caption x={140} y={118} text="Same register design — output to LED array" />
+      <Caption x={140} y={118} text="Same register design: output to LED array" />
     </svg>
   );
 }

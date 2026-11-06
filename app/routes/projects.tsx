@@ -1,7 +1,7 @@
 import type { Route } from "./+types/projects";
 
 export const meta: Route.MetaFunction = () => [
-  { title: "Projects — Lefinno Kwok" },
+  { title: "Projects | Lefinno Kwok" },
 ];
 
 import { Container, Typography, Box } from "@mui/material";
@@ -19,7 +19,7 @@ export default function Projects() {
           Projects
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ mb: 6 }}>
-          A collection of things I've built — spanning hardware, software, and
+          A collection of things I've built, spanning hardware, software, and
           everything in between.
         </Typography>
       </ScrollReveal>

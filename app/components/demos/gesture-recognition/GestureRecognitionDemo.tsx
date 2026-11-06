@@ -146,7 +146,7 @@ const TUTORIAL_STEPS: TutorialStep[] = [
     target: "match-result",
     title: "Try Your Gestures",
     content:
-      "Show your captured poses — the system matches your hand's spectrum to saved references in real-time.",
+      "Show your captured poses. The system matches your hand's spectrum to saved references in real-time.",
     placement: "bottom",
     advance: "manual",
   },

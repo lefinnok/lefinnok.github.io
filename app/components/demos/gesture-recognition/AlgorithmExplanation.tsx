@@ -152,7 +152,7 @@ function Slide0() {
     <SlidePair visual={<HandDiagram />}>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
         MediaPipe Hands detects <strong>21 key points</strong> on the hand
-        in real time — the wrist, each knuckle joint, and every fingertip.
+        in real time: the wrist, each knuckle joint, and every fingertip.
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
         Each landmark carries 3D
@@ -162,7 +162,7 @@ function Slide0() {
       </Typography>
       <Typography variant="body2" color="text.secondary">
         Most recognition systems would feed all 21 points into a neural
-        network. This algorithm takes a different approach — it only needs
+        network. This algorithm takes a different approach: it only needs
         <strong> 6 of them</strong>.
       </Typography>
     </SlidePair>
@@ -192,7 +192,7 @@ function Slide1() {
         </strong>{" "}
         show the analysis connections drawn between these 6 key points.
         This sparse graph captures the essential geometric shape of the
-        hand — how spread or curled the fingers are.
+        hand: how spread or curled the fingers are.
       </Typography>
       <Typography variant="body2" color="text.secondary">
         Why these 6? Fingertips move the most between gestures. Knuckle
@@ -223,7 +223,7 @@ function Slide2() {
         </Typography>
       </Box>
       <Typography variant="body2" color="text.secondary">
-        This gives <strong>11 edges</strong> across 6 nodes — a compact
+        This gives <strong>11 edges</strong> across 6 nodes: a compact
         encoding that captures finger spread, curl, and opposition.
       </Typography>
     </SlidePair>
@@ -246,12 +246,12 @@ function Slide3() {
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
         Division by <Latex math="\|\mathbf{p}_0 - \mathbf{p}_5\|" /> (wrist
         to index base) makes the weights{" "}
-        <strong>scale-invariant</strong> — a small hand and a large hand
+        <strong>scale-invariant</strong>: a small hand and a large hand
         producing the same gesture get the same weights.
       </Typography>
       <Typography variant="body2" color="text.secondary">
         The highlighted edge <strong>W–I</strong> has weight{" "}
-        <strong>195</strong> in this sample "peace sign" pose — the index
+        <strong>195</strong> in this sample "peace sign" pose. The index
         finger is fully extended.
       </Typography>
     </SlidePair>
@@ -276,7 +276,7 @@ function Slide4() {
       </Typography>
       <Latex display math="L = D - A" />
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-        where <Latex math="D" /> is the diagonal degree matrix — each{" "}
+        where <Latex math="D" /> is the diagonal degree matrix: each{" "}
         <strong style={{ color: ACCENT }}>highlighted diagonal
         entry</strong> is the sum of that row's edge weights:
       </Typography>
@@ -298,8 +298,8 @@ function Slide5() {
       visual={<SpectrumBars values={PEACE_SPECTRUM} label="Peace sign" />}
     >
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-        The eigenvalues of the Laplacian — its{" "}
-        <strong>spectrum</strong> — form a geometric fingerprint:
+        The eigenvalues of the Laplacian, its{" "}
+        <strong>spectrum</strong>, form a geometric fingerprint:
       </Typography>
       <Latex
         display
@@ -320,7 +320,7 @@ function Slide5() {
         math="[0,\; 195,\; 340,\; 505,\; 720,\; 970]"
       />
       <Typography variant="body2" color="text.secondary">
-        <Latex math="\lambda_1 = 0" /> always — it reflects the single
+        <Latex math="\lambda_1 = 0" /> always: it reflects the single
         connected component. The remaining 5 values encode the hand's
         shape.
       </Typography>
@@ -365,7 +365,7 @@ function Slide6() {
       </Typography>
       <Typography variant="body2" color="text.secondary">
         Because the fingerprint is position- and scale-independent, only
-        the <em>shape</em> of the gesture matters — not where the hand is
+        the <em>shape</em> of the gesture matters, not where the hand is
         in the frame.
       </Typography>
     </SlidePair>

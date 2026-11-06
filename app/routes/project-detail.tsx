@@ -1,7 +1,7 @@
 import type { Route } from "./+types/project-detail";
 
 export const meta: Route.MetaFunction = () => [
-  { title: "Project — Lefinno Kwok" },
+  { title: "Project | Lefinno Kwok" },
 ];
 
 import {

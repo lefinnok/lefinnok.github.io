@@ -8,14 +8,14 @@ export default function DevEffects() {
         Effects Preview
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 6 }}>
-        Dev page — preview loading animations and effects.
+        Dev page: preview loading animations and effects.
       </Typography>
 
       <Stack spacing={6}>
         {/* Sparse — default, used in InteractiveDemoSlot */}
         <Box>
           <Typography variant="overline" color="text.secondary" sx={{ mb: 1, display: "block" }}>
-            Sparse (default) — Suspense fallback
+            Sparse (default): Suspense fallback
           </Typography>
           <MatrixLoader message="Loading demo..." height={300} />
         </Box>
@@ -23,7 +23,7 @@ export default function DevEffects() {
         {/* Normal density — used in camera viewport */}
         <Box>
           <Typography variant="overline" color="text.secondary" sx={{ mb: 1, display: "block" }}>
-            Normal density — WASM loading
+            Normal density: WASM loading
           </Typography>
           <MatrixLoader
             message="Initializing WASM..."
@@ -35,7 +35,7 @@ export default function DevEffects() {
         {/* No message — used in FbxModelViewer */}
         <Box>
           <Typography variant="overline" color="text.secondary" sx={{ mb: 1, display: "block" }}>
-            No message — model loading overlay
+            No message: model loading overlay
           </Typography>
           <MatrixLoader height={200} />
         </Box>

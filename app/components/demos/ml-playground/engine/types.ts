@@ -16,21 +16,21 @@ export const TRAINING_PRESETS: TrainingPreset[] = [
     name: "Quick",
     samples: 2_000,
     epochs: 5,
-    description: "2K samples, 5 epochs — fast demo (~30s)",
+    description: "2K samples, 5 epochs: fast demo (~30s)",
   },
   {
     id: "balanced",
     name: "Balanced",
     samples: 5_000,
     epochs: 8,
-    description: "5K samples, 8 epochs — recommended (~1-2 min)",
+    description: "5K samples, 8 epochs: recommended (~1-2 min)",
   },
   {
     id: "full",
     name: "Full",
     samples: 8_000,
     epochs: 12,
-    description: "8K samples, 12 epochs — best local accuracy (~2-4 min)",
+    description: "8K samples, 12 epochs: best local accuracy (~2-4 min)",
   },
 ];
 

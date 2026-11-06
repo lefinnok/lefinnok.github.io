@@ -149,7 +149,7 @@ const TUTORIAL_STEPS: TutorialStep[] = [
     target: "architecture-diagram",
     title: "CPU Architecture",
     content:
-      "This diagram shows the CPU modules — registers, ALU, buses, and control unit. Data flows between them.",
+      "This diagram shows the CPU modules: registers, ALU, buses, and control unit. Data flows between them.",
     placement: "right",
     advance: "manual",
   },

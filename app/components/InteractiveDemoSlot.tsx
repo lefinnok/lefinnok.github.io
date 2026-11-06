@@ -46,7 +46,7 @@ export function InteractiveDemoSlot({
         }}
       >
         <Typography variant="overline" color="text.secondary">
-          Interactive demo: {componentName} — coming soon
+          Interactive demo: {componentName} (coming soon)
         </Typography>
       </Box>
     );

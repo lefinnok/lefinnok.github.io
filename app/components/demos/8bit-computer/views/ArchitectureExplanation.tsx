@@ -399,7 +399,7 @@ function Slide0() {
         Inspired by Ben Eater's "Build an 8-bit computer from scratch" video series and the
         SAP-1 (Simple As Possible) architecture from Malvino & Brown's{" "}
         <em>Digital Computer Electronics</em>, the project set out to build a working computer using the
-        fewest integrated circuits possible — constructing logic gates, registers, and an ALU from
+        fewest integrated circuits possible, constructing logic gates, registers, and an ALU from
         individual transistors.
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
@@ -408,7 +408,7 @@ function Slide0() {
         at final assembly due to breadboard resistance limitations on the data bus.
       </Typography>
       <Typography variant="body2" color="text.secondary">
-        This interactive simulator brings the full architecture to life — letting you explore
+        This interactive simulator brings the full architecture to life, letting you explore
         the fetch-decode-execute cycle at the T-state level, inspect each module's live state,
         and write and run assembly programs.
       </Typography>
@@ -442,7 +442,7 @@ function Slide2() {
     <SlidePair visual={<InverterDiagram />}>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
         Every logic gate in the physical computer is built from <strong>NPN transistors</strong>.
-        The fundamental building block is the <strong>inverter</strong> (NOT gate) — a single transistor
+        The fundamental building block is the <strong>inverter</strong> (NOT gate): a single transistor
         with a pull-up resistor.
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
@@ -451,7 +451,7 @@ function Slide2() {
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
         Initial attempts used <strong>buffers</strong>, but voltage from one input could bleed
-        through to the output regardless of the other — making AND gates impossible.
+        through to the output regardless of the other, making AND gates impossible.
         Switching to inverters solved this: two inverters in series form a <strong>NAND gate</strong>,
         add one more inverter to get an AND gate.
       </Typography>
@@ -471,17 +471,17 @@ function Slide3() {
       </Typography>
       <Box component="ol" sx={{ pl: 2.5, mb: 2, "& li": { mb: 1 } }}>
         <Typography component="li" variant="body2" color="text.secondary">
-          <strong style={{ color: ACCENT }}>NOR SR Latch</strong> — stores one bit using
+          <strong style={{ color: ACCENT }}>NOR SR Latch</strong>: stores one bit using
           two cross-coupled NOR gates (2 transistors each). SET and RESET inputs control the state.
         </Typography>
         <Typography component="li" variant="body2" color="text.secondary">
-          <strong style={{ color: ACCENT }}>Edge Detector</strong> — generates a brief pulse on
+          <strong style={{ color: ACCENT }}>Edge Detector</strong>: generates a brief pulse on
           the rising clock edge using a capacitor + resistor + diode circuit. This was the first
           original circuit design in the project, requiring custom modifications to handle capacitor
           discharge issues.
         </Typography>
         <Typography component="li" variant="body2" color="text.secondary">
-          <strong style={{ color: ACCENT }}>Enable Circuit</strong> — two AND gates that gate
+          <strong style={{ color: ACCENT }}>Enable Circuit</strong>: two AND gates that gate
           the data and clock signals. A solid-state relay enables/disables clock pulses for load control.
         </Typography>
       </Box>
@@ -497,7 +497,7 @@ function Slide4() {
   return (
     <Box>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-        The <strong>clock circuit</strong> is based on an <strong>astable multivibrator</strong> —
+        The <strong>clock circuit</strong> is based on an <strong>astable multivibrator</strong>:
         two transistors cross-coupled through capacitors that alternate charging and discharging,
         producing a continuous square wave at approximately <strong>2 Hz</strong>.
       </Typography>
@@ -508,7 +508,7 @@ function Slide4() {
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
         An early problem: the clock worked with discrete transistor circuits but failed with IC
-        components. Investigation revealed the output wasn't cleanly switching — voltage fluctuated
+        components. Investigation revealed the output wasn't cleanly switching; voltage fluctuated
         0.5-1V instead of reaching true 0V. Borrowing from the 555 timer design, an{" "}
         <strong>SR latch</strong> was added to produce discrete HIGH/LOW output, and a{" "}
         <strong>grounding transistor</strong> ensured clean 0V when LOW.
@@ -529,7 +529,7 @@ function Slide5() {
       </Typography>
       <Divider sx={{ my: 2, borderColor: "rgba(255,255,255,0.06)" }} />
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-        The <strong>ALU</strong> is the most innovative module — a novel <strong>11-transistor
+        The <strong>ALU</strong> is the most innovative module: a novel <strong>11-transistor
         voltage-dependent full adder</strong>. Instead of building a conventional full adder from
         XOR gates (which would need 7+ inverters each), it exploits the analog properties of
         transistors:
@@ -537,7 +537,7 @@ function Slide5() {
       <Box component="ul" sx={{ pl: 2, mb: 2, "& li": { mb: 0.75 } }}>
         <Typography component="li" variant="body2" color="text.secondary">
           Three input transistors wired in <strong>parallel</strong> act as a variable resistance
-          circuit — more HIGH inputs = lower resistance
+          circuit: more HIGH inputs = lower resistance
         </Typography>
         <Typography component="li" variant="body2" color="text.secondary">
           A <strong>voltage divider</strong> separates the four possible input-count states
@@ -561,7 +561,7 @@ function Slide6() {
     <Box>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
         The <strong>keyboard input</strong> was the most challenging module. A Logitech MK270R
-        Bluetooth keyboard was disassembled to access its key matrix — two layers of etched
+        Bluetooth keyboard was disassembled to access its key matrix: two layers of etched
         plastic sheets (11 + 12 pins) separated by a spacer layer.
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
@@ -590,7 +590,7 @@ function Slide7() {
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
         <strong>Control Logic</strong> is implemented using <strong>AT28C16-15PC EEPROM</strong> chips
         (2K addresses, 8-bit data). Rather than building a complex combinational logic circuit from
-        transistors, the microcode is stored as a lookup table in the EEPROM — input the opcode and
+        transistors, the microcode is stored as a lookup table in the EEPROM: input the opcode and
         T-state, get back the control word.
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
@@ -621,11 +621,11 @@ function Slide8() {
       </Typography>
       <Box component="ul" sx={{ pl: 2, mb: 2, "& li": { mb: 0.75 } }}>
         <Typography component="li" variant="body2" color="text.secondary">
-          <strong>T0</strong>: <SignalChip label="CO" /> <SignalChip label="MI" /> —
+          <strong>T0</strong>: <SignalChip label="CO" /> <SignalChip label="MI" />:
           Program Counter outputs its address, MAR latches it
         </Typography>
         <Typography component="li" variant="body2" color="text.secondary">
-          <strong>T1</strong>: <SignalChip label="RO" /> <SignalChip label="II" /> <SignalChip label="CE" /> —
+          <strong>T1</strong>: <SignalChip label="RO" /> <SignalChip label="II" /> <SignalChip label="CE" />:
           RAM outputs the instruction byte, IR latches it, PC increments
         </Typography>
       </Box>
@@ -635,10 +635,10 @@ function Slide8() {
       </Typography>
       <Box component="ul" sx={{ pl: 2, "& li": { mb: 0.5 } }}>
         <Typography component="li" variant="body2" color="text.secondary">
-          <strong>T2</strong>: <SignalChip label="IO" /> <SignalChip label="MI" /> — IR outputs operand (9) to MAR
+          <strong>T2</strong>: <SignalChip label="IO" /> <SignalChip label="MI" />: IR outputs operand (9) to MAR
         </Typography>
         <Typography component="li" variant="body2" color="text.secondary">
-          <strong>T3</strong>: <SignalChip label="RO" /> <SignalChip label="AI" /> — RAM[9] outputs to Register A
+          <strong>T3</strong>: <SignalChip label="RO" /> <SignalChip label="AI" />: RAM[9] outputs to Register A
         </Typography>
       </Box>
     </SlidePair>
@@ -704,7 +704,7 @@ function Slide10() {
               </Link>
             ) : r.note ? (
               <Box component="span" sx={{ color: "rgba(255,255,255,0.35)", fontStyle: "italic" }}>
-                — {r.note}
+                ({r.note})
               </Box>
             ) : null}
           </Typography>
@@ -784,7 +784,7 @@ export function ArchitectureExplanation({
           <Box>
             <Typography variant="h5">How It Works</Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-              8-bit breadboard computer — transistor-level SAP-1 architecture
+              8-bit breadboard computer: transistor-level SAP-1 architecture
             </Typography>
           </Box>
           <IconButton onClick={onClose} size="small" sx={{ mt: -0.5 }}>

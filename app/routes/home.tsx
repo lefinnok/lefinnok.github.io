@@ -10,7 +10,7 @@ import { LanguagesDiagram } from "~/components/LanguagesDiagram";
 import { HardwarePipelineDiagram } from "~/components/HardwarePipelineDiagram";
 
 export const meta: Route.MetaFunction = () => [
-  { title: "Lefinno Kwok — Portfolio" },
+  { title: "Lefinno Kwok | Portfolio" },
 ];
 
 // Direct import for lightweight components
@@ -135,7 +135,7 @@ export default function Home() {
                   fontSize: { xs: "1rem", md: "1.15rem" },
                 }}
               >
-                Building things that bridge hardware and software — from 8-bit
+                Building things that bridge hardware and software, from 8-bit
                 computers to AI-powered web applications.
               </Typography>
               <Stack direction="row" spacing={2}>
