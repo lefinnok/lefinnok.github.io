@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Editorial — style tile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --cream:#F6F3EF; --ink:#171220; --muted:#7C756B; --line:#DCD4C8;
+    --coral:#D9604A; --sand:#EFE7DA;
+    --serif:"Instrument Serif",Georgia,serif; --body:"Inter",system-ui,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--cream);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .mono{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase}
+  .wrap{max-width:1320px;margin:0 auto;padding:0 40px}
+  header{border-bottom:1px solid var(--line)}
+  .nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:86px}
+  .brand{font-family:var(--serif);font-size:22px;letter-spacing:-.01em}
+  .nav nav{display:flex;gap:36px;justify-self:center}
+  .nav nav a{font-size:12.5px;letter-spacing:.02em;color:#4b443c}
+  .nav nav a:hover{color:var(--coral)}
+  .nav .right{justify-self:end;display:flex;align-items:center;gap:18px}
+  .nav .right a{border-bottom:1px solid var(--ink);padding-bottom:2px;font-size:12.5px}
+  .hero{padding:80px 0 30px}
+  .hero .kicker{color:var(--coral);margin-bottom:22px;display:block}
+  .hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(56px,8vw,120px);line-height:.94;letter-spacing:-.02em;max-width:15ch}
+  .hero h1 em{font-style:italic;color:var(--coral)}
+  .hero .sub{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-top:36px;padding-bottom:40px;border-bottom:1px solid var(--line)}
+  .hero .sub p{max-width:52ch;font-size:15.5px;line-height:1.65;color:#4b443c}
+  .hero .sub .meta{text-align:right;color:var(--muted);line-height:1.9}
+  .paths{display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:40px 0 80px}
+  .path{display:grid;grid-template-rows:auto 300px auto;border-top:1px solid var(--ink);padding-top:18px;gap:18px}
+  .path .head{display:flex;justify-content:space-between;align-items:baseline}
+  .path h2{font-family:var(--serif);font-weight:400;font-size:clamp(40px,4.4vw,64px);line-height:1;letter-spacing:-.02em}
+  .path .head span{color:var(--muted)}
+  .path .img{position:relative;overflow:hidden;background:var(--sand)}
+  .path .img svg{position:absolute;inset:0;width:100%;height:100%}
+  .path p{font-size:14px;line-height:1.6;color:#4b443c;max-width:44ch}
+  .path .go{display:inline-flex;gap:10px;align-items:center;margin-top:6px;font-size:13px}
+  .path .go i{display:block;width:30px;height:1px;background:var(--ink);transition:width .3s}
+  .path:hover .go i{width:52px}
+  section.work{border-top:1px solid var(--line);padding:70px 0}
+  .sechead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:34px}
+  .sechead h2{font-family:var(--serif);font-weight:400;font-size:clamp(34px,4vw,54px);letter-spacing:-.02em}
+  .sechead .mono{color:var(--muted)}
+  .row{display:grid;grid-template-columns:120px 1.2fr 1.4fr 160px;gap:24px;padding:24px 0;border-top:1px solid var(--line);align-items:start}
+  .row:last-child{border-bottom:1px solid var(--line)}
+  .row .year{font-family:var(--mono);font-size:11px;color:var(--coral);letter-spacing:.1em;padding-top:6px}
+  .row h3{font-family:var(--serif);font-weight:400;font-size:26px;line-height:1.1;letter-spacing:-.01em}
+  .row p{font-size:13.5px;line-height:1.6;color:#4b443c}
+  .row .tags{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right;line-height:1.9}
+  section.lab{border-top:1px solid var(--line);padding:70px 0;background:#EFE9E0}
+  .grid{display:grid;grid-template-columns:1.2fr .9fr .9fr;gap:22px}
+  .card{display:flex;flex-direction:column;gap:14px}
+  .card .img{height:240px;position:relative;overflow:hidden;background:var(--ink)}
+  .card .img svg{position:absolute;inset:0;width:100%;height:100%}
+  .card h3{font-family:var(--serif);font-weight:400;font-size:24px}
+  .card p{font-size:13px;line-height:1.55;color:#4b443c}
+  footer{padding:50px 0 80px;border-top:1px solid var(--line)}
+  .foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:var(--muted);font-size:12px}
+  .foot a{border-bottom:1px solid var(--coral);color:var(--ink)}
+  @media(max-width:980px){
+    .nav{grid-template-columns:1fr auto;height:72px}
+    .nav nav{display:none}
+    .hero h1{font-size:clamp(44px,10vw,72px)}
+    .hero .sub{flex-direction:column;align-items:flex-start}
+    .hero .sub .meta{text-align:left}
+    .paths{grid-template-columns:1fr}
+    .row{grid-template-columns:70px 1fr;row-gap:8px}
+    .row p{grid-column:2}
+    .row .tags{grid-column:2;text-align:left}
+    .grid{grid-template-columns:1fr}
+    .wrap{padding:0 22px}
+  }
+</style>
+</head>
+<body>
+<header><div class="wrap nav">
+  <a class="brand" href="#">Lefinno Kwok</a>
+  <nav><a href="#work">Work</a><a href="#lab">Lab</a><a href="#">About</a><a href="#">Contact</a></nav>
+  <div class="right"><span class="mono" style="color:var(--muted)">HK</span><a href="#">Résumé ↗</a></div>
+</div></header>
+
+<main>
+<section class="hero wrap">
+  <span class="mono kicker">AI platform engineer · Hong Kong</span>
+  <h1>I build systems that can be <em>audited</em>, and games that can be finished.</h1>
+  <div class="sub">
+    <p>Enterprise AI delivery at Deloitte, research-grade decision systems, and a long-running practice in games and hardware. Two tracks, one body of evidence.</p>
+    <div class="meta mono">Currently<br><span style="color:var(--ink)">Analyst, Deloitte</span><br>2026</div>
+  </div>
+</section>
+
+<section class="wrap paths">
+  <a class="path" href="#work">
+    <div class="head"><h2>Work</h2><span class="mono">01</span></div>
+    <div class="img">
+      <svg viewBox="0 0 600 300" fill="none" stroke="#171220" stroke-width="1" opacity=".55">
+        <path d="M0 250 C 90 220 160 280 250 250 S 380 170 470 210 S 560 260 600 230"/>
+        <path d="M0 270 C 80 240 170 300 260 270 S 390 190 480 230 S 570 280 600 250" stroke-opacity=".6"/>
+        <path d="M0 230 C 110 200 180 260 270 230 S 400 150 490 190 S 570 240 600 210" stroke-opacity=".35"/>
+        <circle cx="250" cy="250" r="4" fill="#171220"/>
+        <circle cx="470" cy="210" r="4" fill="#D9604A"/>
+      </svg>
+    </div>
+    <div><p>Roles, delivery, integration and the numbers behind them. Written for people who have to decide whether to interview me.</p><span class="go">Enter work <i></i></span></div>
+  </a>
+  <a class="path" href="#lab">
+    <div class="head"><h2>Lab</h2><span class="mono">02</span></div>
+    <div class="img" style="background:var(--ink)">
+      <svg viewBox="0 0 600 300" fill="none" stroke="#F6F3EF" stroke-width="1" opacity=".7">
+        <path d="M80 260 L80 150 L150 110 L220 150 L220 260"/>
+        <path d="M260 260 L260 90 L340 50 L420 90 L420 260"/>
+        <path d="M460 260 L460 170 L520 140 L580 170 L580 260"/>
+        <path d="M80 150 L150 190 L220 150 M260 90 L340 130 L420 90 M460 170 L520 200 L580 170" stroke-opacity=".5"/>
+        <circle cx="340" cy="130" r="4" fill="#D9604A" stroke="none"/>
+      </svg>
+    </div>
+    <div><p>Games, transistor computers, interactive installations and the prototypes that never shipped. Written for the people who ask what I do for fun.</p><span class="go">Enter lab <i></i></span></div>
+  </a>
+</section>
+
+<section class="work" id="work"><div class="wrap">
+  <div class="sechead"><h2>Selected work</h2><span class="mono">2021 to 2026</span></div>
+  <div class="row"><span class="year">2026</span><h3>Enterprise AI platform</h3><p>Identity, data access, alerting and offline porting for an enterprise AI agent platform. Client withheld.</p><span class="tags">Deloitte<br>Go · Rust · Java</span></div>
+  <div class="row"><span class="year">2025</span><h3>Probabilistic decision support</h3><p>Natural language over verifiable Bayesian, MDP and MCDA models, with provenance and quality grading on every fact.</p><span class="tags">Capstone<br>1,069 tests</span></div>
+  <div class="row"><span class="year">2026</span><h3>GGJHK event platform</h3><p>Bilingual operations platform for 300 to 400 jammers: registration, check-in, teams, judging, certificates.</p><span class="tags">Volunteer<br>Go · SQLite</span></div>
+  <div class="row"><span class="year">2024</span><h3>Digital practice deployment</h3><p>End-to-end deployment of a new digital practice for a luxury retail client, plus an IoT measurement pilot.</p><span class="tags">Deloitte<br>Client work</span></div>
+</div></section>
+
+<section class="lab" id="lab"><div class="wrap">
+  <div class="sechead"><h2>From the lab</h2><span class="mono">2018 to 2026</span></div>
+  <div class="grid">
+    <article class="card"><div class="img"><svg viewBox="0 0 600 300" fill="none" stroke="#F6F3EF" stroke-width="1" opacity=".6"><path d="M0 240 C 120 200 180 280 300 240 S 480 160 600 220"/><path d="M0 270 C 110 230 200 310 320 270 S 500 190 600 250" stroke-opacity=".5"/><circle cx="300" cy="240" r="4" fill="#D9604A" stroke="none"/></svg></div><h3>Eccentricity</h3><p>Steampunk engineering roguelike. Jam prototype to Steam release.</p></article>
+    <article class="card"><div class="img" style="background:#EFE7DA"><svg viewBox="0 0 400 300" fill="none" stroke="#171220" stroke-width="1" opacity=".6"><path d="M60 260 L60 140 L130 100 L200 140 L200 260"/><path d="M230 260 L230 110 L300 80 L370 110 L370 260"/><path d="M60 140 L130 180 L200 140 M230 110 L300 150 L370 110" stroke-opacity=".5"/></svg></div><h3>8-bit computer</h3><p>Discrete transistor logic, custom ISA, browser simulator.</p></article>
+    <article class="card"><div class="img" style="background:#D9604A"><svg viewBox="0 0 400 300" fill="none" stroke="#F6F3EF" stroke-width="1" opacity=".8"><circle cx="200" cy="150" r="70"/><circle cx="200" cy="150" r="40"/><path d="M0 150 H130 M270 150 H400"/><circle cx="200" cy="150" r="5" fill="#F6F3EF"/></svg></div><h3>Binmin</h3><p>Colour-swap rhythm game in three days for GGJ 2026.</p></article>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap foot">
+  <span>Editorial · cream and ink, Instrument Serif display, coral accent, chaptered rows.</span>
+  <a href="mailto:lefinnokwok@gmail.com">lefinnokwok@gmail.com</a>
+</div></footer>
+</body>
+</html>

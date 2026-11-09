@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bulletin — style tile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --orange:#E8501E; --paper:#F2EEE7; --ink:#141414; --white:#fff;
+    --display:"Archivo Black",system-ui,sans-serif; --body:"Archivo",system-ui,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--orange);color:var(--white);font-family:var(--body);-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .mono{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase}
+  .wrap{max-width:1360px;margin:0 auto;padding:0 36px}
+  header{padding:22px 0;border-bottom:1px solid rgba(255,255,255,.4)}
+  .nav{display:flex;justify-content:space-between;align-items:center;gap:20px}
+  .nav .left{display:flex;align-items:center;gap:16px}
+  .nav .num{font-family:var(--mono);font-size:12px}
+  .nav .brand{font-family:var(--display);font-size:15px;letter-spacing:.02em}
+  .nav nav{display:flex;gap:28px}
+  .nav nav a{font-size:13px}
+  .nav nav a:hover{text-decoration:underline;text-underline-offset:4px}
+  .nav .arrow{font-size:20px;line-height:1}
+  .hero{padding:70px 0 50px;text-align:center}
+  .hero h1{font-family:var(--display);font-size:clamp(48px,8.4vw,128px);line-height:.92;letter-spacing:-.02em;text-transform:uppercase}
+  .hero p{max-width:60ch;margin:22px auto 0;font-size:15px;line-height:1.6;color:rgba(255,255,255,.9)}
+  .paths{display:grid;grid-template-columns:1.1fr 1fr .7fr;gap:18px;padding-bottom:70px}
+  .path{display:flex;flex-direction:column;min-height:440px;padding:24px;position:relative;transition:transform .25s ease}
+  .path:hover{transform:translateY(-4px)}
+  .path .glyph{font-family:var(--display);font-size:clamp(64px,7vw,104px);line-height:.8;letter-spacing:-.04em}
+  .path h2{font-family:var(--display);font-size:clamp(22px,2.4vw,32px);text-transform:uppercase;margin-top:auto;letter-spacing:-.01em}
+  .path p{font-size:13.5px;line-height:1.55;margin-top:10px;max-width:34ch}
+  .path .go{position:absolute;top:22px;right:22px;font-size:18px}
+  .path.paper{background:var(--paper);color:var(--ink)}
+  .path.paper p{color:#4a463f}
+  .path.ink{background:var(--ink);color:var(--paper)}
+  .path.ink p{color:#b9b3a8}
+  .path.outline{border:1px solid rgba(255,255,255,.7);color:var(--white)}
+  .path.outline p{color:rgba(255,255,255,.85)}
+  .band{background:var(--paper);color:var(--ink);margin:0 16px;padding:64px 0}
+  .band.ink{background:var(--ink);color:var(--paper);margin-top:16px}
+  .band .wrap{padding:0 44px}
+  .sechead{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid currentColor;padding-bottom:12px;margin-bottom:34px;opacity:.95}
+  .sechead h2{font-family:var(--display);text-transform:uppercase;font-size:clamp(26px,3.2vw,44px);letter-spacing:-.01em}
+  .timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:40px}
+  .tl{border-top:1px solid currentColor;padding-top:12px}
+  .tl b{display:block;font-family:var(--display);font-size:15px;margin-top:8px}
+  .tl small{opacity:.65;font-size:12.5px}
+  .cases{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .case{border:1px solid currentColor;padding:20px;min-height:190px;display:flex;flex-direction:column;gap:10px}
+  .case h3{font-family:var(--display);font-size:17px;letter-spacing:-.01em}
+  .case p{font-size:13px;line-height:1.55;opacity:.7}
+  .case .m{margin-top:auto;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase}
+  .case:hover{background:rgba(255,255,255,.06)}
+  .band:not(.ink) .case:hover{background:rgba(0,0,0,.04)}
+  .art{position:absolute;inset:auto -30px -30px auto;width:55%;opacity:.14;pointer-events:none}
+  footer{padding:36px 0 64px}
+  .foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:flex-end}
+  .foot .note{max-width:46ch;font-size:12.5px;line-height:1.6;color:rgba(255,255,255,.85)}
+  .swatches{display:flex;gap:8px}
+  .sw{width:56px;height:38px;border:1px solid rgba(255,255,255,.5)}
+  @media(max-width:960px){
+    .paths{grid-template-columns:1fr;padding-bottom:44px}
+    .path{min-height:260px}
+    .timeline{grid-template-columns:1fr 1fr}
+    .cases{grid-template-columns:1fr}
+    .band .wrap{padding:0 24px}
+    .wrap{padding:0 22px}
+    .nav nav{display:none}
+  }
+</style>
+</head>
+<body>
+<header><div class="wrap nav">
+  <div class="left"><span class="num">1</span><span class="brand">LEFINNO KWOK</span></div>
+  <nav><a href="#work">Work</a><a href="#lab">Lab</a><a href="#">About</a><a href="#">Contact</a></nav>
+  <span class="arrow">↗</span>
+</div></header>
+
+<main>
+<section class="hero wrap">
+  <h1>Choose your<br>path</h1>
+  <p>Two ways into the same builder. One is evidence for hiring, the other is the craft that keeps the evidence interesting.</p>
+</section>
+
+<section class="wrap paths">
+  <a class="path paper" href="#work">
+    <span class="go">↗</span><span class="mono">01 / Professional</span>
+    <div class="glyph">W</div>
+    <h2>Work</h2>
+    <p>Enterprise AI delivery, integration and research. The roles, the case studies, the numbers.</p>
+  </a>
+  <a class="path ink" href="#lab">
+    <span class="go">↗</span><span class="mono">02 / Creative</span>
+    <div class="glyph">L</div>
+    <h2>Lab</h2>
+    <p>Commercial games, hardware and installations. The long-running practice.</p>
+  </a>
+  <a class="path outline" href="#">
+    <span class="go">↗</span><span class="mono">03 / You</span>
+    <div class="glyph">CV</div>
+    <h2>Résumé</h2>
+    <p>One page, current role, evidence, contact.</p>
+  </a>
+</section>
+
+<section class="band" id="work"><div class="wrap">
+  <div class="sechead"><h2>Selected work</h2><span class="mono">2021 to 2026</span></div>
+  <div class="timeline">
+    <div class="tl"><span class="mono">2021</span><b>AI Mnemonic</b><small>Embedded and video systems</small></div>
+    <div class="tl"><span class="mono">2024</span><b>HKSTP · Deloitte</b><small>Automation to enterprise delivery</small></div>
+    <div class="tl"><span class="mono">2025</span><b>PDSS capstone</b><small>Research-grade decision system</small></div>
+    <div class="tl"><span class="mono">2026</span><b>Deloitte Analyst</b><small>Enterprise AI platform</small></div>
+  </div>
+  <div class="cases">
+    <article class="case"><span class="mono">Case 01</span><h3>Probabilistic Decision Support</h3><p>Natural language over verifiable probabilistic models, provenance on every fact.</p><span class="m">1,069 tests · 5 backends</span></article>
+    <article class="case"><span class="mono">Case 02</span><h3>GGJHK Event Platform</h3><p>Bilingual operations for 300 to 400 jammers, eight workspaces, one VPS.</p><span class="m">168 tests · 7 suites</span></article>
+    <article class="case"><span class="mono">Case 03</span><h3>Enterprise AI Integration</h3><p>Identity, data access, alerting and offline porting. Client withheld.</p><span class="m">7 components · 614 commits</span></article>
+  </div>
+</div></section>
+
+<section class="band ink" id="lab"><div class="wrap">
+  <div class="sechead"><h2>From the lab</h2><span class="mono">2018 to 2026</span></div>
+  <div class="cases">
+    <article class="case"><span class="mono">Commercial</span><h3>Eccentricity</h3><p>Jam prototype to Steam release. 1,656 commits, 482 scenes.</p><span class="m">Steam</span></article>
+    <article class="case"><span class="mono">Hardware</span><h3>8-bit Computer</h3><p>Discrete transistor logic, custom ISA, browser simulator.</p><span class="m">2020</span></article>
+    <article class="case"><span class="mono">Jam</span><h3>Binmin</h3><p>Colour-swap rhythm game in three days for GGJ 2026.</p><span class="m">38 scenes</span></article>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap foot">
+  <div class="note"><strong>Bulletin.</strong> Orange as ground, paper and ink as content, Archivo Black display, mono captions, numbered sections. The loudest of the four.</div>
+  <div class="swatches"><span class="sw" style="background:#E8501E"></span><span class="sw" style="background:#F2EEE7"></span><span class="sw" style="background:#141414"></span></div>
+</div></footer>
+</body>
+</html>

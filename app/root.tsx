@@ -8,37 +8,30 @@ import {
 } from "react-router";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+
+import "@fontsource-variable/archivo";
+import "@fontsource-variable/inter";
+import "@fontsource/jetbrains-mono/400.css";
+import "@fontsource/jetbrains-mono/500.css";
 
 import type { Route } from "./+types/root";
 import { theme } from "./theme/theme";
-import { Navbar } from "./components/Navbar";
-import { Footer } from "./components/Footer";
+import { SiteNav } from "./components/SiteNav";
+import { SiteFooter } from "./components/SiteFooter";
+import { pageMeta } from "./lib/meta";
 import "./app.css";
 
-export const meta: Route.MetaFunction = () => [
-  { title: "Lefinno Kwok | Portfolio" },
-  {
-    name: "description",
-    content:
-      "Portfolio of Lefinno Kwok, developer and creator building things that bridge hardware and software.",
-  },
-  { name: "theme-color", content: "#0a0a0a" },
+export const links: Route.LinksFunction = () => [
+  { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+  { rel: "icon", href: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+  { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
 ];
 
-export const links: Route.LinksFunction = () => [
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
-  {
-    rel: "preconnect",
-    href: "https://fonts.gstatic.com",
-    crossOrigin: "anonymous",
-  },
-  {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap",
-  },
-];
+export const meta: Route.MetaFunction = () =>
+  pageMeta({
+    title: "Lefinno Kwok | AI systems and craft",
+    path: "/",
+  });
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -50,7 +43,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <a className="skip-link" href="#main">
+          Skip to content
+        </a>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <SiteNav />
+          <main id="main">{children}</main>
+          <SiteFooter />
+        </ThemeProvider>
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -59,62 +60,32 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          minHeight: "100vh",
-        }}
-      >
-        <Navbar />
-        <Box component="main" sx={{ flex: 1 }}>
-          <Outlet />
-        </Box>
-        <Footer />
-      </Box>
-    </ThemeProvider>
-  );
+  return <Outlet />;
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let message = "Oops!";
+  let message = "Something went wrong";
   let details = "An unexpected error occurred.";
-  let stack: string | undefined;
 
   if (isRouteErrorResponse(error)) {
     message = error.status === 404 ? "404" : "Error";
     details =
       error.status === 404
-        ? "The requested page could not be found."
+        ? "That page does not exist."
         : error.statusText || details;
-  } else if (import.meta.env.DEV && error && error instanceof Error) {
+  } else if (import.meta.env.DEV && error instanceof Error) {
     details = error.message;
-    stack = error.stack;
   }
 
   return (
-    <Box sx={{ pt: 8, px: 4, maxWidth: 800, mx: "auto" }}>
-      <Typography variant="h2">{message}</Typography>
-      <Typography variant="body1" sx={{ mt: 2 }}>
+    <div className="container" style={{ padding: "96px 0" }}>
+      <span className="mono">{message}</span>
+      <h1 style={{ fontFamily: "var(--display)", fontSize: "clamp(40px, 6vw, 72px)", margin: "12px 0" }}>
         {details}
-      </Typography>
-      {stack && (
-        <Box
-          component="pre"
-          sx={{
-            mt: 2,
-            p: 2,
-            overflow: "auto",
-            bgcolor: "background.paper",
-            borderRadius: 2,
-          }}
-        >
-          <code>{stack}</code>
-        </Box>
-      )}
-    </Box>
+      </h1>
+      <a className="btn" href="/">
+        Back home
+      </a>
+    </div>
   );
 }

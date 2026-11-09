@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pathways plus — style tile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#F2EFE9; --paper-2:#F8F5F0; --ink:#151412; --accent:#C2542D; --muted:#8B8579;
+    --line:rgba(21,20,18,.16); --line-inv:rgba(242,239,233,.18);
+    --display:"Archivo",system-ui,sans-serif; --body:"Inter",system-ui,sans-serif;
+    --serif:"Instrument Serif",Georgia,serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .mono{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+  .wrap{max-width:1440px;margin:0 auto;padding:0 40px}
+  header{border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:76px;gap:20px}
+  .brand{font-family:var(--display);font-weight:900;font-size:20px;letter-spacing:-.02em;display:flex;align-items:center;gap:10px;white-space:nowrap}
+  .brand i{width:9px;height:9px;background:var(--accent);display:block}
+  .nav nav{display:flex;gap:34px}
+  .nav nav a{font-size:13px}
+  .nav nav a:hover{color:var(--accent)}
+  .btn{border:1px solid var(--ink);padding:9px 16px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+  .btn:hover{background:var(--ink);color:var(--paper)}
+
+  /* chooser */
+  .chooser{display:grid;grid-template-columns:1fr 1px 1fr;min-height:min(74vh,720px);border-bottom:1px solid var(--line)}
+  .half{position:relative;overflow:hidden;padding:40px;display:grid;grid-template-rows:auto 1fr auto;gap:20px;transition:background .35s ease}
+  .half .top{display:flex;justify-content:space-between;align-items:flex-start}
+  .half h1{font-family:var(--display);font-weight:900;text-transform:uppercase;letter-spacing:-.045em;line-height:.84;font-size:clamp(54px,8vw,116px)}
+  .mid{align-self:center}
+  .half p{max-width:34ch;font-size:15px;line-height:1.55;margin-top:16px;color:var(--muted)}
+  .half .enter{display:inline-flex;gap:12px;align-items:center;margin-top:4px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+  .half .enter span{display:block;width:38px;height:1px;background:currentColor;transition:width .3s}
+  .half:hover .enter span{width:64px}
+  .work{background:var(--paper)}
+  .lab{background:var(--ink);color:var(--paper)}
+  .lab p{color:#A9A399}
+  .seam{background:var(--accent);position:relative}
+  .seam::before{content:"";position:absolute;top:0;left:-3px;width:7px;height:7px;background:var(--accent);border-radius:50%}
+  .preview{border:1px solid var(--line);padding:18px;display:grid;gap:8px;max-width:420px;background:rgba(255,255,255,.28)}
+  .lab .preview{border-color:var(--line-inv);background:rgba(255,255,255,.03)}
+  .preview b{font-family:var(--display);font-weight:700;font-size:15px}
+  .preview small{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .lab .preview small{color:#A9A399}
+  .art{position:absolute;right:-40px;bottom:-60px;width:60%;max-width:560px;opacity:.55;pointer-events:none;color:var(--ink)}
+  .lab .art{color:var(--paper);opacity:.45}
+  .art path{stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 2.2s ease forwards .2s}
+  @keyframes draw{to{stroke-dashoffset:0}}
+
+  /* work */
+  .band{border-bottom:1px solid var(--line);padding:68px 0}
+  .sechead{display:flex;align-items:baseline;gap:18px;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:30px}
+  .sechead h2{font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:-.02em;font-size:clamp(26px,3vw,40px)}
+  .sechead .n{color:var(--accent);font-family:var(--mono);font-size:11px;letter-spacing:.14em}
+  .sechead .r{margin-left:auto;color:var(--muted);font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase}
+
+  /* signal-style metrics */
+  .metrics{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:8px 0 42px}
+  .metric{padding:24px 22px;border-right:1px solid var(--line)}
+  .metric:last-child{border-right:0}
+  .metric b{display:block;font-family:var(--display);font-weight:800;font-size:clamp(28px,3.4vw,46px);letter-spacing:-.035em;line-height:1}
+  .metric span{display:block;margin-top:8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+  .timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:46px}
+  .tl{border-top:1px solid var(--ink);padding-top:14px;position:relative}
+  .tl::before{content:"";position:absolute;top:-3px;left:0;width:5px;height:5px;background:var(--accent);border-radius:50%}
+  .tl b{display:block;font-family:var(--display);font-weight:700;font-size:16px;margin-top:6px}
+  .tl small{color:var(--muted);font-size:13px}
+
+  /* serif case feature */
+  .feature{display:grid;grid-template-columns:1.45fr .55fr;gap:48px;border-top:1px solid var(--ink);padding-top:28px}
+  .feature .lead{font-family:var(--serif);font-weight:400;font-size:clamp(34px,3.9vw,54px);line-height:1.02;letter-spacing:-.01em}
+  .feature .lead em{font-style:italic;color:var(--accent)}
+  .feature .prose{font-family:var(--serif);font-size:19.5px;line-height:1.62;color:#3f3a33;margin-top:18px;max-width:64ch}
+  .feature .prose::first-letter{font-family:var(--serif);font-size:66px;float:left;line-height:.78;padding:4px 10px 0 0;color:var(--accent)}
+  .read{display:inline-flex;gap:12px;align-items:center;margin-top:20px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+  .read i{display:block;width:32px;height:1px;background:var(--ink);transition:width .3s}
+  .read:hover i{width:56px}
+  .meta{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:grid;gap:16px;align-content:start}
+  .meta b{display:block;color:var(--ink);font-weight:400;margin-top:4px;letter-spacing:.04em}
+
+  /* lab */
+  .labband{background:var(--ink);color:var(--paper);padding:68px 0;border-bottom:1px solid var(--line-inv)}
+  .labband .sechead{border-color:var(--line-inv)}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .case{border:1px solid var(--line);padding:20px;min-height:180px;display:flex;flex-direction:column;gap:10px;transition:transform .3s,border-color .3s}
+  .case:hover{transform:translateY(-3px);border-color:var(--accent)}
+  .case h3{font-family:var(--display);font-weight:700;font-size:19px;letter-spacing:-.01em}
+  .case p{font-size:13.5px;line-height:1.5;color:var(--muted)}
+  .case .metric{margin-top:auto;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+  .labband .case{border-color:var(--line-inv)}
+  .labband .case p{color:#A9A399}
+
+  footer{padding:42px 0 70px}
+  .foot{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap;align-items:flex-end}
+  .type-spec{display:flex;gap:28px;align-items:flex-end}
+  .type-spec div{line-height:1}
+  .type-spec .aa{font-family:var(--display);font-weight:900;font-size:44px;letter-spacing:-.04em}
+  .type-spec .ss{font-family:var(--serif);font-style:italic;font-size:46px}
+  .type-spec .mm{font-family:var(--mono);font-size:20px;letter-spacing:.06em}
+  .type-spec small{display:block;margin-top:8px;font-family:var(--mono);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .note{max-width:46ch;font-size:13px;line-height:1.65;color:#4b443c}
+  .chips{display:flex;gap:8px;margin-top:14px}
+  .chip{width:52px;height:34px;border:1px solid var(--line);display:grid;place-items:end;padding:4px;font-family:var(--mono);font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:#fff}
+
+  @media(max-width:960px){
+    .chooser{grid-template-columns:1fr;grid-template-rows:auto 1px auto;min-height:0}
+    .half{min-height:50svh;padding:30px 22px;gap:14px}
+    .half h1{font-size:clamp(44px,13vw,64px)}
+    .seam{width:100%;height:1px}
+    .wrap{padding:0 22px}
+    .nav{gap:10px}
+    .brand{font-size:15px}
+    .nav nav{gap:16px}
+    .nav nav a{font-size:12px}
+    .btn{padding:7px 10px;font-size:9.5px}
+    .metrics{grid-template-columns:1fr 1fr}
+    .metric:nth-child(2){border-right:0}
+    .metric:nth-child(-n+2){border-bottom:1px solid var(--line)}
+    .timeline{grid-template-columns:1fr 1fr}
+    .feature{grid-template-columns:1fr;gap:26px}
+    .cards{grid-template-columns:1fr}
+    .art{width:76%;opacity:.4}
+  }
+  @media(max-width:430px){ .nav nav a:nth-child(3){display:none} }
+  @media(prefers-reduced-motion:reduce){ .art path{animation:none;stroke-dashoffset:0} *{transition:none!important} }
+</style>
+</head>
+<body>
+<header><div class="wrap nav">
+  <a class="brand" href="#"><i></i>LEFINNO KWOK</a>
+  <nav><a href="#work">Work</a><a href="#lab">Lab</a><a href="#">About</a></nav>
+  <a class="btn" href="#">CV ↗</a>
+</div></header>
+
+<main>
+<section class="chooser">
+  <a class="half work" href="#work">
+    <div class="top"><span class="mono">01 / Professional</span><span class="mono">↗</span></div>
+    <div class="mid"><h1>Work</h1><p>Enterprise AI delivery, integration and research. Evidence, not adjectives.</p></div>
+    <div class="bottom">
+      <div class="preview"><small>Currently</small><b>Analyst, Deloitte</b><small>Enterprise AI platform · 2026 to present</small></div>
+      <span class="enter">Enter work <span></span></span>
+    </div>
+    <svg class="art" viewBox="0 0 600 420" fill="none" stroke="currentColor" stroke-width="1.1">
+      <path d="M-20 330 C 90 300, 140 360, 230 340 S 380 270, 470 300 S 560 350, 640 320"/>
+      <path d="M-20 360 C 80 330, 150 390, 240 370 S 400 300, 490 330 S 570 380, 640 350"/>
+      <path d="M-20 390 C 70 360, 160 420, 250 400 S 410 330, 500 360 S 580 410, 640 380"/>
+      <circle cx="230" cy="340" r="5" fill="currentColor" stroke="none"/>
+      <circle cx="470" cy="300" r="5" fill="var(--accent)" stroke="none"/>
+    </svg>
+  </a>
+  <div class="seam"></div>
+  <a class="half lab" href="#lab">
+    <div class="top"><span class="mono">02 / Creative</span><span class="mono">↗</span></div>
+    <div class="mid"><h1>Lab</h1><p>Games, hardware and interactive experiments. Shipped, not sketched.</p></div>
+    <div class="bottom">
+      <div class="preview"><small>Now in production</small><b>Eccentricity</b><small>Steam · Chefs Hat Studio</small></div>
+      <span class="enter">Enter lab <span></span></span>
+    </div>
+    <svg class="art" viewBox="0 0 600 420" fill="none" stroke="currentColor" stroke-width="1.1">
+      <path d="M60 380 L60 240 L120 200 L180 240 L180 380"/>
+      <path d="M220 380 L220 180 L290 140 L360 180 L360 380"/>
+      <path d="M400 380 L400 260 L450 230 L500 260 L500 380"/>
+      <path d="M60 240 L120 280 L180 240 M220 180 L290 220 L360 180 M400 260 L450 290 L500 260" stroke-opacity=".6"/>
+      <circle cx="290" cy="220" r="5" fill="var(--accent)" stroke="none"/>
+    </svg>
+  </a>
+</section>
+
+<section class="band" id="work"><div class="wrap">
+  <div class="sechead"><span class="n">01</span><h2>Selected work</h2><span class="r">2021 to 2026</span></div>
+
+  <div class="metrics">
+    <div class="metric"><b>1,069</b><span>Tests passing · PDSS</span></div>
+    <div class="metric"><b>400</b><span>Jammers served · GGJHK</span></div>
+    <div class="metric"><b>614</b><span>Commits · enterprise AI</span></div>
+    <div class="metric"><b>8–89%</b><span>Quality lift · PDSS eval</span></div>
+  </div>
+
+  <div class="timeline">
+    <div class="tl"><span class="mono">2021</span><b>AI Mnemonic</b><small>Embedded and video systems</small></div>
+    <div class="tl"><span class="mono">2024</span><b>HKSTP · Deloitte</b><small>Automation to enterprise delivery</small></div>
+    <div class="tl"><span class="mono">2025</span><b>PDSS capstone</b><small>Research-grade decision system</small></div>
+    <div class="tl"><span class="mono">2026</span><b>Deloitte Analyst</b><small>Enterprise AI platform engagement</small></div>
+  </div>
+
+  <div class="feature">
+    <div>
+      <span class="mono" style="color:var(--accent)">Case 01</span>
+      <h3 class="lead" style="margin-top:12px">Probabilistic decision support,<br><em>audited end to end</em></h3>
+      <p class="prose">A natural-language interface to probabilistic risk assessment. The model is never asked to do arithmetic: it interprets the question, gathers evidence, and hands the problem to Bayesian, decision-theoretic and multi-criteria solvers. Every fact carries its source and a quality tier, every model returns uncertainty, and every recommendation can be traced back to the sentence it came from. Against five language models across four scenarios, composite decision quality improved by 8 to 89 percent, with the largest gains in attribution and traceability.</p>
+      <a class="read" href="#">Read the case study <i></i></a>
+    </div>
+    <div class="meta">
+      <div>Role<b>Design and build, solo</b></div>
+      <div>Period<b>2025 to 2026</b></div>
+      <div>Stack<b>Go · Python · React</b></div>
+      <div>Evidence<b>1,069 tests · 66-page report</b></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="labband" id="lab"><div class="wrap">
+  <div class="sechead"><span class="n">02</span><h2>From the lab</h2><span class="r" style="margin-left:auto;color:#A9A399">2018 to 2026</span></div>
+  <div class="cards">
+    <article class="case"><span class="mono">Commercial</span><h3>Eccentricity</h3><p>Steampunk engineering roguelike. Jam prototype to Steam release, 1,656 commits and 482 scenes.</p><span class="metric">Steam · in production</span></article>
+    <article class="case"><span class="mono">Hardware</span><h3>8-bit Transistor Computer</h3><p>Discrete logic, an original 11-transistor adder, custom instruction set, later rebuilt as a browser simulator.</p><span class="metric">2020 · still running</span></article>
+    <article class="case"><span class="mono">Jam</span><h3>Binmin</h3><p>Colour-swap rhythm game built in three days for Global Game Jam 2026. 38 scenes, playable in browser.</p><span class="metric">GGJ 2026 · 47 commits</span></article>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap foot">
+  <div>
+    <div class="type-spec">
+      <div><span class="aa">Aa</span><small>Archivo · structure</small></div>
+      <div><span class="ss">Aa</span><small>Instrument Serif · reading</small></div>
+      <div><span class="mm">01</span><small>JetBrains Mono · labels</small></div>
+    </div>
+    <div class="chips">
+      <div class="chip" style="background:#F2EFE9;color:#151412">Paper</div>
+      <div class="chip" style="background:#151412">Ink</div>
+      <div class="chip" style="background:#C2542D">Ember</div>
+      <div class="chip" style="background:#8B8579">Muted</div>
+    </div>
+  </div>
+  <div class="note"><b>Pathways plus.</b> Grotesk structure, serif reading, ember accent. The metric strip is Signal's density; the case-study prose is Editorial's. <a href="mailto:lefinnokwok@gmail.com" style="border-bottom:1px solid var(--accent)">lefinnokwok@gmail.com</a></div>
+</div></footer>
+</body>
+</html>

@@ -1,166 +1,145 @@
 import type { Route } from "./+types/about";
+import { Link } from "react-router";
+import { SectionHead } from "~/components/SectionHead";
+import { pageMeta } from "~/lib/meta";
 
-export const meta: Route.MetaFunction = () => [
-  { title: "About | Lefinno Kwok" },
+export const meta: Route.MetaFunction = () =>
+  pageMeta({
+    title: "About | Lefinno Kwok",
+    description:
+      "AI platform engineer in Hong Kong. Enterprise AI delivery on one side, games and hardware on the other.",
+    path: "/about",
+  });
+
+const eras = [
+  {
+    year: "2015 to 2020",
+    title: "Making",
+    text: "Microcontrollers, a game jam entry, and an 8-bit computer built from discrete transistors.",
+  },
+  {
+    year: "2021 to 2024",
+    title: "Working",
+    text: "Embedded video at a startup, automation at HKSTP, then enterprise delivery at Deloitte.",
+  },
+  {
+    year: "2025",
+    title: "Research",
+    text: "A solo capstone on probabilistic decision support, evaluated against five language models.",
+  },
+  {
+    year: "2026",
+    title: "Now",
+    text: "Analyst at Deloitte, studio owner at Chefs Hat, and a 400-person event platform in production.",
+  },
 ];
 
-import { useState } from "react";
-import {
-  Container,
-  Typography,
-  Box,
-  Button,
-  Stack,
-} from "@mui/material";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import LinkIcon from "@mui/icons-material/Link";
-import { FiMail } from "react-icons/fi";
-import { ScrollReveal } from "~/components/ScrollReveal";
-import { SkillCard } from "~/components/SkillCard";
-import { LanguagesCard } from "~/components/LanguagesCard";
-import { HardwareCard } from "~/components/HardwareCard";
-import { MlaiCard } from "~/components/MlaiCard";
-import { bio } from "~/data/bio";
-import { skillGroups } from "~/data/skills";
-
-const SOCIAL_ICONS: Record<string, React.ReactNode> = {
-  GitHub: <GitHubIcon fontSize="small" />,
-  Email: <FiMail size={18} />,
-  Link: <LinkIcon fontSize="small" />,
-};
-
 export default function About() {
-  const [languagesExpanded, setLanguagesExpanded] = useState(false);
-  const [hardwareExpanded, setHardwareExpanded] = useState(false);
-  const [mlaiExpanded, setMlaiExpanded] = useState(false);
-
   return (
-    <Container maxWidth="lg" sx={{ py: 8 }}>
-      {/* Bio Section */}
-      <ScrollReveal>
-        <Typography variant="h3" component="h1" sx={{ mb: 1 }}>
-          {bio.name}
-        </Typography>
-        <Typography
-          variant="overline"
-          color="text.secondary"
-          display="block"
-          sx={{ mb: 3, fontSize: "0.9rem" }}
-        >
-          {bio.title}
-        </Typography>
-        <Box sx={{ maxWidth: 700, mb: 3 }}>
-          {bio.paragraphs.map((p, i) => (
-            <Typography
-              key={i}
-              variant="body1"
-              color="text.secondary"
-              sx={{ mb: 2, lineHeight: 1.8 }}
-            >
-              {p}
-            </Typography>
-          ))}
-        </Box>
-        <Stack direction="row" spacing={1} sx={{ mb: 6 }}>
-          {bio.socialLinks.map((link) => (
-            <Button
-              key={link.platform}
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="outlined"
-              size="small"
-              startIcon={SOCIAL_ICONS[link.icon] ?? <LinkIcon fontSize="small" />}
-            >
-              {link.platform}
-            </Button>
-          ))}
-        </Stack>
-      </ScrollReveal>
+    <>
+      <section className="container about-hero">
+        <div>
+          <span className="eyebrow">About</span>
+          <h1>Two registers, one builder.</h1>
+          <p>
+            I am an AI platform engineer in Hong Kong. I build systems where
+            correctness matters, and I make games and hardware where experience
+            matters. The two are not a side project and a job; they are the same
+            practice applied to different materials.
+          </p>
+          <p>
+            I studied computer science at HKU, worked across an embedded
+            startup, a science park and a consultancy, and now deploy an
+            enterprise AI platform. What I care about is the unglamorous middle:
+            provenance, audit trails, integration, tests, release processes, the
+            parts that make a system trustworthy rather than impressive.
+          </p>
+          <p>
+            The rest of the time I make things: a steampunk roguelike on Steam, a
+            computer from transistors, a rhythm game in three days, an
+            interactive installation that recognises gestures from one image.
+          </p>
+        </div>
+        <div className="about-facts">
+          <div>
+            Based in
+            <strong>Hong Kong</strong>
+          </div>
+          <div>
+            Languages
+            <strong>Cantonese, Mandarin, English</strong>
+          </div>
+          <div>
+            Education
+            <strong>BEng Computer Science, HKU</strong>
+          </div>
+          <div>
+            Currently
+            <strong>Analyst, Deloitte</strong>
+          </div>
+          <div>
+            Studio
+            <strong>Chefs Hat Studio</strong>
+          </div>
+        </div>
+      </section>
 
-      {/* Skills Grid */}
-      <ScrollReveal delay={100}>
-        <Typography variant="h4" component="h2" sx={{ mb: 1 }}>
-          Skills & Experience
-        </Typography>
-        <Typography
-          variant="body1"
-          color="text.secondary"
-          sx={{ mb: 4 }}
-        >
-          Click a category to expand and see details.
-        </Typography>
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: {
-              xs: "1fr",
-              sm: "1fr 1fr",
-              md: "1fr 1fr 1fr",
-            },
-            gap: 3,
-          }}
-        >
-          {/* Languages card — spans full width when expanded */}
-          <ScrollReveal
-            delay={150}
-            sx={{
-              gridColumn: languagesExpanded ? "1 / -1" : undefined,
-            }}
-          >
-            <LanguagesCard
-              expanded={languagesExpanded}
-              onToggleExpanded={() =>
-                setLanguagesExpanded((prev) => !prev)
-              }
-            />
-          </ScrollReveal>
-
-          {/* Hardware card — spans full width when expanded */}
-          <ScrollReveal
-            delay={190}
-            sx={{
-              gridColumn: hardwareExpanded ? "1 / -1" : undefined,
-            }}
-          >
-            <HardwareCard
-              expanded={hardwareExpanded}
-              onToggleExpanded={() =>
-                setHardwareExpanded((prev) => !prev)
-              }
-            />
-          </ScrollReveal>
-
-          {/* ML/AI card — spans full width when expanded */}
-          <ScrollReveal
-            delay={220}
-            sx={{
-              gridColumn: mlaiExpanded ? "1 / -1" : undefined,
-            }}
-          >
-            <MlaiCard
-              expanded={mlaiExpanded}
-              onToggleExpanded={() =>
-                setMlaiExpanded((prev) => !prev)
-              }
-            />
-          </ScrollReveal>
-
-          {/* Other skill categories */}
-          {skillGroups
-            .filter(
-              (g) =>
-                g.id !== "languages-frameworks" &&
-                g.id !== "hardware-embedded" &&
-                g.id !== "ai-ml-cv"
-            )
-            .map((group, i) => (
-              <ScrollReveal key={group.id} delay={230 + i * 80}>
-                <SkillCard group={group} />
-              </ScrollReveal>
+      <section className="section">
+        <div className="container">
+          <SectionHead num="01" title="Trajectory" range="2015 to now" />
+          <div className="trajectory">
+            {eras.map((era) => (
+              <div className="era" key={era.year}>
+                <div className="era__year">{era.year}</div>
+                <h3>{era.title}</h3>
+                <p>{era.text}</p>
+              </div>
             ))}
-        </Box>
-      </ScrollReveal>
-    </Container>
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <SectionHead num="02" title="What I work with" />
+          <div className="skill-grid">
+            <div className="skill-block">
+              <h3>Engineering</h3>
+              <p>
+                Go, Rust, Java, Python and TypeScript. LLM orchestration and
+                evaluation, Bayesian and decision models, integration
+                middleware, identity and data access, Linux and container
+                deployment.
+              </p>
+            </div>
+            <div className="skill-block">
+              <h3>Craft</h3>
+              <p>
+                Godot and GDScript, Unity and C#, shaders, game systems and
+                production pipelines. KiCad, embedded C and 3D printing for
+                hardware. Line art and interface design for the web.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <SectionHead num="03" title="Elsewhere" />
+          <div className="hero-actions" style={{ marginTop: 0 }}>
+            <Link className="btn" to="/engineering">
+              Engineering
+            </Link>
+            <Link className="btn" to="/craft">
+              Craft
+            </Link>
+            <Link className="btn" to="/contact">
+              Contact
+            </Link>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

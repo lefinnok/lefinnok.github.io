@@ -1,31 +1,35 @@
 import type { TypographyOptions } from "@mui/material/styles/createTypography";
 
+const display = '"Archivo Variable", "Archivo", system-ui, sans-serif';
+const body = '"Inter Variable", "Inter", system-ui, sans-serif';
+const mono = '"JetBrains Mono", ui-monospace, monospace';
+
 export const typography: TypographyOptions = {
-  fontFamily: '"Inter", "Fira Code", sans-serif',
+  fontFamily: body,
   h1: {
-    fontFamily: '"Inter", sans-serif',
+    fontFamily: display,
     fontWeight: 800,
-    letterSpacing: "-0.02em",
+    letterSpacing: "-0.035em",
+    lineHeight: 0.94,
+    textTransform: "uppercase",
   },
   h2: {
-    fontFamily: '"Inter", sans-serif',
-    fontWeight: 700,
-    letterSpacing: "-0.01em",
+    fontFamily: display,
+    fontWeight: 800,
+    letterSpacing: "-0.025em",
+    textTransform: "uppercase",
   },
-  h3: { fontFamily: '"Inter", sans-serif', fontWeight: 700 },
-  h4: { fontFamily: '"Inter", sans-serif', fontWeight: 600 },
-  h5: { fontFamily: '"Inter", sans-serif', fontWeight: 600 },
-  h6: { fontFamily: '"Inter", sans-serif', fontWeight: 600 },
-  button: {
-    fontFamily: '"Inter", sans-serif',
-    fontWeight: 600,
-    textTransform: "none",
-  },
-  body1: { fontFamily: '"Inter", sans-serif' },
-  body2: { fontFamily: '"Inter", sans-serif' },
+  h3: { fontFamily: display, fontWeight: 700, letterSpacing: "-0.015em" },
+  h4: { fontFamily: display, fontWeight: 700 },
+  h5: { fontFamily: display, fontWeight: 600 },
+  h6: { fontFamily: display, fontWeight: 600 },
+  button: { fontFamily: mono, fontWeight: 500, textTransform: "uppercase" },
+  body1: { fontFamily: body },
+  body2: { fontFamily: body },
   overline: {
-    fontFamily: '"Fira Code", monospace',
+    fontFamily: mono,
     fontWeight: 400,
-    letterSpacing: "0.05em",
+    letterSpacing: "0.14em",
+    textTransform: "uppercase",
   },
 };

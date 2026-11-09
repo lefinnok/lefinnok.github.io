@@ -1,65 +1,50 @@
 import type { Route } from "./+types/contact";
-import { Container, Typography, Box, Button, Stack } from "@mui/material";
-import { FiMail } from "react-icons/fi";
-import { ScrollReveal } from "~/components/ScrollReveal";
+import { pageMeta } from "~/lib/meta";
 
-export const meta: Route.MetaFunction = () => [
-  { title: "Contact | Lefinno Kwok" },
-];
+export const meta: Route.MetaFunction = () =>
+  pageMeta({
+    title: "Contact | Lefinno Kwok",
+    description: "Email, LinkedIn, GitHub and CV for Lefinno Kwok, based in Hong Kong.",
+    path: "/contact",
+  });
 
 export default function Contact() {
   return (
-    <Container maxWidth="md" sx={{ py: 8 }}>
-      <ScrollReveal>
-        <Typography variant="h3" component="h1" sx={{ mb: 1 }}>
-          Contact
-        </Typography>
-        <Typography
-          variant="overline"
-          color="text.secondary"
-          display="block"
-          sx={{ mb: 4, fontSize: "0.9rem" }}
-        >
-          Get in touch
-        </Typography>
-      </ScrollReveal>
-
-      <ScrollReveal delay={100}>
-        <Box
-          sx={{
-            p: 4,
-            border: 1,
-            borderColor: "divider",
-            borderRadius: 2,
-            textAlign: "center",
-          }}
-        >
-          <Typography
-            variant="body1"
-            color="text.secondary"
-            sx={{ mb: 3, lineHeight: 1.8 }}
+    <>
+      <section className="container contact">
+        <span className="eyebrow">Contact</span>
+        <h1>Start a conversation.</h1>
+        <a className="contact__mail" href="mailto:lefinnokwok@gmail.com">
+          lefinnokwok@gmail.com
+        </a>
+        <div className="contact__grid">
+          <a href="mailto:lefinnokwok@gmail.com">
+            <span>Email</span>
+            lefinnokwok@gmail.com
+          </a>
+          <a
+            href="https://www.linkedin.com/in/lefinno/"
+            target="_blank"
+            rel="noreferrer"
           >
-            Feel free to reach out via email for collaboration, questions,
-            or just to say hello. I'll get back to you as soon as I can.
-          </Typography>
-          <Stack
-            direction="row"
-            spacing={2}
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Button
-              href="mailto:lefinnokwok@gmail.com"
-              variant="contained"
-              size="large"
-              startIcon={<FiMail />}
-              sx={{ fontFamily: "'Fira Code', monospace" }}
-            >
-              lefinnokwok@gmail.com
-            </Button>
-          </Stack>
-        </Box>
-      </ScrollReveal>
-    </Container>
+            <span>LinkedIn</span>
+            /in/lefinno
+          </a>
+          <a href="https://github.com/lefinnok" target="_blank" rel="noreferrer">
+            <span>GitHub</span>
+            github.com/lefinnok
+          </a>
+          <a href="/lefinnok-kwok-cv.pdf" download>
+            <span>CV</span>
+            Download PDF
+          </a>
+        </div>
+        <p className="footer-note" style={{ marginTop: 40, maxWidth: "56ch" }}>
+          Based in Hong Kong. Available for conversations about AI engineering,
+          platform roles and game development. Client work is discussed at the
+          level of engineering, never at the level of the client.
+        </p>
+      </section>
+    </>
   );
 }
