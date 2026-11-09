@@ -19,6 +19,8 @@ source: feat/portfolio-v2
 
 **Single page** — The site collapsed to one scroll with anchor navigation, inline case studies, demos and project blocks, dates and context on every demo, background fades between paper and ink, a section rail, sticky section heads, scroll-drawn line art and lazy-mounted demos. Old routes redirect to anchors.
 
+**Collapsible pass** — Case studies and project blocks collapsed to thumbnail rows with one-line descriptions; demos remain open; anchors open the target item.
+
 **Verification** — `npm run typecheck` PASS. `npm run build` PASS, prerendering `/`, `/engineering`, `/craft`, `/about`, `/contact`, `/projects`, the three case pages and five craft pages, then writing the SPA fallback and `404.html`. Manual visual checks at 1440px and 390px. Independent review returned no remaining critical or major issues after fixes for the duplicate H1, link names, duplicate Eccentricity page, redirect metadata and data-derived prerender slugs.
 
 ## [S1] Problem
@@ -124,6 +126,15 @@ Every demo and project carries a year and a context line, rendered in the frame 
 - The whole page background interpolates between paper and ink across tall empty gaps between tracks, computed from scroll position. There are no gradient bands, so the colour changes continuously and never cuts across content.
 - Demo blocks mount only when within 500px of the viewport, so a 20,000px page does not boot every instrument at once.
 
+### S2.13 Collapsible long-form items
+
+Case studies and project blocks are collapsed by default:
+
+- A compact row with a thumbnail, title, one-line description and a meta line.
+- A Read case or Open control expands the full body in place.
+- Anchor links (`#case-pdss`, `#project-binmin`) open the matching item automatically.
+- Demos are never collapsed. They stay open in Craft and Demos because they are the point of the page.
+
 ### S2.7 Performance and accessibility
 
 Demos stay lazy-loaded and mount only when visible. Fonts are self-hosted and subset. Targets: Lighthouse performance 90+ on both landings, no layout shift from fonts, 4.5:1 body contrast, visible focus rings, skip link, semantic heading order, keyboard-operable chooser.
@@ -139,6 +150,7 @@ CMS, blog, authentication, newsletter, multilingual UI, redesign of demo interna
 - [x] T13: Demos restored — acceptance: CPU, gesture, ML, UML, diagrams and 3D models render on the site. (covers: S2.8)
 - [x] T15: Demo frame and brand tokens — acceptance: demos render inside a paper frame with an ink stage and ember accents; expand works. (covers: S2.9)
 - [x] T16: Demo index and detail pages — acceptance: `/demos` lists eight entries and each detail page mounts its demo. (covers: S2.9)
+- [x] T25: Collapsible case studies and projects — acceptance: compact rows expand in place and anchors open the target. (covers: S2.13)
 - [x] T21: Single-page scroll — acceptance: one route carries every section and anchors navigate. (covers: S2.1)
 - [x] T22: Demo dates and context — acceptance: every demo shows a year and a context line. (covers: S2.11)
 - [x] T23: Scroll decoration — acceptance: rail, sticky heads, drawing line art and fades work during scroll. (covers: S2.12)

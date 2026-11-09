@@ -1,6 +1,8 @@
+import { useEffect, useState } from "react";
 import type { CraftProject } from "~/lib/content";
 import { DemoSurface } from "./DemoSurface";
 import { FbxModelViewer } from "./FbxModelViewer";
+import { LineArt } from "./LineArt";
 
 export function ProjectBlock({
   project,
@@ -9,43 +11,71 @@ export function ProjectBlock({
   project: CraftProject;
   showModel?: boolean;
 }) {
+  const anchor = `project-${project.slug}`;
+  const [open, setOpen] = useState(() =>
+    typeof window !== "undefined" && window.location.hash === `#${anchor}`
+  );
+
+  useEffect(() => {
+    const sync = () => {
+      if (window.location.hash === `#${anchor}`) setOpen(true);
+    };
+    window.addEventListener("hashchange", sync);
+    return () => window.removeEventListener("hashchange", sync);
+  }, [anchor]);
+
   return (
-    <article className="project-block" id={`project-${project.slug}`}>
-      <header className="project-block__head">
-        <span className="mono accent">{project.year}</span>
-        <h3>{project.title}</h3>
-        <p>{project.summary}</p>
-        <div className="card__tags">
-          {project.tags.map((tag) => (
-            <span key={tag}>{tag}</span>
-          ))}
+    <article id={anchor} className={`project-block ${open ? "is-open" : ""}`}>
+      <button
+        type="button"
+        className="project-block__toggle"
+        aria-expanded={open}
+        aria-controls={`${anchor}-body`}
+        onClick={() => setOpen((value) => !value)}
+      >
+        <span className="project-block__thumb" aria-hidden="true">
+          <LineArt variant={project.art} className="" />
+        </span>
+        <span className="project-block__intro">
+          <span className="mono accent">{project.year}</span>
+          <span className="project-block__title">{project.title}</span>
+          <span className="project-block__line">{project.summary}</span>
+          <span className="card__tags">
+            {project.tags.map((tag) => (
+              <span key={tag}>{tag}</span>
+            ))}
+          </span>
+        </span>
+        <span className="project-block__action">{open ? "Collapse" : "Open"}</span>
+      </button>
+
+      {open ? (
+        <div className="project-block__body" id={`${anchor}-body`}>
+          {showModel && project.model ? (
+            <DemoSurface>
+              <FbxModelViewer config={project.model} height={300} />
+            </DemoSurface>
+          ) : null}
+          <div className="hero-actions">
+            {project.demo ? (
+              <a className="btn" href={`#demo-${project.slug}`}>
+                Open the demo
+              </a>
+            ) : null}
+            {project.links?.map((link) => (
+              <a
+                key={link.url}
+                className="btn"
+                href={link.url}
+                target={link.url.startsWith("http") ? "_blank" : undefined}
+                rel={link.url.startsWith("http") ? "noreferrer" : undefined}
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
         </div>
-      </header>
-
-      {showModel && project.model ? (
-        <DemoSurface>
-          <FbxModelViewer config={project.model} height={300} />
-        </DemoSurface>
       ) : null}
-
-      <div className="hero-actions">
-        {project.demo ? (
-          <a className="btn" href={`#demo-${project.slug}`}>
-            Open the demo
-          </a>
-        ) : null}
-        {project.links?.map((link) => (
-          <a
-            key={link.url}
-            className="btn"
-            href={link.url}
-            target={link.url.startsWith("http") ? "_blank" : undefined}
-            rel={link.url.startsWith("http") ? "noreferrer" : undefined}
-          >
-            {link.label}
-          </a>
-        ))}
-      </div>
     </article>
   );
 }
