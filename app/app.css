@@ -2,8 +2,9 @@
   --paper: #f2efe9;
   --paper-2: #f8f5f0;
   --ink: #151412;
-  --accent: #c2542d;
-  --muted: #8b8579;
+  --accent: #b04724;
+  --accent-on-dark: #d97757;
+  --muted: #6e675c;
   --body-muted: #5f594f;
   --line: rgba(21, 20, 18, 0.16);
   --line-inv: rgba(242, 239, 233, 0.18);
@@ -171,6 +172,8 @@ svg {
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  min-height: 44px;
   gap: 10px;
   border: 1px solid var(--ink);
   padding: 9px 16px;
@@ -439,6 +442,12 @@ svg {
   color: var(--muted);
 }
 
+.section--dark .accent,
+.section--dark .card__meta,
+.section--dark .mono.accent {
+  color: var(--accent-on-dark);
+}
+
 .section--dark .section-head__range {
   color: #a9a399;
 }
@@ -563,6 +572,10 @@ svg {
 }
 
 .section--dark .card p {
+  color: #a9a399;
+}
+
+.section--dark .card__tags {
   color: #a9a399;
 }
 
@@ -1248,7 +1261,8 @@ svg {
   }
 
   .case-hero {
-    padding: 44px 0 30px;
+    padding-top: 44px;
+    padding-bottom: 30px;
   }
 
   .case-section p,

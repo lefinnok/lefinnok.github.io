@@ -30,7 +30,7 @@ const eras = [
   {
     year: "2026",
     title: "Now",
-    text: "Analyst at Deloitte, studio owner at Chefs Hat, and a 400-person event platform in production.",
+    text: "Analyst at Deloitte, studio owner at Chefs Hat, and an event platform for 300 to 400 jammers being readied for launch.",
   },
 ];
 

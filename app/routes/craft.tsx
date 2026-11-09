@@ -20,7 +20,7 @@ const eras = [
   { year: "2020", title: "Transistor computer", text: "Discrete logic, custom instruction set." },
   { year: "2022", title: "Retro handheld", text: "Custom PCB, firmware, enclosure." },
   { year: "2025", title: "Eccentricity", text: "Jam build to commercial production." },
-  { year: "2026", title: "Studio and releases", text: "Steam, Binmin, contract work." },
+  { year: "2026", title: "Studio work", text: "Steam page, Binmin, contract development." },
 ];
 
 export default function Craft() {

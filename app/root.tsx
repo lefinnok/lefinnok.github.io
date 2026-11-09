@@ -49,7 +49,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <SiteNav />
-          <main id="main">{children}</main>
+          <main id="main" tabIndex={-1}>
+            {children}
+          </main>
           <SiteFooter />
         </ThemeProvider>
         <ScrollRestoration />
