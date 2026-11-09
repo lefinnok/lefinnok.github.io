@@ -4,11 +4,8 @@ import { SectionHead } from "~/components/SectionHead";
 import { Timeline } from "~/components/Timeline";
 import { CaseCard } from "~/components/CaseCard";
 import { TrackSubnav } from "~/components/TrackSubnav";
-import { DemoBlock } from "~/components/DemoBlock";
-import { DemoSurface } from "~/components/DemoSurface";
 import { TrackLink } from "~/components/TrackLink";
-import { LanguagesDiagram } from "~/components/LanguagesDiagram";
-import { HardwarePipelineDiagram } from "~/components/HardwarePipelineDiagram";
+import { LineArt } from "~/components/LineArt";
 import { caseStudies } from "~/data/caseStudies";
 import { roles } from "~/data/roles";
 import { pageMeta } from "~/lib/meta";
@@ -67,17 +64,35 @@ export default function Engineering() {
 
       <section className="section" id="interactive">
         <div className="container">
-          <SectionHead num="02" title="Interactive" range="Run it here" />
-          <p className="lede" style={{ marginTop: 0, marginBottom: 26 }}>
-            The UML generator turns a natural-language description into a class
-            diagram through an iterative conversation. This is the live demo,
-            not a video.
-          </p>
-          <DemoBlock componentName="UmlGeneratorDemo" title="UML diagram generator" />
-          <div className="hero-actions" style={{ marginTop: 20 }}>
-            <Link className="btn" to="/demos">
-              All demos
-            </Link>
+          <SectionHead num="02" title="Demos" range="Live systems" />
+          <div className="live-split">
+            <div className="live-panel live-panel--paper">
+              <span className="eyebrow">Engineering demo</span>
+              <h3>UML generator</h3>
+              <p>
+                A natural-language description becomes a class diagram through
+                an iterative conversation with a model. The demo lives on its
+                own page, in the dark instrument room with the rest.
+              </p>
+              <LineArt variant="connector" className="" />
+              <Link className="mono accent" to="/demos/uml-generator">
+                Open the UML generator →
+              </Link>
+            </div>
+            <div className="live-panel live-panel--paper">
+              <span className="eyebrow">All demos</span>
+              <h3>Eight instruments</h3>
+              <p>
+                CPU, gesture recognition, UML, machine learning, the CNN
+                visualiser, two architecture diagrams and the 3D model gallery.
+              </p>
+              <p className="mono" style={{ marginTop: "auto" }}>
+                Runs in the browser
+              </p>
+              <Link className="mono accent" to="/demos">
+                Browse all demos →
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -91,7 +106,7 @@ export default function Engineering() {
 
       <section className="section" id="capabilities">
         <div className="container">
-          <SectionHead num="04" title="Capabilities" />
+          <SectionHead num="03" title="Capabilities" />
           <div className="skill-grid">
             <div className="skill-block">
               <h3>AI systems</h3>
@@ -125,34 +140,12 @@ export default function Engineering() {
             </div>
           </div>
 
-          <div className="demo-grid" style={{ marginTop: 44 }}>
-            <div className="media-card">
-              <h3>How a service fits together</h3>
-              <p>
-                The architecture I reach for: typed clients, a gateway, service
-                boundaries and a build path.
-              </p>
-              <DemoSurface>
-                <LanguagesDiagram />
-              </DemoSurface>
-            </div>
-            <div className="media-card">
-              <h3>How a product gets built</h3>
-              <p>
-                From schematic to firmware to assembly, with the tools I
-                actually use at each stage.
-              </p>
-              <DemoSurface>
-                <HardwarePipelineDiagram />
-              </DemoSurface>
-            </div>
-          </div>
         </div>
       </section>
 
       <section className="section" id="current">
         <div className="container">
-          <SectionHead num="05" title="Current" />
+          <SectionHead num="04" title="Current" />
           <div className="current">
             <div>
               <h3>Analyst, Deloitte</h3>

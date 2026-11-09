@@ -126,7 +126,7 @@ export default function Craft() {
         </div>
       </section>
 
-      <section className="section section--dark" id="projects">
+      <section className="section" id="projects">
         <div className="container">
           <SectionHead num="03" title="Projects" range="Selected" />
           <div className="project-grid">

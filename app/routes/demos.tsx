@@ -55,9 +55,9 @@ export default function Demos() {
       <section className="next-track">
         <div className="container">
           <p className="mono" style={{ color: "var(--muted)" }}>
-            The demos also appear where they belong: the CPU and gesture
-            recognition on Craft, the UML generator on Engineering, the
-            diagrams in Capabilities.
+            The demos also appear where they belong: the CPU, gesture and machine
+            learning instruments on Craft, and links from Engineering where the
+            work is described.
           </p>
         </div>
       </section>

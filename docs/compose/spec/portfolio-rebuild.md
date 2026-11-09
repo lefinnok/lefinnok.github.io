@@ -15,6 +15,8 @@ source: feat/portfolio-v2
 
 **Demo pass** — Demos gained a paper frame with an ink stage, brand typography and ember accents; a `/demos` index and detail routes expose eight experiences, including the CNN visualiser and a 3D model gallery that were previously unreachable.
 
+**Track pass** — Craft and Demos became black pages with dark chrome, Engineering stayed paper with no dark instruments, and the home live band split into a paper Engineering preview and an ink Craft preview. The UML demo moved to `/demos`.
+
 **Verification** — `npm run typecheck` PASS. `npm run build` PASS, prerendering `/`, `/engineering`, `/craft`, `/about`, `/contact`, `/projects`, the three case pages and five craft pages, then writing the SPA fallback and `404.html`. Manual visual checks at 1440px and 390px. Independent review returned no remaining critical or major issues after fixes for the duplicate H1, link names, duplicate Eccentricity page, redirect metadata and data-derived prerender slugs.
 
 ## [S1] Problem
@@ -97,6 +99,16 @@ Demos are promoted to a first-class system rather than black boxes inside paper 
 - `/demos/:slug` mounts one demo per page with its own metadata; contextual embeds stay on Engineering and Craft.
 - The ML playground's two tabs (digit recognition and 2D training) share one entry; the architecture and hardware explainers behind the demos remain inside their instruments.
 
+### S2.10 Track themes
+
+The site is now themed by track, not by section.
+
+- Engineering pages are paper: paper ground, ink type, light callout panels.
+- Craft and the demos section are ink: black page, paper type, dark instruments, dark header, subnav and footer.
+- The theme is set as `data-track` on the document element before paint by an inline script, then maintained by the layout, so there is no light flash on a dark page.
+- The home page stays neutral but its live band is split: a paper Engineering panel and an ink Craft panel, each carrying a preview rather than one dark box on a light page.
+- Engineering no longer embeds dark instruments. The UML demo lives at `/demos/uml-generator`, linked from Engineering; its callout and the diagram links stay on paper.
+
 ### S2.7 Performance and accessibility
 
 Demos stay lazy-loaded and mount only when visible. Fonts are self-hosted and subset. Targets: Lighthouse performance 90+ on both landings, no layout shift from fonts, 4.5:1 body contrast, visible focus rings, skip link, semantic heading order, keyboard-operable chooser.
@@ -112,6 +124,9 @@ CMS, blog, authentication, newsletter, multilingual UI, redesign of demo interna
 - [x] T13: Demos restored — acceptance: CPU, gesture, ML, UML, diagrams and 3D models render on the site. (covers: S2.8)
 - [x] T15: Demo frame and brand tokens — acceptance: demos render inside a paper frame with an ink stage and ember accents; expand works. (covers: S2.9)
 - [x] T16: Demo index and detail pages — acceptance: `/demos` lists eight entries and each detail page mounts its demo. (covers: S2.9)
+- [x] T18: Track themes — acceptance: `/craft` and `/demos` render black, `/engineering` renders paper, header and footer follow the track. (covers: S2.10)
+- [x] T19: Home preview split — acceptance: the live band has a paper Engineering panel and an ink Craft panel. (covers: S2.10)
+- [x] T20: Engineering stays light — acceptance: no dark demo stage appears on `/engineering`; demos are linked to `/demos`. (covers: S2.10)
 - [x] T17: Missing demos restored — acceptance: CNN visualiser, model gallery and ML tabs are reachable. (covers: S2.9)
 - [x] T14: Home and cross-track cohesion — acceptance: home has Live, work and craft bands; each track links to the other. (covers: S2.8)
 
@@ -135,3 +150,4 @@ CMS, blog, authentication, newsletter, multilingual UI, redesign of demo interna
 - 2026-11-09: Contrast pass: ember darkened to `#B04724` on paper, `#D97757` on ink; muted text `#6E675C`; 44px button targets.
 - 2026-11-09: Human review found that demos had been cut to two, the nav had no scroll behaviour and mobile links were hidden, and the interior pages lacked cohesion. Restored all demos, added scroll-aware nav and subnav, added home bands and cross-links.
 - 2026-11-09: Second demo review found more demos in the codebase and no shared styling. Added DemoFrame, `/demos` index and detail routes, CNN and model gallery entries, and replaced neon accents with ember.
+- 2026-11-09: Human review asked for black or white pages by track and updated home previews. Craft and Demos are now black, Engineering paper, and the home live band is split.

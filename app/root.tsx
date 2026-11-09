@@ -7,6 +7,7 @@ import {
   useLocation,
   ScrollRestoration,
 } from "react-router";
+import { useLayoutEffect } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
@@ -42,6 +43,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){var p=location.pathname;var t=p.indexOf('/craft')===0?'craft':p.indexOf('/demos')===0?'demos':p.indexOf('/engineering')===0?'engineering':'neutral';document.documentElement.dataset.track=t;})();",
+          }}
+        />
       </head>
       <body>
         <a className="skip-link" href="#main">
@@ -64,6 +71,21 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   const location = useLocation();
+  const track = location.pathname.startsWith("/craft")
+    ? "craft"
+    : location.pathname.startsWith("/demos")
+      ? "demos"
+      : location.pathname.startsWith("/engineering")
+        ? "engineering"
+        : "neutral";
+
+  useLayoutEffect(() => {
+    document.documentElement.dataset.track = track;
+    return () => {
+      delete document.documentElement.dataset.track;
+    };
+  }, [track]);
+
   return (
     <div className="page-enter" key={location.pathname}>
       <Outlet />
