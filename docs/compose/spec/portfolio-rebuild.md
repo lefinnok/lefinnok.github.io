@@ -119,9 +119,9 @@ Every demo and project carries a year and a context line, rendered in the frame 
 
 - Section rail fixed on the right, with active state driven by IntersectionObserver.
 - Header switches to dark styling over ink sections, and the progress line tracks the whole page.
-- Section heads stick under the header while their section scrolls.
+- Section heads stick flush under the 64px header while their section scrolls, with the same background colour so there is no visible seam.
 - Line art draws on entry via `stroke-dashoffset` when it enters view.
-- Backgrounds fade between tracks with gradient bands: paper to ink before Craft, ink to paper before About.
+- The whole page background interpolates between paper and ink across tall empty gaps between tracks, computed from scroll position. There are no gradient bands, so the colour changes continuously and never cuts across content.
 - Demo blocks mount only when within 500px of the viewport, so a 20,000px page does not boot every instrument at once.
 
 ### S2.7 Performance and accessibility

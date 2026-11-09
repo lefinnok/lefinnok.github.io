@@ -2,7 +2,6 @@ import type { Route } from "./+types/home";
 import { Chooser } from "~/components/Chooser";
 import { SectionHead } from "~/components/SectionHead";
 import { SectionRail } from "~/components/SectionRail";
-import { SectionFade } from "~/components/SectionFade";
 import { CaseStudyBlock } from "~/components/CaseStudyBlock";
 import { ProjectBlock } from "~/components/ProjectBlock";
 import { DemoBlock } from "~/components/DemoBlock";
@@ -16,6 +15,7 @@ import { craftProjects } from "~/data/craftProjects";
 import { demos } from "~/data/demos";
 import { roles } from "~/data/roles";
 import { pageMeta } from "~/lib/meta";
+import { usePageBackground } from "~/hooks/usePageBackground";
 
 export const meta: Route.MetaFunction = () =>
   pageMeta({
@@ -42,6 +42,8 @@ const eras = [
 ];
 
 export default function Home() {
+  usePageBackground();
+
   return (
     <>
       <SectionRail />
@@ -151,7 +153,7 @@ export default function Home() {
         </div>
       </section>
 
-      <SectionFade from="paper" to="ink" />
+      <div id="bg-gap-1" className="bg-gap" aria-hidden="true" />
 
       <section id="craft" data-theme="ink" className="page-section page-section--ink">
         <div className="container section-hero">
@@ -322,7 +324,7 @@ export default function Home() {
         </div>
       </section>
 
-      <SectionFade from="ink" to="paper" />
+      <div id="bg-gap-2" className="bg-gap" aria-hidden="true" />
 
       <section id="about" data-theme="paper" className="page-section page-section--paper">
         <div className="container about-hero">

@@ -28,7 +28,8 @@ html {
 body {
   margin: 0;
   padding: 0;
-  background: var(--paper);
+  background: var(--page-bg, #f2efe9);
+  transition: background-color 0.2s linear;
   color: var(--ink);
   font-family: var(--body);
   font-size: 16px;
@@ -127,7 +128,7 @@ svg {
   position: sticky;
   top: 0;
   z-index: 40;
-  background: rgba(242, 239, 233, 0.88);
+  background: color-mix(in srgb, var(--page-bg, #f2efe9) 88%, transparent);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--line);
 }
@@ -1292,7 +1293,7 @@ svg {
 }
 
 .site-header.is-scrolled {
-  background: rgba(242, 239, 233, 0.97);
+  background: color-mix(in srgb, var(--page-bg, #f2efe9) 94%, transparent);
   box-shadow: 0 1px 0 rgba(21, 20, 18, 0.08);
 }
 
@@ -1983,7 +1984,7 @@ html[data-track="demos"] .demo-surface {
   --body-muted: #5f594f;
   --accent: #b04724;
   --accent-on-dark: #d97757;
-  background: var(--paper);
+  background: transparent;
   color: var(--ink);
 }
 
@@ -1997,7 +1998,7 @@ html[data-track="demos"] .demo-surface {
   --body-muted: #c9c2b7;
   --accent: #d97757;
   --accent-on-dark: #d97757;
-  background: #151412;
+  background: transparent;
   color: #f2efe9;
 }
 
@@ -2025,16 +2026,33 @@ html[data-track="demos"] .demo-surface {
   color: var(--body-muted);
 }
 
-.section-fade {
-  height: 170px;
+.bg-gap {
+  height: 110vh;
+  min-height: 720px;
+  max-height: 1100px;
+  position: relative;
+  display: grid;
+  place-items: center;
 }
 
-.section-fade--paper-ink {
-  background: linear-gradient(180deg, #f2efe9 0%, #f2efe9 14%, #151412 100%);
+.bg-gap::before {
+  content: "";
+  width: 1px;
+  height: clamp(80px, 18vh, 160px);
+  background: #b04724;
+  opacity: 0.8;
 }
 
-.section-fade--ink-paper {
-  background: linear-gradient(180deg, #151412 0%, #151412 14%, #f2efe9 100%);
+.bg-gap::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  border-radius: 50%;
+  background: #b04724;
 }
 
 .page-section[id],
@@ -2046,18 +2064,14 @@ html[data-track="demos"] .demo-surface {
 
 /* sticky section heads, DeepBook style */
 @media (min-width: 1000px) {
-  .page-section--paper .section-head {
-    position: sticky;
-    top: 78px;
-    z-index: 6;
-    background: var(--paper);
-  }
-
+  .page-section--paper .section-head,
   .page-section--ink .section-head {
     position: sticky;
-    top: 78px;
+    top: 64px;
     z-index: 6;
-    background: #151412;
+    padding-top: 6px;
+    background: color-mix(in srgb, var(--page-bg, #f2efe9) 92%, transparent);
+    backdrop-filter: blur(8px);
   }
 }
 
@@ -2236,7 +2250,7 @@ html[data-track="demos"] .demo-surface {
 }
 
 .site-header.is-dark.is-scrolled {
-  background: rgba(21, 20, 18, 0.97);
+  background: rgba(21, 20, 18, 0.94);
 }
 
 .site-header.is-dark .nav-links a {
