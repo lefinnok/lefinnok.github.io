@@ -17,6 +17,8 @@ source: feat/portfolio-v2
 
 **Track pass** — Craft and Demos became black pages with dark chrome, Engineering stayed paper with no dark instruments, and the home live band split into a paper Engineering preview and an ink Craft preview. The UML demo moved to `/demos`.
 
+**Single page** — The site collapsed to one scroll with anchor navigation, inline case studies, demos and project blocks, dates and context on every demo, background fades between paper and ink, a section rail, sticky section heads, scroll-drawn line art and lazy-mounted demos. Old routes redirect to anchors.
+
 **Verification** — `npm run typecheck` PASS. `npm run build` PASS, prerendering `/`, `/engineering`, `/craft`, `/about`, `/contact`, `/projects`, the three case pages and five craft pages, then writing the SPA fallback and `404.html`. Manual visual checks at 1440px and 390px. Independent review returned no remaining critical or major issues after fixes for the duplicate H1, link names, duplicate Eccentricity page, redirect metadata and data-derived prerender slugs.
 
 ## [S1] Problem
@@ -29,17 +31,17 @@ The rebuild presents one builder through two tracks, Engineering and Craft, usin
 
 ### S2.1 Routes and information architecture
 
-| Route | Purpose |
-|---|---|
-| `/` | Chooser. Landscape: 50/50 vertical split, Engineering on paper left, Craft on ink right. Portrait: stacked, Engineering first. Each half has a glyph plate, one-line proposition, a work preview and an enter affordance. No numbers. |
-| `/engineering` | Single scroll: positioning, current role, role timeline, two case study cards (PDSS, GGJHK), capability summary, CV call to action. |
-| `/engineering/case/:slug` | Case study pages for PDSS and the GGJHK platform. |
-| `/craft` | Single scroll: creative positioning, project chronology, Eccentricity feature, 8-bit computer and Binmin project cards, interactive demos. |
-| `/craft/:slug` | Project pages for Eccentricity, 8-bit computer, Binmin and other public craft work. |
-| `/about` | Bio, four-era trajectory, languages, contact links. |
-| `/contact` | Email, LinkedIn, GitHub, CV download. |
+The site is one page. `/` carries every section in one scroll:
 
-Legacy `/projects` and `/projects/:slug` redirect to the nearest new route. `react-router.config.ts` prerender list includes every new static route; case and project slugs are generated from data.
+| Anchor | Content |
+|---|---|
+| `#engineering` | Paper section: positioning, PDSS and GGJHK case studies inline, experience, capabilities, current role. |
+| `#craft` | Ink section: Eccentricity, four demos inline (CPU, gesture, ML, CNN), project blocks, chronology. |
+| `#demos` | Ink section: index of all eight demos plus the UML generator, architecture diagrams and 3D gallery inline. |
+| `#about` | Paper section: bio, facts, trajectory. |
+| `#contact` | Paper section: email, LinkedIn, GitHub, CV. |
+
+Navigation is anchor based. Any old URL (`/engineering`, `/craft`, `/demos/:slug`, `/engineering/case/:slug`, `/projects/...`) is handled by the catch-all route, which redirects to the matching anchor. There are no detail routes. Prerender is `/` only; the sitemap lists only `/`.
 
 ### S2.2 Chooser behaviour
 
@@ -109,6 +111,19 @@ The site is now themed by track, not by section.
 - The home page stays neutral but its live band is split: a paper Engineering panel and an ink Craft panel, each carrying a preview rather than one dark box on a light page.
 - Engineering no longer embeds dark instruments. The UML demo lives at `/demos/uml-generator`, linked from Engineering; its callout and the diagram links stay on paper.
 
+### S2.11 Dates and context
+
+Every demo and project carries a year and a context line, rendered in the frame and the index. The UML generator, for example, is labelled 2025 with a note that iterative LLM diagramming was novel then and the interaction matters more than the generation now. Case studies carry their period; project blocks carry their year.
+
+### S2.12 Scroll-driven decoration
+
+- Section rail fixed on the right, with active state driven by IntersectionObserver.
+- Header switches to dark styling over ink sections, and the progress line tracks the whole page.
+- Section heads stick under the header while their section scrolls.
+- Line art draws on entry via `stroke-dashoffset` when it enters view.
+- Backgrounds fade between tracks with gradient bands: paper to ink before Craft, ink to paper before About.
+- Demo blocks mount only when within 500px of the viewport, so a 20,000px page does not boot every instrument at once.
+
 ### S2.7 Performance and accessibility
 
 Demos stay lazy-loaded and mount only when visible. Fonts are self-hosted and subset. Targets: Lighthouse performance 90+ on both landings, no layout shift from fonts, 4.5:1 body contrast, visible focus rings, skip link, semantic heading order, keyboard-operable chooser.
@@ -124,6 +139,10 @@ CMS, blog, authentication, newsletter, multilingual UI, redesign of demo interna
 - [x] T13: Demos restored — acceptance: CPU, gesture, ML, UML, diagrams and 3D models render on the site. (covers: S2.8)
 - [x] T15: Demo frame and brand tokens — acceptance: demos render inside a paper frame with an ink stage and ember accents; expand works. (covers: S2.9)
 - [x] T16: Demo index and detail pages — acceptance: `/demos` lists eight entries and each detail page mounts its demo. (covers: S2.9)
+- [x] T21: Single-page scroll — acceptance: one route carries every section and anchors navigate. (covers: S2.1)
+- [x] T22: Demo dates and context — acceptance: every demo shows a year and a context line. (covers: S2.11)
+- [x] T23: Scroll decoration — acceptance: rail, sticky heads, drawing line art and fades work during scroll. (covers: S2.12)
+- [x] T24: Legacy redirects — acceptance: old URLs land on the matching anchor. (covers: S2.1)
 - [x] T18: Track themes — acceptance: `/craft` and `/demos` render black, `/engineering` renders paper, header and footer follow the track. (covers: S2.10)
 - [x] T19: Home preview split — acceptance: the live band has a paper Engineering panel and an ink Craft panel. (covers: S2.10)
 - [x] T20: Engineering stays light — acceptance: no dark demo stage appears on `/engineering`; demos are linked to `/demos`. (covers: S2.10)
@@ -151,3 +170,4 @@ CMS, blog, authentication, newsletter, multilingual UI, redesign of demo interna
 - 2026-11-09: Human review found that demos had been cut to two, the nav had no scroll behaviour and mobile links were hidden, and the interior pages lacked cohesion. Restored all demos, added scroll-aware nav and subnav, added home bands and cross-links.
 - 2026-11-09: Second demo review found more demos in the codebase and no shared styling. Added DemoFrame, `/demos` index and detail routes, CNN and model gallery entries, and replaced neon accents with ember.
 - 2026-11-09: Human review asked for black or white pages by track and updated home previews. Craft and Demos are now black, Engineering paper, and the home live band is split.
+- 2026-11-09: Final structure review asked for one page, dates on demos, and scroll-driven decoration. The site is now a single scroll with anchors, inline detail, fades, a rail and lazy demos.

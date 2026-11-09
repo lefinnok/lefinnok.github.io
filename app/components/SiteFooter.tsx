@@ -1,4 +1,3 @@
-import { Link } from "react-router";
 
 export function SiteFooter() {
   return (
@@ -6,11 +5,11 @@ export function SiteFooter() {
       <div className="container footer-row">
         <div>
           <div className="footer-links">
-            <Link to="/engineering">Engineering</Link>
-            <Link to="/craft">Craft</Link>
-            <Link to="/demos">Demos</Link>
-            <Link to="/about">About</Link>
-            <Link to="/contact">Contact</Link>
+            <a href="#engineering">Engineering</a>
+            <a href="#craft">Craft</a>
+            <a href="#demos">Demos</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
             <a href="https://github.com/lefinnok" target="_blank" rel="noreferrer">
               GitHub
             </a>

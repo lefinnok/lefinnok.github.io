@@ -5,6 +5,8 @@ interface DemoFrameProps {
   kicker: string;
   title: string;
   description?: string;
+  year?: string;
+  context?: string;
   tone?: "ink" | "paper";
   related?: { label: string; url: string };
   showHeader?: boolean;
@@ -15,6 +17,8 @@ export function DemoFrame({
   kicker,
   title,
   description,
+  year,
+  context,
   tone = "ink",
   related,
   showHeader = true,
@@ -42,7 +46,9 @@ export function DemoFrame({
         <div>
           <span className="eyebrow">{kicker}</span>
           <h3>{title}</h3>
+          {year ? <span className="demo-year">{year}</span> : null}
           {description ? <p>{description}</p> : null}
+          {context ? <p className="demo-context">{context}</p> : null}
         </div>
         <div className="demo-frame__actions">
           {related ? (

@@ -1,5 +1,6 @@
 import { ThemeProvider } from "@mui/material/styles";
 import { InteractiveDemoSlot } from "./InteractiveDemoSlot";
+import { LazyMount } from "./LazyMount";
 import { DemoFrame } from "./DemoFrame";
 import { demoTheme } from "~/theme/demoTheme";
 
@@ -7,6 +8,8 @@ export function DemoBlock({
   componentName,
   title,
   description,
+  year,
+  context,
   kicker = "Interactive demo",
   tone = "ink",
   related,
@@ -15,6 +18,8 @@ export function DemoBlock({
   componentName: string;
   title: string;
   description?: string;
+  year?: string;
+  context?: string;
   kicker?: string;
   tone?: "ink" | "paper";
   related?: { label: string; url: string };
@@ -25,13 +30,17 @@ export function DemoBlock({
       kicker={kicker}
       title={title}
       description={description}
+      year={year}
+      context={context}
       tone={tone}
       related={related}
       showHeader={showHeader}
     >
-      <ThemeProvider theme={demoTheme}>
-        <InteractiveDemoSlot available componentName={componentName} />
-      </ThemeProvider>
+      <LazyMount>
+        <ThemeProvider theme={demoTheme}>
+          <InteractiveDemoSlot available componentName={componentName} />
+        </ThemeProvider>
+      </LazyMount>
     </DemoFrame>
   );
 }

@@ -6,6 +6,8 @@ export interface DemoEntry {
   kicker: string;
   description: string;
   tone: DemoTone;
+  year: string;
+  context: string;
   component?: string;
   href?: string;
   related?: { label: string; url: string };
@@ -15,6 +17,8 @@ export interface DemoEntry {
 export const demos: DemoEntry[] = [
   {
     slug: "cpu-simulator",
+    year: "2020 / 2026",
+    context: "The machine was built in 2020 from discrete logic; the browser simulator is the 2026 rebuild.",
     title: "8-bit CPU simulator",
     kicker: "Simulation",
     description:
@@ -26,6 +30,8 @@ export const demos: DemoEntry[] = [
   },
   {
     slug: "gesture-recognition",
+    year: "2020 / 2022",
+    context: "First written in 2020, then extended to full-body tracking for a 2022 installation.",
     title: "Gesture recognition",
     kicker: "Computer vision",
     description:
@@ -37,6 +43,8 @@ export const demos: DemoEntry[] = [
   },
   {
     slug: "uml-generator",
+    year: "2025",
+    context: "Built in 2025, when iterative LLM diagramming was still novel. In 2026 the interaction matters more than the generation.",
     title: "UML generator",
     kicker: "Language models",
     description:
@@ -48,6 +56,8 @@ export const demos: DemoEntry[] = [
   },
   {
     slug: "ml-playground",
+    year: "2025",
+    context: "A teaching tool from the capstone era: small models you can train and inspect in the browser.",
     title: "ML playground",
     kicker: "Machine learning",
     description:
@@ -59,6 +69,8 @@ export const demos: DemoEntry[] = [
   },
   {
     slug: "cnn-visualiser",
+    year: "2025",
+    context: "The visualisation layer from the ML playground, separated so the network can be read in three dimensions.",
     title: "CNN visualiser",
     kicker: "Machine learning",
     description:
@@ -70,6 +82,8 @@ export const demos: DemoEntry[] = [
   },
   {
     slug: "service-architecture",
+    year: "2026",
+    context: "A working reference diagram for the service boundaries I reach for in practice.",
     title: "Service architecture",
     kicker: "Diagram",
     description:
@@ -81,6 +95,8 @@ export const demos: DemoEntry[] = [
   },
   {
     slug: "hardware-pipeline",
+    year: "2026",
+    context: "The actual toolchain from schematic to assembly, not a generic diagram.",
     title: "Hardware pipeline",
     kicker: "Diagram",
     description:
@@ -92,6 +108,8 @@ export const demos: DemoEntry[] = [
   },
   {
     slug: "3d-models",
+    year: "2020 to 2026",
+    context: "Project models from six years of making, rendered as wireframes.",
     title: "3D model gallery",
     kicker: "3D",
     description:

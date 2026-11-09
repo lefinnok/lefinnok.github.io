@@ -1,23 +1,20 @@
-import { NavLink, Link, useLocation } from "react-router";
+import { Link } from "react-router";
 import { useEffect, useState } from "react";
 
-const LINKS = [
-  { label: "Engineering", to: "/engineering" },
-  { label: "Craft", to: "/craft" },
-  { label: "Demos", to: "/demos" },
-  { label: "About", to: "/about" },
-  { label: "Contact", to: "/contact" },
+const SECTIONS = [
+  { id: "engineering", label: "Engineering" },
+  { id: "craft", label: "Craft" },
+  { id: "demos", label: "Demos" },
+  { id: "about", label: "About" },
+  { id: "contact", label: "Contact" },
 ];
 
 export function SiteNav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [progress, setProgress] = useState(0);
-  const location = useLocation();
-
-  useEffect(() => {
-    setOpen(false);
-  }, [location.pathname]);
+  const [active, setActive] = useState("engineering");
+  const [dark, setDark] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
@@ -36,6 +33,27 @@ export function SiteNav() {
   }, []);
 
   useEffect(() => {
+    const nodes = SECTIONS.map((section) =>
+      document.getElementById(section.id)
+    ).filter((node): node is HTMLElement => Boolean(node));
+    if (!nodes.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActive(entry.target.id);
+            setDark((entry.target as HTMLElement).dataset.theme === "ink");
+          }
+        });
+      },
+      { rootMargin: "-40% 0px -50% 0px", threshold: 0 }
+    );
+    nodes.forEach((node) => observer.observe(node));
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     if (!open) return;
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") setOpen(false);
@@ -49,24 +67,30 @@ export function SiteNav() {
   }, [open]);
 
   return (
-    <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
+    <header
+      className={`site-header ${scrolled ? "is-scrolled" : ""} ${dark ? "is-dark" : ""}`}
+    >
       <div className="container nav">
         <Link to="/" className="brand" aria-label="Lefinno Kwok, home">
           Lefinno Kwok
         </Link>
 
         <nav className="nav-links" aria-label="Primary">
-          {LINKS.map((link) => (
-            <NavLink key={link.to} to={link.to}>
-              {link.label}
-            </NavLink>
+          {SECTIONS.map((section) => (
+            <a
+              key={section.id}
+              href={`#${section.id}`}
+              aria-current={active === section.id ? "location" : undefined}
+            >
+              {section.label}
+            </a>
           ))}
         </nav>
 
         <div className="nav-actions">
-          <Link to="/contact" className="btn nav-cv">
+          <a href="#contact" className="btn nav-cv">
             CV
-          </Link>
+          </a>
           <button
             type="button"
             className={`nav-toggle ${open ? "is-open" : ""}`}
@@ -85,12 +109,20 @@ export function SiteNav() {
         <span style={{ transform: `scaleX(${progress})` }} />
       </div>
 
-      <div id="mobile-menu" className={`mobile-menu ${open ? "is-open" : ""}`} hidden={!open}>
+      <div
+        id="mobile-menu"
+        className={`mobile-menu ${open ? "is-open" : ""}`}
+        hidden={!open}
+      >
         <nav aria-label="Mobile">
-          {LINKS.map((link) => (
-            <NavLink key={link.to} to={link.to} onClick={() => setOpen(false)}>
-              {link.label}
-            </NavLink>
+          {SECTIONS.map((section) => (
+            <a
+              key={section.id}
+              href={`#${section.id}`}
+              onClick={() => setOpen(false)}
+            >
+              {section.label}
+            </a>
           ))}
         </nav>
         <p className="mono">Hong Kong · lefinnokwok@gmail.com</p>
