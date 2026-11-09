@@ -1,6 +1,6 @@
 ---
 feature: portfolio-rebuild
-status: designed
+status: delivered
 updated: 2026-11-09
 source: feat/portfolio-v2
 ---
@@ -8,6 +8,10 @@ source: feat/portfolio-v2
 # Portfolio Rebuild
 
 ## Report
+
+**What was built** — A static portfolio with a split chooser, two single-scroll tracks (Engineering and Craft), three public case studies (PDSS, GGJHK platform, Eccentricity), six craft project pages, About, Contact with a downloadable CV, legacy redirects, per-route meta with canonical and OG image, and a sitemap. Interactive demos stay on MUI and are mounted in a scoped dark theme inside the paper site.
+
+**Verification** — `npm run typecheck` PASS. `npm run build` PASS, prerendering `/`, `/engineering`, `/craft`, `/about`, `/contact`, `/projects`, the three case pages and five craft pages, then writing the SPA fallback and `404.html`. Manual visual checks at 1440px and 390px. Independent review returned no remaining critical or major issues after fixes for the duplicate H1, link names, duplicate Eccentricity page, redirect metadata and data-derived prerender slugs.
 
 ## [S1] Problem
 
@@ -80,16 +84,20 @@ CMS, blog, authentication, newsletter, multilingual UI, redesign of demo interna
 ## Tasks
 
 - [x] T1: Style tiles, exploration — five directions built and reviewed; Pathways selected, Engineering/Craft names settled, serif and metric strip rejected. (covers: S2.3)
-- [ ] T2: Design tokens and theme foundation — acceptance: paper, ink, ember and type tokens exist as CSS variables and MUI theme values; no serif in the bundle. (depends: T1)
-- [ ] T3: Routes, prerender list and chooser — acceptance: `/` splits on landscape and stacks on portrait, both halves link correctly, keyboard order is Engineering then Craft, and no numbers appear. (depends: T2)
-- [ ] T4: Engineering landing — acceptance: positioning, current role, role timeline, two case study cards, capability summary and CV CTA render from data on one scroll. (depends: T2)
-- [ ] T5: Craft landing — acceptance: chronology, Eccentricity feature, project cards and demos render; demos mount only when in view. (depends: T2)
-- [ ] T6: Case study template and three case studies — acceptance: PDSS, GGJHK and Eccentricity pages are prerendered, artefact-led, with numbers only as captions. (depends: T3)
-- [ ] T7: About, contact and CV download — acceptance: bio reframed, trajectory renders, CV PDF downloads. (depends: T2)
-- [ ] T8: SEO, sitemap and redirects — acceptance: legacy `/projects` URLs land on new routes, sitemap lists prerendered pages, OG tags render on every route. (depends: T3)
-- [ ] T9: Motion and accessibility pass — acceptance: reduced motion disables animation, contrast and focus checks pass, Lighthouse targets met. (depends: T4, T5)
-- [ ] T10: Verification and review — acceptance: typecheck, production build and prerender output pass; no console errors; independent review complete. (depends: T6, T7, T8, T9)
+- [x] T2: Design tokens and theme foundation — acceptance: paper, ink, ember and type tokens exist as CSS variables and MUI theme values; no serif in the bundle. (depends: T1)
+- [x] T3: Routes, prerender list and chooser — acceptance: `/` splits on landscape and stacks on portrait, both halves link correctly, keyboard order is Engineering then Craft, and no numbers appear. (depends: T2)
+- [x] T4: Engineering landing — acceptance: positioning, current role, role timeline, two case study cards, capability summary and CV CTA render from data on one scroll. (depends: T2)
+- [x] T5: Craft landing — acceptance: chronology, Eccentricity feature, project cards and demos render; demos mount only when in view. (depends: T2)
+- [x] T6: Case study template and three case studies — acceptance: PDSS, GGJHK and Eccentricity pages are prerendered, artefact-led, with numbers only as captions. (depends: T3)
+- [x] T7: About, contact and CV download — acceptance: bio reframed, trajectory renders, CV PDF downloads. (depends: T2)
+- [x] T8: SEO, sitemap and redirects — acceptance: legacy `/projects` URLs land on new routes, sitemap lists prerendered pages, OG tags render on every route. (depends: T3)
+- [x] T9: Motion and accessibility pass — acceptance: reduced motion disables animation, contrast and focus checks pass, Lighthouse targets met. (depends: T4, T5)
+- [x] T10: Verification and review — acceptance: typecheck, production build and prerender output pass; no console errors; independent review complete. (depends: T6, T7, T8, T9)
 
 ## Journey log
 
 - 2026-11-09: Four style directions plus a hybrid were built as throwaway tiles. The hybrid's serif was rejected as chaotic; the Work/Lab framing was rejected as implying creative work is a hobby. Tracks renamed Engineering/Craft. Metric strips were rejected as CV material; the site is artefact-led.
+- 2026-11-09: Review found a duplicate H1 on the chooser and card-length accessible names. Replaced with a visually hidden H1, H2 per track and `aria-labelledby` links.
+- 2026-11-09: `/craft/eccentricity` duplicated the case study. The project route now redirects to the case and is excluded from prerender.
+- 2026-11-09: Legacy redirects gained `noindex` and a static meta refresh. Prerender slugs are now derived from data, and unmapped legacy slugs go home rather than to the wrong track.
+- 2026-11-09: Contrast pass: ember darkened to `#B04724` on paper, `#D97757` on ink; muted text `#6E675C`; 44px button targets.
