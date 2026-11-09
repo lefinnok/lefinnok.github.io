@@ -6,7 +6,7 @@ const MAP: Record<string, string> = {
   "8-bit-transistor-computer": "/craft/8-bit-computer",
   "gesture-recognition": "/craft/gesture-recognition",
   "ld42-space-saver": "/craft/space-saver",
-  "ld58-eccentricity": "/craft/eccentricity",
+  "ld58-eccentricity": "/craft/case/eccentricity",
   "ggj26-binmin": "/craft/binmin",
   "retro-handheld": "/craft/retro-handheld",
 };
