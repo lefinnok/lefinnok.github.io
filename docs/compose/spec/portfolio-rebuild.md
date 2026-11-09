@@ -21,6 +21,8 @@ source: feat/portfolio-v2
 
 **Collapsible pass** — Case studies and project blocks collapsed to thumbnail rows with one-line descriptions; demos remain open; anchors open the target item.
 
+**Systems and polish pass** — The demo stage paper edge was removed, diagrams moved to their own Systems section with a nav entry, and the scroll gained Lenis smoothing, ghost words, view-timeline titles and animated rules.
+
 **Verification** — `npm run typecheck` PASS. `npm run build` PASS, prerendering `/`, `/engineering`, `/craft`, `/about`, `/contact`, `/projects`, the three case pages and five craft pages, then writing the SPA fallback and `404.html`. Manual visual checks at 1440px and 390px. Independent review returned no remaining critical or major issues after fixes for the duplicate H1, link names, duplicate Eccentricity page, redirect metadata and data-derived prerender slugs.
 
 ## [S1] Problem
@@ -39,7 +41,8 @@ The site is one page. `/` carries every section in one scroll:
 |---|---|
 | `#engineering` | Paper section: positioning, PDSS and GGJHK case studies inline, experience, capabilities, current role. |
 | `#craft` | Ink section: Eccentricity, four demos inline (CPU, gesture, ML, CNN), project blocks, chronology. |
-| `#demos` | Ink section: index of all eight demos plus the UML generator, architecture diagrams and 3D gallery inline. |
+| `#systems` | Ink section: the two architecture diagrams, separated from the interactive demos. |
+| `#demos` | Ink section: index of the interactive demos, the UML generator and the 3D gallery. |
 | `#about` | Paper section: bio, facts, trajectory. |
 | `#contact` | Paper section: email, LinkedIn, GitHub, CV. |
 
@@ -126,6 +129,20 @@ Every demo and project carries a year and a context line, rendered in the frame 
 - The whole page background interpolates between paper and ink across tall empty gaps between tracks, computed from scroll position. There are no gradient bands, so the colour changes continuously and never cuts across content.
 - Demo blocks mount only when within 500px of the viewport, so a 20,000px page does not boot every instrument at once.
 
+### S2.14 Systems and demo surfaces
+
+- The two reference diagrams live in their own `#systems` section with a heading, ghost word and reference framing. They are not part of the demo rack.
+- Demo stages use fixed ink and paper surfaces rather than the inverted page variables. The stage previously inherited `--ink` from the dark section and painted a paper border around every instrument.
+- The demo index now lists the interactive demos and the 3D gallery; diagram cards link to Systems.
+
+### S2.15 Scroll feel
+
+- Lenis smooth scrolling, with a custom anchor handler that opens a collapsed case or project before scrolling to it.
+- Oversized outlined ghost words in section heroes drift against the scroll.
+- Section titles arrive with a view-timeline reveal; the section rule draws itself with a view timeline.
+- Navigation underlines animate on hover and active state; thumbnails scale on hover; demo card arrows slide.
+- Reduced-motion disables smooth scroll, ghost drift and title animation.
+
 ### S2.13 Collapsible long-form items
 
 Case studies and project blocks are collapsed by default:
@@ -150,6 +167,8 @@ CMS, blog, authentication, newsletter, multilingual UI, redesign of demo interna
 - [x] T13: Demos restored — acceptance: CPU, gesture, ML, UML, diagrams and 3D models render on the site. (covers: S2.8)
 - [x] T15: Demo frame and brand tokens — acceptance: demos render inside a paper frame with an ink stage and ember accents; expand works. (covers: S2.9)
 - [x] T16: Demo index and detail pages — acceptance: `/demos` lists eight entries and each detail page mounts its demo. (covers: S2.9)
+- [x] T26: Systems section — acceptance: diagrams have their own section and nav item, separate from demos. (covers: S2.14)
+- [x] T27: Smooth scroll and motion — acceptance: Lenis scrolling, anchor opening, ghost words and view-timeline titles work. (covers: S2.15)
 - [x] T25: Collapsible case studies and projects — acceptance: compact rows expand in place and anchors open the target. (covers: S2.13)
 - [x] T21: Single-page scroll — acceptance: one route carries every section and anchors navigate. (covers: S2.1)
 - [x] T22: Demo dates and context — acceptance: every demo shows a year and a context line. (covers: S2.11)

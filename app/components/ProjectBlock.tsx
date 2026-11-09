@@ -20,8 +20,15 @@ export function ProjectBlock({
     const sync = () => {
       if (window.location.hash === `#${anchor}`) setOpen(true);
     };
+    const onOpen = (event: Event) => {
+      if ((event as CustomEvent<string>).detail === anchor) setOpen(true);
+    };
     window.addEventListener("hashchange", sync);
-    return () => window.removeEventListener("hashchange", sync);
+    window.addEventListener("anchor:open", onOpen);
+    return () => {
+      window.removeEventListener("hashchange", sync);
+      window.removeEventListener("anchor:open", onOpen);
+    };
   }, [anchor]);
 
   return (

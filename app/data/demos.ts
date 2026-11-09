@@ -6,6 +6,7 @@ export interface DemoEntry {
   kicker: string;
   description: string;
   tone: DemoTone;
+  category: "interactive" | "diagram" | "gallery";
   year: string;
   context: string;
   component?: string;
@@ -17,6 +18,7 @@ export interface DemoEntry {
 export const demos: DemoEntry[] = [
   {
     slug: "cpu-simulator",
+    category: "interactive",
     year: "2020 / 2026",
     context: "The machine was built in 2020 from discrete logic; the browser simulator is the 2026 rebuild.",
     title: "8-bit CPU simulator",
@@ -30,6 +32,7 @@ export const demos: DemoEntry[] = [
   },
   {
     slug: "gesture-recognition",
+    category: "interactive",
     year: "2020 / 2022",
     context: "First written in 2020, then extended to full-body tracking for a 2022 installation.",
     title: "Gesture recognition",
@@ -43,6 +46,7 @@ export const demos: DemoEntry[] = [
   },
   {
     slug: "uml-generator",
+    category: "interactive",
     year: "2025",
     context: "Built in 2025, when iterative LLM diagramming was still novel. In 2026 the interaction matters more than the generation.",
     title: "UML generator",
@@ -56,6 +60,7 @@ export const demos: DemoEntry[] = [
   },
   {
     slug: "ml-playground",
+    category: "interactive",
     year: "2025",
     context: "A teaching tool from the capstone era: small models you can train and inspect in the browser.",
     title: "ML playground",
@@ -69,6 +74,7 @@ export const demos: DemoEntry[] = [
   },
   {
     slug: "cnn-visualiser",
+    category: "interactive",
     year: "2025",
     context: "The visualisation layer from the ML playground, separated so the network can be read in three dimensions.",
     title: "CNN visualiser",
@@ -82,6 +88,7 @@ export const demos: DemoEntry[] = [
   },
   {
     slug: "service-architecture",
+    category: "diagram",
     year: "2026",
     context: "A working reference diagram for the service boundaries I reach for in practice.",
     title: "Service architecture",
@@ -95,6 +102,7 @@ export const demos: DemoEntry[] = [
   },
   {
     slug: "hardware-pipeline",
+    category: "diagram",
     year: "2026",
     context: "The actual toolchain from schematic to assembly, not a generic diagram.",
     title: "Hardware pipeline",
@@ -108,6 +116,7 @@ export const demos: DemoEntry[] = [
   },
   {
     slug: "3d-models",
+    category: "gallery",
     year: "2020 to 2026",
     context: "Project models from six years of making, rendered as wireframes.",
     title: "3D model gallery",

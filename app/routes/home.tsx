@@ -2,6 +2,7 @@ import type { Route } from "./+types/home";
 import { Chooser } from "~/components/Chooser";
 import { SectionHead } from "~/components/SectionHead";
 import { SectionRail } from "~/components/SectionRail";
+import { GhostWord } from "~/components/GhostWord";
 import { CaseStudyBlock } from "~/components/CaseStudyBlock";
 import { ProjectBlock } from "~/components/ProjectBlock";
 import { DemoBlock } from "~/components/DemoBlock";
@@ -27,7 +28,10 @@ const engineeringCases = caseStudies.filter((study) => study.track === "engineer
 const eccentricity = craftProjects.find((project) => project.slug === "eccentricity");
 const craftOnly = craftProjects.filter((project) => project.slug !== "eccentricity");
 const craftDemos = ["cpu-simulator", "gesture-recognition", "ml-playground", "cnn-visualiser"];
-const inlineDemos = ["uml-generator", "service-architecture", "hardware-pipeline", "3d-models"];
+const interactiveDemos = demos.filter((demo) => demo.category === "interactive");
+const systemsDemos = demos.filter((demo) => demo.category === "diagram");
+const galleryDemos = demos.filter((demo) => demo.category === "gallery");
+const demosIndex = [...interactiveDemos, ...galleryDemos];
 
 function demoBySlug(slug: string) {
   return demos.find((demo) => demo.slug === slug)!;
@@ -51,6 +55,7 @@ export default function Home() {
 
       <section id="engineering" data-theme="paper" className="page-section page-section--paper">
         <div className="container section-hero">
+          <GhostWord word="ENGINEERING" />
           <span className="eyebrow">Engineering / 01</span>
           <h2 className="section-hero__title">I build AI systems that can be audited.</h2>
           <p className="lede">
@@ -157,6 +162,7 @@ export default function Home() {
 
       <section id="craft" data-theme="ink" className="page-section page-section--ink">
         <div className="container section-hero">
+          <GhostWord word="CRAFT" />
           <span className="eyebrow">Craft / 02</span>
           <h2 className="section-hero__title">I make things you can play with.</h2>
           <p className="lede">
@@ -252,20 +258,51 @@ export default function Home() {
         </div>
       </section>
 
+      <section id="systems" data-theme="ink" className="page-section page-section--ink">
+        <div className="container section-hero">
+          <GhostWord word="SYSTEMS" />
+          <span className="eyebrow">Systems / 03</span>
+          <h2 className="section-hero__title">The systems underneath.</h2>
+          <p className="lede">
+            Two reference drawings, kept out of the demo rack because they are
+            not toys. One is the service shape I reach for; the other is the
+            actual path from schematic to firmware.
+          </p>
+        </div>
+
+        <div className="container">
+          <SectionHead num="01" title="Diagrams" range="Reference" />
+          {systemsDemos.map((demo) => (
+            <div key={demo.slug} id={`demo-${demo.slug}`} className="demo-anchor">
+              <DemoBlock
+                componentName={demo.component!}
+                title={demo.title}
+                description={demo.description}
+                year={demo.year}
+                context={demo.context}
+                kicker={demo.kicker}
+                related={demo.related}
+              />
+            </div>
+          ))}
+        </div>
+      </section>
+
       <section id="demos" data-theme="ink" className="page-section page-section--ink">
         <div className="container section-hero">
-          <span className="eyebrow">Demos / 03</span>
-          <h2 className="section-hero__title">Eight things that run here.</h2>
+          <GhostWord word="DEMOS" />
+          <span className="eyebrow">Demos / 04</span>
+          <h2 className="section-hero__title">Things that run here.</h2>
           <p className="lede">
-            Not screenshots. Working systems from the projects, with the date
-            and the context they were built in. The four on Craft are above;
-            the rest live here.
+            Working systems, not screenshots. The four instruments on Craft are
+            above, the UML generator is below; the diagrams have their own
+            section. Every one carries the year it was made.
           </p>
         </div>
 
         <div className="container">
           <div className="demos-grid">
-            {demos.map((demo) => (
+            {demosIndex.map((demo) => (
               <a key={demo.slug} href={`#demo-${demo.slug}`} className="demo-card">
                 <span className="eyebrow">
                   {demo.kicker} · {demo.year}
@@ -276,27 +313,29 @@ export default function Home() {
               </a>
             ))}
           </div>
+          <div className="hero-actions" style={{ marginTop: 22 }}>
+            <a className="btn" href="#systems">
+              Diagrams live in Systems
+            </a>
+          </div>
         </div>
 
         <div className="container">
-          {inlineDemos
-            .filter((slug) => slug !== "3d-models")
-            .map((slug) => {
-              const demo = demoBySlug(slug);
-              return (
-                <div key={slug} id={`demo-${slug}`} className="demo-anchor">
-                  <DemoBlock
-                    componentName={demo.component!}
-                    title={demo.title}
-                    description={demo.description}
-                    year={demo.year}
-                    context={demo.context}
-                    kicker={demo.kicker}
-                    related={demo.related}
-                  />
-                </div>
-              );
-            })}
+          {interactiveDemos
+            .filter((demo) => demo.slug === "uml-generator")
+            .map((demo) => (
+              <div key={demo.slug} id={`demo-${demo.slug}`} className="demo-anchor">
+                <DemoBlock
+                  componentName={demo.component!}
+                  title={demo.title}
+                  description={demo.description}
+                  year={demo.year}
+                  context={demo.context}
+                  kicker={demo.kicker}
+                  related={demo.related}
+                />
+              </div>
+            ))}
 
           <div id="demo-3d-models" className="demo-anchor">
             <div className="demo-frame">
@@ -328,8 +367,9 @@ export default function Home() {
 
       <section id="about" data-theme="paper" className="page-section page-section--paper">
         <div className="container about-hero">
+          <GhostWord word="ABOUT" />
           <div>
-            <span className="eyebrow">About / 04</span>
+            <span className="eyebrow">About / 05</span>
             <h2 className="section-hero__title">Two registers, one builder.</h2>
             <p>
               I am an AI platform engineer in Hong Kong. I build systems where
@@ -398,7 +438,7 @@ export default function Home() {
 
       <section id="contact" data-theme="paper" className="page-section page-section--paper">
         <div className="container contact">
-          <span className="eyebrow">Contact / 05</span>
+          <span className="eyebrow">Contact / 06</span>
           <h2 className="section-hero__title">Start a conversation.</h2>
           <a className="contact__mail" href="mailto:lefinnokwok@gmail.com">
             lefinnokwok@gmail.com

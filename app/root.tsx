@@ -8,6 +8,7 @@ import {
   ScrollRestoration,
 } from "react-router";
 import { useLayoutEffect } from "react";
+import { useSmoothScroll } from "~/hooks/useSmoothScroll";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
@@ -71,6 +72,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   const location = useLocation();
+  useSmoothScroll();
   const track = location.pathname.startsWith("/craft")
     ? "craft"
     : location.pathname.startsWith("/demos")
