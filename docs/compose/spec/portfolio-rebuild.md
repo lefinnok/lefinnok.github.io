@@ -11,6 +11,8 @@ source: feat/portfolio-v2
 
 **What was built** — A static portfolio with a split chooser, two single-scroll tracks (Engineering and Craft), three public case studies (PDSS, GGJHK platform, Eccentricity), six craft project pages, About, Contact with a downloadable CV, legacy redirects, per-route meta with canonical and OG image, and a sitemap. Interactive demos stay on MUI and are mounted in a scoped dark theme inside the paper site.
 
+**Second pass** — After review, demos were restored as first-class content, the header gained scroll state, progress and a mobile menu, each track gained a sticky subnav with scrollspy, the home page gained Live, Selected work and From craft bands, and the tracks now cross-link with a page transition.
+
 **Verification** — `npm run typecheck` PASS. `npm run build` PASS, prerendering `/`, `/engineering`, `/craft`, `/about`, `/contact`, `/projects`, the three case pages and five craft pages, then writing the SPA fallback and `404.html`. Manual visual checks at 1440px and 390px. Independent review returned no remaining critical or major issues after fixes for the duplicate H1, link names, duplicate Eccentricity page, redirect metadata and data-derived prerender slugs.
 
 ## [S1] Problem
@@ -73,6 +75,16 @@ IntersectionObserver reveals, not a scroll hijack. SVG strokes draw on with `str
 
 Port the uncommitted `phase0-credibility` work: `app/lib/meta.ts`, OG image, favicons, `robots.txt`, `sitemap.xml`, canonical and social tags per route. Static deploy stays GitHub Pages; `postbuild` keeps the 404 fallback. No SSR.
 
+### S2.8 Second pass after review
+
+The first delivered pass under-used the demo material and left navigation and cohesion weak. This pass adds:
+
+- A scroll-aware header: condensed state after scrolling, a reading-progress line, and a mobile menu instead of hidden links.
+- A sticky track subnav with scrollspy on Engineering and Craft.
+- Demos as first-class content: CPU simulator, gesture recognition and ML playground on Craft; UML generator on Engineering; diagram panels in Capabilities; 3D model viewers on Craft project pages; CPU and gesture previews on the home page.
+- A home page that continues below the chooser: Live demos, Selected work, From craft and a contact cross-link.
+- Cross-links between tracks and a page transition on route change.
+
 ### S2.7 Performance and accessibility
 
 Demos stay lazy-loaded and mount only when visible. Fonts are self-hosted and subset. Targets: Lighthouse performance 90+ on both landings, no layout shift from fonts, 4.5:1 body contrast, visible focus rings, skip link, semantic heading order, keyboard-operable chooser.
@@ -82,6 +94,11 @@ Demos stay lazy-loaded and mount only when visible. Fonts are self-hosted and su
 CMS, blog, authentication, newsletter, multilingual UI, redesign of demo internals, any backend beyond the existing Supabase proxy, client case studies, and any client-identifying content.
 
 ## Tasks
+
+- [x] T11: Scroll-aware nav and mobile menu — acceptance: header condenses, progress line tracks scroll, mobile menu opens with links. (covers: S2.8)
+- [x] T12: Track subnav with scrollspy — acceptance: anchors jump with sticky offset and the active section follows scroll. (covers: S2.8)
+- [x] T13: Demos restored — acceptance: CPU, gesture, ML, UML, diagrams and 3D models render on the site. (covers: S2.8)
+- [x] T14: Home and cross-track cohesion — acceptance: home has Live, work and craft bands; each track links to the other. (covers: S2.8)
 
 - [x] T1: Style tiles, exploration — five directions built and reviewed; Pathways selected, Engineering/Craft names settled, serif and metric strip rejected. (covers: S2.3)
 - [x] T2: Design tokens and theme foundation — acceptance: paper, ink, ember and type tokens exist as CSS variables and MUI theme values; no serif in the bundle. (depends: T1)
@@ -101,3 +118,4 @@ CMS, blog, authentication, newsletter, multilingual UI, redesign of demo interna
 - 2026-11-09: `/craft/eccentricity` duplicated the case study. The project route now redirects to the case and is excluded from prerender.
 - 2026-11-09: Legacy redirects gained `noindex` and a static meta refresh. Prerender slugs are now derived from data, and unmapped legacy slugs go home rather than to the wrong track.
 - 2026-11-09: Contrast pass: ember darkened to `#B04724` on paper, `#D97757` on ink; muted text `#6E675C`; 44px button targets.
+- 2026-11-09: Human review found that demos had been cut to two, the nav had no scroll behaviour and mobile links were hidden, and the interior pages lacked cohesion. Restored all demos, added scroll-aware nav and subnav, added home bands and cross-links.

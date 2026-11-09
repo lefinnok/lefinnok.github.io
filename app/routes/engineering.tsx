@@ -3,6 +3,12 @@ import { Link } from "react-router";
 import { SectionHead } from "~/components/SectionHead";
 import { Timeline } from "~/components/Timeline";
 import { CaseCard } from "~/components/CaseCard";
+import { TrackSubnav } from "~/components/TrackSubnav";
+import { DemoBlock } from "~/components/DemoBlock";
+import { DemoSurface } from "~/components/DemoSurface";
+import { TrackLink } from "~/components/TrackLink";
+import { LanguagesDiagram } from "~/components/LanguagesDiagram";
+import { HardwarePipelineDiagram } from "~/components/HardwarePipelineDiagram";
 import { caseStudies } from "~/data/caseStudies";
 import { roles } from "~/data/roles";
 import { pageMeta } from "~/lib/meta";
@@ -11,11 +17,19 @@ export const meta: Route.MetaFunction = () =>
   pageMeta({
     title: "Engineering | Lefinno Kwok",
     description:
-      "Enterprise AI delivery, integration, infrastructure and a research-grade decision system. Case studies and evidence.",
+      "Enterprise AI delivery, integration, infrastructure and a research-grade decision system. Case studies, demos and evidence.",
     path: "/engineering",
   });
 
 const engineeringCases = caseStudies.filter((study) => study.track === "engineering");
+
+const SECTIONS = [
+  { id: "work", label: "Selected work" },
+  { id: "interactive", label: "Interactive" },
+  { id: "experience", label: "Experience" },
+  { id: "capabilities", label: "Capabilities" },
+  { id: "current", label: "Current" },
+];
 
 export default function Engineering() {
   return (
@@ -38,7 +52,9 @@ export default function Engineering() {
         </div>
       </section>
 
-      <section className="section">
+      <TrackSubnav items={SECTIONS} label="Engineering sections" />
+
+      <section className="section" id="work">
         <div className="container">
           <SectionHead num="01" title="Selected work" range="2025 to 2027" />
           <div className="cards cards--two">
@@ -49,16 +65,28 @@ export default function Engineering() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section" id="interactive">
         <div className="container">
-          <SectionHead num="02" title="Experience" range="2021 to now" />
+          <SectionHead num="02" title="Interactive" range="Run it here" />
+          <p className="lede" style={{ marginTop: 0, marginBottom: 26 }}>
+            The UML generator turns a natural-language description into a class
+            diagram through an iterative conversation. This is the live demo,
+            not a video.
+          </p>
+          <DemoBlock componentName="UmlGeneratorDemo" title="UML diagram generator" />
+        </div>
+      </section>
+
+      <section className="section" id="experience">
+        <div className="container">
+          <SectionHead num="03" title="Experience" range="2021 to now" />
           <Timeline roles={roles} />
         </div>
       </section>
 
-      <section className="section">
+      <section className="section" id="capabilities">
         <div className="container">
-          <SectionHead num="03" title="Capabilities" />
+          <SectionHead num="04" title="Capabilities" />
           <div className="skill-grid">
             <div className="skill-block">
               <h3>AI systems</h3>
@@ -91,12 +119,35 @@ export default function Engineering() {
               </p>
             </div>
           </div>
+
+          <div className="demo-grid" style={{ marginTop: 44 }}>
+            <div className="media-card">
+              <h3>How a service fits together</h3>
+              <p>
+                The architecture I reach for: typed clients, a gateway, service
+                boundaries and a build path.
+              </p>
+              <DemoSurface>
+                <LanguagesDiagram />
+              </DemoSurface>
+            </div>
+            <div className="media-card">
+              <h3>How a product gets built</h3>
+              <p>
+                From schematic to firmware to assembly, with the tools I
+                actually use at each stage.
+              </p>
+              <DemoSurface>
+                <HardwarePipelineDiagram />
+              </DemoSurface>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="section">
+      <section className="section" id="current">
         <div className="container">
-          <SectionHead num="04" title="Current" />
+          <SectionHead num="05" title="Current" />
           <div className="current">
             <div>
               <h3>Analyst, Deloitte</h3>
@@ -105,10 +156,6 @@ export default function Engineering() {
                 identity, data access, alerting and offline porting. The
                 client, the vendor and the systems stay out of this site by
                 design; the CV carries the detail.
-              </p>
-              <p>
-                If you want the engineering narrative behind it, ask. I can
-                talk through the integration patterns without naming anyone.
               </p>
             </div>
             <div className="about-facts">
@@ -130,6 +177,17 @@ export default function Engineering() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="next-track">
+        <div className="container">
+          <TrackLink
+            to="/craft"
+            kicker="Next track"
+            title="Craft"
+            text="Games, hardware and interactive work. The same practice, different materials."
+          />
         </div>
       </section>
     </>

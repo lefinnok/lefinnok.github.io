@@ -4,6 +4,7 @@ import {
   Meta,
   Outlet,
   Scripts,
+  useLocation,
   ScrollRestoration,
 } from "react-router";
 import { ThemeProvider } from "@mui/material/styles";
@@ -62,7 +63,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  const location = useLocation();
+  return (
+    <div className="page-enter" key={location.pathname}>
+      <Outlet />
+    </div>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

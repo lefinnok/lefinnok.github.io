@@ -18,6 +18,9 @@ const DEMO_COMPONENTS: Record<
     () =>
       import("~/components/demos/uml-generator/UmlGeneratorDemo"),
   ),
+  MlPlaygroundDemo: lazy(
+    () => import("~/components/demos/ml-playground/MlPlaygroundDemo"),
+  ),
 };
 
 interface InteractiveDemoSlotProps {

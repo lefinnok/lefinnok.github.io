@@ -3,7 +3,10 @@ import { Link } from "react-router";
 import { SectionHead } from "~/components/SectionHead";
 import { ProjectCard } from "~/components/ProjectCard";
 import { DemoBlock } from "~/components/DemoBlock";
-import { LineArt } from "~/components/LineArt";
+import { DemoSurface } from "~/components/DemoSurface";
+import { TrackSubnav } from "~/components/TrackSubnav";
+import { TrackLink } from "~/components/TrackLink";
+import { FbxModelViewer } from "~/components/FbxModelViewer";
 import { craftProjects } from "~/data/craftProjects";
 import { pageMeta } from "~/lib/meta";
 
@@ -21,6 +24,13 @@ const eras = [
   { year: "2022", title: "Retro handheld", text: "Custom PCB, firmware, enclosure." },
   { year: "2025", title: "Eccentricity", text: "Jam build to commercial production." },
   { year: "2026", title: "Studio work", text: "Steam page, Binmin, contract development." },
+];
+
+const SECTIONS = [
+  { id: "production", label: "In production" },
+  { id: "demos", label: "Demos" },
+  { id: "projects", label: "Projects" },
+  { id: "chronology", label: "Chronology" },
 ];
 
 export default function Craft() {
@@ -44,7 +54,9 @@ export default function Craft() {
         </div>
       </section>
 
-      <section className="section">
+      <TrackSubnav items={SECTIONS} label="Craft sections" />
+
+      <section className="section" id="production">
         <div className="container">
           <SectionHead num="01" title="In production" range="2025 to now" />
           <div className="feature">
@@ -71,17 +83,53 @@ export default function Craft() {
                 </a>
               </div>
             </div>
-            <div className="feature__art">
-              <LineArt variant="arch" className="" />
-            </div>
+            <DemoSurface>
+              <FbxModelViewer
+                config={{ path: "/models/dynamo.obj", cameraZ: 2.2, cameraY: 0, scale: 1.6 }}
+                height={340}
+              />
+            </DemoSurface>
           </div>
         </div>
       </section>
 
-      <section className="section">
+      <section className="section" id="demos">
         <div className="container">
-          <SectionHead num="02" title="Chronology" range="2018 to 2026" />
-          <div className="timeline" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))" }}>
+          <SectionHead num="02" title="Demos" range="Run them here" />
+          <p className="lede" style={{ marginTop: 0, marginBottom: 26 }}>
+            Four systems small enough to run in the browser: a transistor-level
+            computer with a microcode stepper and assembler, a gesture
+            recogniser that needs one reference image, and a neural network you
+            can train and inspect.
+          </p>
+
+          <DemoBlock componentName="TransistorSimulator" title="8-bit computer simulator" />
+
+          <div className="demo-grid" style={{ marginTop: 28 }}>
+            <DemoBlock componentName="GestureRecognitionDemo" title="Gesture recognition" />
+            <DemoBlock componentName="MlPlaygroundDemo" title="Machine learning playground" />
+          </div>
+        </div>
+      </section>
+
+      <section className="section section--dark" id="projects">
+        <div className="container">
+          <SectionHead num="03" title="Projects" range="Selected" />
+          <div className="project-grid">
+            {craftProjects.map((project) => (
+              <ProjectCard key={project.slug} project={project} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section" id="chronology">
+        <div className="container">
+          <SectionHead num="04" title="Chronology" range="2018 to 2026" />
+          <div
+            className="timeline"
+            style={{ gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))" }}
+          >
             {eras.map((era) => (
               <div className="tl" key={era.year}>
                 <div className="tl__year">{era.year}</div>
@@ -93,30 +141,14 @@ export default function Craft() {
         </div>
       </section>
 
-      <section className="section section--dark">
+      <section className="next-track">
         <div className="container">
-          <SectionHead num="03" title="Projects" range="Selected" />
-          <div className="project-grid">
-            {craftProjects.map((project) => (
-              <ProjectCard key={project.slug} project={project} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="container">
-          <SectionHead num="04" title="Demos" range="In the browser" />
-          <p className="lede" style={{ marginTop: 0, marginBottom: 28 }}>
-            Two of the systems are small enough to run here. The first is a
-            transistor-level computer with a microcode stepper and assembler.
-            The second is a gesture recogniser that needs one reference image
-            and no training.
-          </p>
-          <div style={{ display: "grid", gap: 28 }}>
-            <DemoBlock componentName="TransistorSimulator" title="8-bit computer simulator" />
-            <DemoBlock componentName="GestureRecognitionDemo" title="Gesture recognition" />
-          </div>
+          <TrackLink
+            to="/engineering"
+            kicker="Next track"
+            title="Engineering"
+            text="Enterprise AI delivery, integration and research. The same practice, different constraints."
+          />
         </div>
       </section>
     </>

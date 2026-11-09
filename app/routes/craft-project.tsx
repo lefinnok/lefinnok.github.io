@@ -1,6 +1,8 @@
 import type { Route } from "./+types/craft-project";
 import { Link, Navigate, useParams } from "react-router";
 import { DemoBlock } from "~/components/DemoBlock";
+import { DemoSurface } from "~/components/DemoSurface";
+import { FbxModelViewer } from "~/components/FbxModelViewer";
 import { LineArt } from "~/components/LineArt";
 import { getCraftProject } from "~/data/craftProjects";
 import { pageMeta } from "~/lib/meta";
@@ -75,6 +77,16 @@ export default function CraftProjectPage() {
           </Link>
         </div>
       </section>
+
+      {project.model ? (
+        <section className="section">
+          <div className="container">
+            <DemoSurface>
+              <FbxModelViewer config={project.model} height={380} />
+            </DemoSurface>
+          </div>
+        </section>
+      ) : null}
 
       <section className="section">
         <div className="container">

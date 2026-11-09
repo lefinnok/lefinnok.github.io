@@ -9,6 +9,7 @@ export const craftProjects: CraftProject[] = [
       "Steampunk engineering roguelike. Jam prototype to Steam release, with a data pipeline, tests and a repeatable release process.",
     tags: ["Commercial", "Godot", "Steam"],
     art: "arch",
+    model: { path: "/models/dynamo.obj", cameraZ: 3.8, cameraY: 0, scale: 1.6 },
     links: [{ label: "Case study", url: "/craft/eccentricity" }],
   },
   {
@@ -19,6 +20,7 @@ export const craftProjects: CraftProject[] = [
       "A working computer from discrete transistor logic: an original 11-transistor adder, a custom instruction set and a browser simulator.",
     tags: ["Hardware", "Systems"],
     art: "grid",
+    model: { path: "/models/Transistor.fbx", cameraZ: 80, cameraY: -30 },
     demo: "TransistorSimulator",
   },
   {
@@ -29,6 +31,7 @@ export const craftProjects: CraftProject[] = [
       "A colour-swap rhythm game built in three days for Global Game Jam 2026, with 38 scenes and a browser build.",
     tags: ["Jam", "Rhythm"],
     art: "waves",
+    model: { path: "/models/mask.obj", cameraZ: 6, cameraY: 3, scale: 1.5 },
     links: [{ label: "Play", url: "https://lefinno.itch.io/binmin" }],
   },
   {
@@ -39,6 +42,7 @@ export const craftProjects: CraftProject[] = [
       "A gesture recogniser that needs no training data, deployed in an interactive projection-mapping installation.",
     tags: ["Computer vision", "Installation"],
     art: "connector",
+    model: { path: "/models/Gesture.fbx", cameraZ: 10, cameraY: 0 },
     demo: "GestureRecognitionDemo",
   },
   {
@@ -49,6 +53,7 @@ export const craftProjects: CraftProject[] = [
       "A handheld console built from scratch: custom PCB, embedded firmware and a 3D-printed enclosure.",
     tags: ["PCB", "Firmware"],
     art: "arch",
+    model: { path: "/models/Handheld.fbx", cameraZ: 100, cameraY: -10 },
     links: [
       {
         label: "Report",
@@ -64,6 +69,7 @@ export const craftProjects: CraftProject[] = [
       "The first game I shipped: a Ludum Dare shooter built in high school, including models, music and sound.",
     tags: ["Jam", "Unity"],
     art: "waves",
+    model: { path: "/models/SpaceDef.fbx", cameraZ: 26, cameraY: 0 },
     links: [{ label: "Play", url: "https://lefinno.itch.io/space-saver" }],
   },
 ];
