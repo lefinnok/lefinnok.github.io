@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Box, Typography, Stack } from "@mui/material";
 
-export const ACCENT = "#00e5ff";
+export const ACCENT = "#D97757";
 const DIM = 0.15;
 
 // ─── Lazy KaTeX ──────────────────────────────────────────────────
@@ -308,7 +308,7 @@ export function GraphDiagram({
           <g key={n.id}>
             <circle
               cx={x} cy={y} r={18}
-              fill={dimmed ? "#1a1a1a" : "#1a1a2e"}
+              fill={dimmed ? "#1a1a1a" : "#121110"}
               stroke={
                 dimmed ? "#333" : n.id === 0 ? "#fff" : ACCENT
               }
@@ -428,11 +428,11 @@ export function MatrixGrid({
                     textAlign: "center",
                     color: isHigh(r, c) ? "#fff" : "#888",
                     bgcolor: isHigh(r, c)
-                      ? "rgba(0,229,255,0.12)"
+                      ? "rgba(217,119,87,0.12)"
                       : "transparent",
                     border: "1px solid",
                     borderColor: isHigh(r, c)
-                      ? "rgba(0,229,255,0.3)"
+                      ? "rgba(217,119,87,0.3)"
                       : "rgba(255,255,255,0.06)",
                     fontWeight: isHigh(r, c) ? 600 : 400,
                     transition: "all 0.2s",

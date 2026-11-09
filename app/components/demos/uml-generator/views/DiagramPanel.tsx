@@ -119,7 +119,7 @@ export function DiagramPanel({
           </Tooltip>
           <Tooltip title={showingCode ? "Show diagram" : "Show code"} arrow>
             <IconButton size="small" onClick={onToggleCodeView}>
-              <CodeIcon sx={{ fontSize: 16, color: showingCode ? "#f97316" : undefined }} />
+              <CodeIcon sx={{ fontSize: 16, color: showingCode ? "#D97757" : undefined }} />
             </IconButton>
           </Tooltip>
         </Stack>

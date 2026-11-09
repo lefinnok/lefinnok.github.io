@@ -1,4 +1,4 @@
-const ACCENT = "#f97316";
+const ACCENT = "#D97757";
 const OFF = "#1a1a1a";
 
 interface LedStripProps {

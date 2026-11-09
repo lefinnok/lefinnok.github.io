@@ -76,11 +76,11 @@ function PipelineIndicator({
               borderColor: i === active ? ACCENT : "divider",
               borderRadius: 1,
               cursor: "pointer",
-              bgcolor: i === active ? "rgba(0,229,255,0.08)" : "transparent",
+              bgcolor: i === active ? "rgba(217,119,87,0.08)" : "transparent",
               transition: "all 0.2s ease",
               "&:hover": {
                 borderColor: ACCENT,
-                bgcolor: "rgba(0,229,255,0.04)",
+                bgcolor: "rgba(217,119,87,0.04)",
               },
             }}
           >
@@ -202,7 +202,7 @@ function Slide3() {
           code in a fenced code block
         </Typography>
         <Typography component="li" variant="body2" color="text.secondary">
-          <strong style={{ color: "#f97316" }}>NEED_CLARIFICATION:</strong>{" "}
+          <strong style={{ color: "#D97757" }}>NEED_CLARIFICATION:</strong>{" "}
           followed by questions when the request is ambiguous
         </Typography>
       </Box>

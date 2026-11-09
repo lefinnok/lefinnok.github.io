@@ -1,7 +1,7 @@
 import { Box, Typography, Stack } from "@mui/material";
 
-export const ACCENT = "#00e5ff";
-const ORANGE = "#f97316";
+export const ACCENT = "#D97757";
+const ORANGE = "#D97757";
 
 export function SlidePair({
   visual,
@@ -77,7 +77,7 @@ export function PipelineDiagram({ activeStep }: { activeStep: number }) {
                 border: "1px solid",
                 borderColor: i === activeStep ? ACCENT : "rgba(255,255,255,0.15)",
                 borderRadius: 1,
-                bgcolor: i === activeStep ? "rgba(0,229,255,0.08)" : "transparent",
+                bgcolor: i === activeStep ? "rgba(217,119,87,0.08)" : "transparent",
                 textAlign: "center",
                 minWidth: 60,
               }}
@@ -147,10 +147,10 @@ export function ResponseFormatDiagram() {
       <Box
         sx={{
           p: 1.5,
-          bgcolor: "rgba(0,229,255,0.05)",
+          bgcolor: "rgba(217,119,87,0.05)",
           borderRadius: 1,
           border: "1px solid",
-          borderColor: "rgba(0,229,255,0.2)",
+          borderColor: "rgba(217,119,87,0.2)",
         }}
       >
         <Typography

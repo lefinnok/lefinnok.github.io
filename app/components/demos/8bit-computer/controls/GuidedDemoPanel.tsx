@@ -4,7 +4,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import type { SampleProgram } from "../engine/programs";
 
 const MONO = "'Fira Code', monospace";
-const SECONDARY = "#00e5ff";
+const SECONDARY = "#D97757";
 
 interface GuidedDemoPanelProps {
   program: SampleProgram;
@@ -146,8 +146,8 @@ export function GuidedDemoPanel({
               fontWeight: 600,
               "&:hover": { bgcolor: "#00b8d4" },
               "&.Mui-disabled": {
-                bgcolor: "rgba(0,229,255,0.1)",
-                color: "rgba(0,229,255,0.3)",
+                bgcolor: "rgba(217,119,87,0.1)",
+                color: "rgba(217,119,87,0.3)",
               },
             }}
           >

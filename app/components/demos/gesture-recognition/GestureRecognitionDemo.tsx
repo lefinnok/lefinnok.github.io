@@ -42,8 +42,8 @@ import { TutorialSpotlight } from "~/components/tutorial/TutorialSpotlight";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type HandLandmarker = any;
 
-const ACCENT = "#00e5ff";
-const ACCENT_DIM = "rgba(0, 229, 255, 0.4)";
+const ACCENT = "#D97757";
+const ACCENT_DIM = "rgba(217,119,87, 0.4)";
 
 const REFERENCES = [
   {
@@ -415,7 +415,7 @@ export default function GestureRecognitionDemo() {
           border: isFullscreen ? "none" : "1px solid",
           borderColor: "divider",
           borderRadius: isFullscreen ? 0 : 3,
-          bgcolor: "#0a0a0a",
+          bgcolor: "#121110",
           ...(isFullscreen && {
             position: "fixed",
             inset: 0,
@@ -455,7 +455,7 @@ export default function GestureRecognitionDemo() {
                 borderColor: ACCENT,
                 "&:hover": {
                   borderColor: ACCENT,
-                  bgcolor: "rgba(0,229,255,0.06)",
+                  bgcolor: "rgba(217,119,87,0.06)",
                 },
                 flexShrink: 0,
               }}
@@ -472,7 +472,7 @@ export default function GestureRecognitionDemo() {
                 borderColor: ACCENT,
                 "&:hover": {
                   borderColor: ACCENT,
-                  bgcolor: "rgba(0,229,255,0.06)",
+                  bgcolor: "rgba(217,119,87,0.06)",
                 },
                 flexShrink: 0,
               }}
@@ -639,7 +639,7 @@ export default function GestureRecognitionDemo() {
                               border: "1px solid",
                               borderColor: isMatch ? ACCENT : "transparent",
                               bgcolor: isMatch
-                                ? "rgba(0,229,255,0.04)"
+                                ? "rgba(217,119,87,0.04)"
                                 : "transparent",
                               transition: "all 0.2s",
                             }}

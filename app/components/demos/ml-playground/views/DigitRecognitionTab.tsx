@@ -223,7 +223,7 @@ export function DigitRecognitionTab({ state, tfReady, dispatch }: Props) {
     py: 0.75,
     px: 1.5,
     color: "text.secondary",
-    borderColor: "#2a2a2a",
+    borderColor: "#2A2724",
     "&.Mui-selected": {
       color: "text.primary",
       bgcolor: "rgba(255,255,255,0.06)",
@@ -329,8 +329,8 @@ export function DigitRecognitionTab({ state, tfReady, dispatch }: Props) {
                 textTransform: "none",
                 fontSize: "0.75rem",
                 fontFamily: FONT,
-                bgcolor: "#f97316",
-                "&:hover": { bgcolor: "#ea580c" },
+                bgcolor: "#D97757",
+                "&:hover": { bgcolor: "#B04724" },
               }}
             >
               Start Training

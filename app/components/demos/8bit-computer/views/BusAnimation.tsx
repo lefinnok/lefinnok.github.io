@@ -55,7 +55,7 @@ function edgeX(side: "left" | "right"): number {
 const ANIM_DURATION = 0.4; // seconds
 const DOT_COUNT = 3;
 const DOT_STAGGER = 0.04; // seconds between trailing dots
-const ACCENT = "#f97316";
+const ACCENT = "#D97757";
 
 // ── Component ───────────────────────────────────────────────────
 

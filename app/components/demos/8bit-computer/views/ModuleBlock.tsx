@@ -1,8 +1,8 @@
 import { LedStrip } from "./LedStrip";
 
-const ACCENT = "#f97316";
-const SECONDARY = "#00e5ff";
-const BORDER_DEFAULT = "#2a2a2a";
+const ACCENT = "#D97757";
+const SECONDARY = "#D97757";
+const BORDER_DEFAULT = "#2A2724";
 const BG = "#111111";
 
 interface Signal {

@@ -108,7 +108,7 @@ function FilterMapCanvas({
         width: MAP_DISPLAY_SIZE,
         height: MAP_DISPLAY_SIZE,
         borderRadius: 2,
-        border: "1px solid #2a2a2a",
+        border: "1px solid #2A2724",
         imageRendering: "pixelated",
       }}
     />

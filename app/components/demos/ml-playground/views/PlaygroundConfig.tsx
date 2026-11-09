@@ -55,7 +55,7 @@ export function PlaygroundConfig({
     py: 0.25,
     px: 1,
     color: "text.secondary",
-    borderColor: "#2a2a2a",
+    borderColor: "#2A2724",
     "&.Mui-selected": { color: "text.primary", bgcolor: "rgba(255,255,255,0.06)" },
   };
 
@@ -124,7 +124,7 @@ export function PlaygroundConfig({
           disabled={isTraining}
           marks
           sx={{
-            color: "#f97316",
+            color: "#D97757",
             "& .MuiSlider-markLabel": { fontFamily: FONT, fontSize: "0.6rem" },
           }}
         />
@@ -147,7 +147,7 @@ export function PlaygroundConfig({
           onChange={(_, v) => onConfigChange({ neuronsPerLayer: v as number })}
           disabled={isTraining}
           sx={{
-            color: "#f97316",
+            color: "#D97757",
             "& .MuiSlider-markLabel": { fontFamily: FONT, fontSize: "0.6rem" },
           }}
         />
@@ -168,7 +168,7 @@ export function PlaygroundConfig({
           value={config.learningRate}
           onChange={(_, v) => onConfigChange({ learningRate: v as number })}
           disabled={isTraining}
-          sx={{ color: "#f97316" }}
+          sx={{ color: "#D97757" }}
         />
       </Box>
 
@@ -185,8 +185,8 @@ export function PlaygroundConfig({
             textTransform: "none",
             fontSize: "0.75rem",
             fontFamily: FONT,
-            bgcolor: "#f97316",
-            "&:hover": { bgcolor: "#ea580c" },
+            bgcolor: "#D97757",
+            "&:hover": { bgcolor: "#B04724" },
           }}
         >
           {isTraining ? "Training..." : "Train"}

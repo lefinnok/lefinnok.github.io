@@ -1,6 +1,7 @@
 import type { Config } from "@react-router/dev/config";
 import { caseStudies } from "./app/data/caseStudies";
 import { craftProjects } from "./app/data/craftProjects";
+import { demos } from "./app/data/demos";
 
 const caseSlugs = caseStudies.map(
   (study) => `/${study.track}/case/${study.slug}`,
@@ -21,6 +22,8 @@ export default {
     "/about",
     "/contact",
     "/projects",
+    "/demos",
+    ...demos.map((demo) => `/demos/${demo.slug}`),
     ...caseSlugs,
     ...craftSlugs,
   ],

@@ -112,7 +112,7 @@ export function DrawingCanvas({ disabled, onDrawingComplete, onClear }: Props) {
           maxWidth: CANVAS_SIZE,
           aspectRatio: "1",
           borderRadius: 8,
-          border: `1px solid ${disabled ? "#1a1a1a" : "#2a2a2a"}`,
+          border: `1px solid ${disabled ? "#1a1a1a" : "#2A2724"}`,
           cursor: disabled ? "not-allowed" : "crosshair",
           touchAction: "none",
           opacity: disabled ? 0.4 : 1,

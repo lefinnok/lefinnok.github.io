@@ -5,7 +5,7 @@
 
 // ── Token colors ────────────────────────────────────────────────
 
-const C_MNEMONIC = "#00e5ff"; // cyan — instructions
+const C_MNEMONIC = "#D97757"; // cyan — instructions
 const C_DIRECTIVE = "#f97316"; // orange — ORG, DB
 const C_LABEL_DEF = "#4ade80"; // green — label definitions (word:)
 const C_LABEL_REF = "#86efac"; // light green — label references (operands)

@@ -60,7 +60,7 @@ export function CodeEditorPanel({
         sx={{ flexShrink: 0, pb: 0.5 }}
       >
         <Stack direction="row" spacing={0.5} alignItems="center">
-          <CodeIcon sx={{ fontSize: 14, color: "#f97316" }} />
+          <CodeIcon sx={{ fontSize: 14, color: "#D97757" }} />
           <Typography
             variant="caption"
             sx={{ fontFamily: "'Fira Code', monospace", fontSize: 10, color: "text.secondary" }}
@@ -70,7 +70,7 @@ export function CodeEditorPanel({
           {hasChanges && (
             <Typography
               variant="caption"
-              sx={{ fontSize: 9, color: "#f97316", fontStyle: "italic" }}
+              sx={{ fontSize: 9, color: "#D97757", fontStyle: "italic" }}
             >
               (modified)
             </Typography>
@@ -148,7 +148,7 @@ export function CodeEditorPanel({
             border: "none",
             outline: "none",
             bgcolor: "transparent",
-            color: "#e0e0e0",
+            color: "#F5F1E8",
             fontFamily: "'Fira Code', monospace",
             fontSize: 11,
             lineHeight: "18px",

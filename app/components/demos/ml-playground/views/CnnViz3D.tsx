@@ -366,7 +366,7 @@ export function CnnViz3D({
       smMesh.setColorAt(i, smDimColor);
       smPositions.push(pos);
 
-      const digitLabel = createTextSprite(String(i), "#f97316", 18);
+      const digitLabel = createTextSprite(String(i), "#D97757", 18);
       digitLabel.position.set(SOFTMAX_X + 0.28, pos.y, 0);
       world.add(digitLabel);
     }
@@ -375,7 +375,7 @@ export function CnnViz3D({
     world.add(smMesh);
     allLayerPositions.push(smPositions);
 
-    const smLabel = createTextSprite("Softmax", "#f97316");
+    const smLabel = createTextSprite("Softmax", "#D97757");
     smLabel.position.set(SOFTMAX_X, smHalfH + 0.3, 0);
     world.add(smLabel);
 
@@ -396,7 +396,7 @@ export function CnnViz3D({
     world.add(decMesh);
     allLayerPositions.push([decPos]);
 
-    const decLabel = createTextSprite("argmax", "#f97316", 18);
+    const decLabel = createTextSprite("argmax", "#D97757", 18);
     decLabel.position.set(DECISION_X, 0.4, 0);
     world.add(decLabel);
 

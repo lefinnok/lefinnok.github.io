@@ -91,7 +91,7 @@ export function SetupDialog({ open, onComplete }: SetupDialogProps) {
             p: 2,
             borderRadius: 2,
             border: "1px solid",
-            borderColor: mode === "choose" ? "#f97316" : "divider",
+            borderColor: mode === "choose" ? "#D97757" : "divider",
             bgcolor: mode === "choose" ? "rgba(249,115,22,0.04)" : "transparent",
             cursor: "pointer",
             mb: 1.5,
@@ -102,7 +102,7 @@ export function SetupDialog({ open, onComplete }: SetupDialogProps) {
             Use free models (via proxy)
           </Typography>
           <Stack direction="row" alignItems="center" spacing={0.5} sx={{ mb: 1 }}>
-            <WarningAmberIcon sx={{ fontSize: 13, color: "#f97316" }} />
+            <WarningAmberIcon sx={{ fontSize: 13, color: "#D97757" }} />
             <Typography variant="caption" color="text.secondary" sx={{ lineHeight: 1.4 }}>
               Free models may produce lower quality diagrams compared to
               commercial models. Results may be inconsistent.
@@ -130,8 +130,8 @@ export function SetupDialog({ open, onComplete }: SetupDialogProps) {
                       fontFamily: "'Fira Code', monospace",
                       bgcolor: selectedFreeModel === m.id ? "rgba(249,115,22,0.15)" : "rgba(255,255,255,0.03)",
                       border: "1px solid",
-                      borderColor: selectedFreeModel === m.id ? "#f97316" : "rgba(255,255,255,0.1)",
-                      color: selectedFreeModel === m.id ? "#f97316" : "text.secondary",
+                      borderColor: selectedFreeModel === m.id ? "#D97757" : "rgba(255,255,255,0.1)",
+                      color: selectedFreeModel === m.id ? "#D97757" : "text.secondary",
                     }}
                   />
                 ))}
@@ -142,9 +142,9 @@ export function SetupDialog({ open, onComplete }: SetupDialogProps) {
                 onClick={handleFreeModelSelect}
                 sx={{
                   mt: 1.5,
-                  color: "#f97316",
-                  borderColor: "#f97316",
-                  "&:hover": { borderColor: "#ea580c", bgcolor: "rgba(249,115,22,0.08)" },
+                  color: "#D97757",
+                  borderColor: "#D97757",
+                  "&:hover": { borderColor: "#B04724", bgcolor: "rgba(249,115,22,0.08)" },
                 }}
               >
                 Start with free model
@@ -160,8 +160,8 @@ export function SetupDialog({ open, onComplete }: SetupDialogProps) {
             p: 2,
             borderRadius: 2,
             border: "1px solid",
-            borderColor: mode === "custom" ? "#00e5ff" : "divider",
-            bgcolor: mode === "custom" ? "rgba(0,229,255,0.04)" : "transparent",
+            borderColor: mode === "custom" ? "#D97757" : "divider",
+            bgcolor: mode === "custom" ? "rgba(217,119,87,0.04)" : "transparent",
             cursor: "pointer",
             transition: "all 0.15s",
           }}
@@ -243,9 +243,9 @@ export function SetupDialog({ open, onComplete }: SetupDialogProps) {
                 onClick={handleCustomSubmit}
                 disabled={!customApiKey.trim() || !customModel.trim()}
                 sx={{
-                  color: "#00e5ff",
-                  borderColor: "#00e5ff",
-                  "&:hover": { borderColor: "#00e5ff", bgcolor: "rgba(0,229,255,0.08)" },
+                  color: "#D97757",
+                  borderColor: "#D97757",
+                  "&:hover": { borderColor: "#D97757", bgcolor: "rgba(217,119,87,0.08)" },
                 }}
               >
                 Start with custom model

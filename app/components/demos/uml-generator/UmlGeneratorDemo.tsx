@@ -352,7 +352,7 @@ export default function UmlGeneratorDemo() {
           border: isFullscreen ? "none" : "1px solid",
           borderColor: "divider",
           borderRadius: isFullscreen ? 0 : 3,
-          bgcolor: "#0a0a0a",
+          bgcolor: "#121110",
           ...(!isFullscreen && {
             maxHeight: 1820,
             display: "flex",
@@ -408,11 +408,11 @@ export default function UmlGeneratorDemo() {
               startIcon={<InfoOutlinedIcon />}
               onClick={() => setShowExplanation(true)}
               sx={{
-                color: "#00e5ff",
-                borderColor: "#00e5ff",
+                color: "#D97757",
+                borderColor: "#D97757",
                 "&:hover": {
-                  borderColor: "#00e5ff",
-                  bgcolor: "rgba(0,229,255,0.06)",
+                  borderColor: "#D97757",
+                  bgcolor: "rgba(217,119,87,0.06)",
                 },
                 flexShrink: 0,
               }}

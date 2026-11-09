@@ -18,8 +18,8 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 // ── Colors ──────────────────────────────────────────────────────
 
-const ACCENT = "#00e5ff";
-const ORANGE = "#f97316";
+const ACCENT = "#D97757";
+const ORANGE = "#D97757";
 const MONO = "'Fira Code', monospace";
 
 // ── Pipeline steps & slide mapping ──────────────────────────────
@@ -149,11 +149,11 @@ function PipelineIndicator({
               borderColor: i === active ? ACCENT : "divider",
               borderRadius: 1,
               cursor: "pointer",
-              bgcolor: i === active ? "rgba(0,229,255,0.08)" : "transparent",
+              bgcolor: i === active ? "rgba(217,119,87,0.08)" : "transparent",
               transition: "all 0.2s ease",
               "&:hover": {
                 borderColor: ACCENT,
-                bgcolor: "rgba(0,229,255,0.04)",
+                bgcolor: "rgba(217,119,87,0.04)",
               },
             }}
           >
@@ -191,15 +191,15 @@ function PipelineIndicator({
 
 function ArchDiagram() {
   const modules = [
-    { label: "Register A", y: 10, color: "#00e5ff" },
-    { label: "ALU", y: 60, color: "#f97316" },
-    { label: "Register B", y: 110, color: "#00e5ff" },
+    { label: "Register A", y: 10, color: "#D97757" },
+    { label: "ALU", y: 60, color: "#D97757" },
+    { label: "Register B", y: 110, color: "#D97757" },
     { label: "RAM (16\u00d78)", y: 10, color: "#4ade80", col: 1 },
     { label: "MAR / PC", y: 60, color: "#fbbf24", col: 1 },
     { label: "Instruction Reg", y: 110, color: "#a78bfa", col: 1 },
     { label: "Control Logic", y: 160, color: "#f472b6", col: 1 },
     { label: "Clock", y: 160, color: "#94a3b8", col: 0 },
-    { label: "Output", y: 210, color: "#00e5ff", col: 0 },
+    { label: "Output", y: 210, color: "#D97757", col: 0 },
     { label: "Keyboard", y: 210, color: "#94a3b8", col: 1 },
   ];
 
@@ -295,8 +295,8 @@ function InverterDiagram() {
 
 function FetchExecuteDiagram() {
   const steps = [
-    { label: "T0: CO|MI", desc: "PC → MAR", color: "#00e5ff" },
-    { label: "T1: RO|II|CE", desc: "RAM → IR, PC++", color: "#00e5ff" },
+    { label: "T0: CO|MI", desc: "PC → MAR", color: "#D97757" },
+    { label: "T1: RO|II|CE", desc: "RAM → IR, PC++", color: "#D97757" },
     { label: "T2", desc: "Execute step 1", color: ORANGE },
     { label: "T3", desc: "Execute step 2", color: ORANGE },
     { label: "T4", desc: "Execute step 3", color: ORANGE },
@@ -318,7 +318,7 @@ function FetchExecuteDiagram() {
               width={boxW}
               height={50}
               rx={4}
-              fill={isFetch ? "rgba(0,229,255,0.08)" : "rgba(249,115,22,0.08)"}
+              fill={isFetch ? "rgba(217,119,87,0.08)" : "rgba(249,115,22,0.08)"}
               stroke={s.color}
               strokeWidth={1}
               opacity={0.8}
@@ -336,7 +336,7 @@ function FetchExecuteDiagram() {
         );
       })}
       {/* Labels */}
-      <rect x={10} y={70} width={142} height={18} rx={3} fill="rgba(0,229,255,0.06)" stroke={ACCENT} strokeWidth={0.5} />
+      <rect x={10} y={70} width={142} height={18} rx={3} fill="rgba(217,119,87,0.06)" stroke={ACCENT} strokeWidth={0.5} />
       <text x={81} y={83} fill={ACCENT} fontSize={8} fontFamily={MONO} textAnchor="middle">FETCH (universal)</text>
       <rect x={166} y={70} width={220} height={18} rx={3} fill="rgba(249,115,22,0.06)" stroke={ORANGE} strokeWidth={0.5} />
       <text x={276} y={83} fill={ORANGE} fontSize={8} fontFamily={MONO} textAnchor="middle">EXECUTE (per instruction)</text>

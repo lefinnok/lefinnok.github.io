@@ -107,11 +107,11 @@ function PipelineIndicator({
               borderRadius: 1,
               cursor: "pointer",
               bgcolor:
-                i === active ? "rgba(0,229,255,0.08)" : "transparent",
+                i === active ? "rgba(217,119,87,0.08)" : "transparent",
               transition: "all 0.2s ease",
               "&:hover": {
                 borderColor: ACCENT,
-                bgcolor: "rgba(0,229,255,0.04)",
+                bgcolor: "rgba(217,119,87,0.04)",
               },
             }}
           >

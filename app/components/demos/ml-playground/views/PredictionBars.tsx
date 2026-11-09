@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 
 const FONT = "'Fira Code', monospace";
-const ACCENT = "#f97316";
+const ACCENT = "#D97757";
 const MUTED = "rgba(255,255,255,0.15)";
 
 interface Props {

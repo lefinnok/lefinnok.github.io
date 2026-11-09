@@ -150,7 +150,7 @@ export function PlaygroundTab({ state, tfReady, dispatch }: Props) {
               <LossChart
                 data={state.lossHistory}
                 label="Loss"
-                color="#f97316"
+                color="#D97757"
                 width={400}
                 height={80}
               />

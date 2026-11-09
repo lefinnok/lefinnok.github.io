@@ -84,10 +84,10 @@ export function ChatPanel({
 
         {isProcessing && (
           <Stack direction="row" alignItems="center" spacing={1} sx={{ pl: 1 }}>
-            <CircularProgress size={14} sx={{ color: "#00e5ff" }} />
+            <CircularProgress size={14} sx={{ color: "#D97757" }} />
             <Typography
               variant="caption"
-              sx={{ color: "#00e5ff", fontFamily: "'Fira Code', monospace", fontSize: 11 }}
+              sx={{ color: "#D97757", fontFamily: "'Fira Code', monospace", fontSize: 11 }}
             >
               Generating diagram...
             </Typography>
@@ -134,7 +134,7 @@ export function ChatPanel({
             onClick={handleSend}
             disabled={!input.trim() || isProcessing || !hasApiKey}
             sx={{
-              color: "#f97316",
+              color: "#D97757",
               "&.Mui-disabled": { color: "rgba(249,115,22,0.3)" },
             }}
           >
@@ -163,9 +163,9 @@ function MessageBubble({ message }: { message: ChatMessage }) {
           {isError ? (
             <ErrorOutlineIcon sx={{ fontSize: 14, color: "#ef4444" }} />
           ) : isClarification ? (
-            <HelpOutlineIcon sx={{ fontSize: 14, color: "#f97316" }} />
+            <HelpOutlineIcon sx={{ fontSize: 14, color: "#D97757" }} />
           ) : (
-            <SmartToyIcon sx={{ fontSize: 14, color: "#00e5ff" }} />
+            <SmartToyIcon sx={{ fontSize: 14, color: "#D97757" }} />
           )}
         </Box>
       )}
@@ -212,9 +212,9 @@ function MessageBubble({ message }: { message: ChatMessage }) {
               mt: 0.5,
               height: 18,
               fontSize: 9,
-              bgcolor: "rgba(0,229,255,0.1)",
-              color: "#00e5ff",
-              border: "1px solid rgba(0,229,255,0.2)",
+              bgcolor: "rgba(217,119,87,0.1)",
+              color: "#D97757",
+              border: "1px solid rgba(217,119,87,0.2)",
             }}
           />
         )}

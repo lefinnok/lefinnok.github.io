@@ -109,6 +109,20 @@ export default function Craft() {
             <DemoBlock componentName="GestureRecognitionDemo" title="Gesture recognition" />
             <DemoBlock componentName="MlPlaygroundDemo" title="Machine learning playground" />
           </div>
+
+          <div style={{ marginTop: 28 }}>
+            <DemoBlock
+              componentName="CnnDemo"
+              title="CNN visualiser"
+              description="A convolutional network reading digits in three dimensions: layers, weights, activations and the decision."
+            />
+          </div>
+
+          <div className="hero-actions" style={{ marginTop: 24 }}>
+            <Link className="btn" to="/demos">
+              All demos
+            </Link>
+          </div>
         </div>
       </section>
 

@@ -7,7 +7,7 @@ const RANGE = 1.2; // data range: [-1.2, 1.2]
 // Colors for the two classes
 const CLASS_COLORS = [
   [56, 189, 248], // #38bdf8 sky blue
-  [249, 115, 22], // #f97316 orange
+  [249, 115, 22], // #D97757 orange
 ];
 
 interface Props {
@@ -29,7 +29,7 @@ export function DecisionBoundaryCanvas({
     const ctx = canvas.getContext("2d")!;
 
     // Clear
-    ctx.fillStyle = "#0a0a0a";
+    ctx.fillStyle = "#121110";
     ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
     // Draw decision boundary
@@ -92,7 +92,7 @@ export function DecisionBoundaryCanvas({
           maxWidth: CANVAS_SIZE,
           aspectRatio: "1",
           borderRadius: 8,
-          border: "1px solid #2a2a2a",
+          border: "1px solid #2A2724",
         }}
       />
     </Box>

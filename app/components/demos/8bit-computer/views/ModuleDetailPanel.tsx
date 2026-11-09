@@ -26,8 +26,8 @@ import {
 import { disassemble } from "../engine/cpu";
 import { getInstructionMicrocode } from "../engine/microcode";
 
-const ACCENT = "#f97316";
-const SECONDARY = "#00e5ff";
+const ACCENT = "#D97757";
+const SECONDARY = "#D97757";
 const MONO = "'Fira Code', monospace";
 
 // ── Shared sub-components ───────────────────────────────────────
@@ -273,7 +273,7 @@ function RamPanel({ cpu }: { cpu: CpuState }) {
               key={i}
               sx={{
                 fontFamily: MONO, fontSize: 9, px: 0.5, py: 0.2, borderRadius: 0.5,
-                bgcolor: isMAR ? "rgba(249,115,22,0.12)" : isPC ? "rgba(0,229,255,0.08)" : "transparent",
+                bgcolor: isMAR ? "rgba(249,115,22,0.12)" : isPC ? "rgba(217,119,87,0.08)" : "transparent",
                 color: isMAR ? ACCENT : "rgba(255,255,255,0.45)",
               }}
             >
@@ -575,7 +575,7 @@ function OutputPanel({ cpu }: { cpu: CpuState }) {
               size="small"
               sx={{
                 height: 18, fontSize: 9, fontFamily: MONO,
-                bgcolor: i === cpu.outputHistory.length - 1 ? "rgba(0,229,255,0.12)" : "rgba(255,255,255,0.03)",
+                bgcolor: i === cpu.outputHistory.length - 1 ? "rgba(217,119,87,0.12)" : "rgba(255,255,255,0.03)",
                 color: i === cpu.outputHistory.length - 1 ? SECONDARY : "rgba(255,255,255,0.35)",
               }}
             />

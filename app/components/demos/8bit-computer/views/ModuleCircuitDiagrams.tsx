@@ -4,8 +4,8 @@
  * These are block-level diagrams showing the key sub-circuits.
  */
 
-const ACCENT = "#00e5ff";
-const ORANGE = "#f97316";
+const ACCENT = "#D97757";
+const ORANGE = "#D97757";
 const DIM = "rgba(255,255,255,0.35)";
 const WIRE = "rgba(255,255,255,0.25)";
 const BG = "rgba(255,255,255,0.03)";
@@ -410,7 +410,7 @@ export function IrCircuit() {
       <SigLabel x={272} y={74} text="BUS" color={ORANGE} />
 
       {/* Signal labels */}
-      <rect x={40} y={95} rx={2} width={190} height={30} fill="rgba(0,229,255,0.04)" stroke={ACCENT} strokeWidth={0.5} />
+      <rect x={40} y={95} rx={2} width={190} height={30} fill="rgba(217,119,87,0.04)" stroke={ACCENT} strokeWidth={0.5} />
       <text x={135} y={106} textAnchor="middle" fill={DIM} fontSize={5.5} fontFamily={MONO}>
         II: Latch instruction from bus on clock edge
       </text>
@@ -636,7 +636,7 @@ export function OutputCircuit() {
       <SigLabel x={90} y={28} text="CLK" color={DIM} />
 
       {/* Note */}
-      <rect x={55} y={88} rx={2} width={170} height={18} fill="rgba(0,229,255,0.04)" stroke={ACCENT} strokeWidth={0.5} />
+      <rect x={55} y={88} rx={2} width={170} height={18} fill="rgba(217,119,87,0.04)" stroke={ACCENT} strokeWidth={0.5} />
       <text x={140} y={100} textAnchor="middle" fill={DIM} fontSize={5.5} fontFamily={MONO}>
         Latches bus value on OI signal, displays as decimal
       </text>

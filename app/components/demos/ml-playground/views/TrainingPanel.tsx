@@ -94,7 +94,7 @@ export function TrainingPanel({ metrics, mode, presetName }: Props) {
             borderRadius: 2,
             bgcolor: "rgba(255,255,255,0.05)",
             "& .MuiLinearProgress-bar": {
-              bgcolor: "#f97316",
+              bgcolor: "#D97757",
             },
           }}
         />
@@ -106,7 +106,7 @@ export function TrainingPanel({ metrics, mode, presetName }: Props) {
           <LossChart
             data={lossHistory}
             label="Loss"
-            color="#f97316"
+            color="#D97757"
             width={200}
             height={90}
           />

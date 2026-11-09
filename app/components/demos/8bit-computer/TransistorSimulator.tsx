@@ -42,8 +42,8 @@ import { TutorialSpotlight } from "~/components/tutorial/TutorialSpotlight";
 
 // ── Colors ──────────────────────────────────────────────────────
 
-const ACCENT = "#f97316";
-const SECONDARY = "#00e5ff";
+const ACCENT = "#D97757";
+const SECONDARY = "#D97757";
 
 // ── State management ────────────────────────────────────────────
 
@@ -362,7 +362,7 @@ export default function TransistorSimulator() {
       elevation={0}
       data-tutorial-demo
       sx={{
-        bgcolor: "#0a0a0a",
+        bgcolor: "#121110",
         border: isFullscreen ? "none" : "1px solid",
         borderColor: "divider",
         borderRadius: isFullscreen ? 0 : 2,
@@ -403,7 +403,7 @@ export default function TransistorSimulator() {
               py: 0.25,
               "&:hover": {
                 borderColor: SECONDARY,
-                bgcolor: "rgba(0,229,255,0.06)",
+                bgcolor: "rgba(217,119,87,0.06)",
               },
             }}
           >
@@ -422,7 +422,7 @@ export default function TransistorSimulator() {
               py: 0.25,
               "&:hover": {
                 borderColor: SECONDARY,
-                bgcolor: "rgba(0,229,255,0.06)",
+                bgcolor: "rgba(217,119,87,0.06)",
               },
             }}
           >
@@ -460,9 +460,9 @@ export default function TransistorSimulator() {
                 textTransform: "none",
                 "&.Mui-selected": {
                   color: SECONDARY,
-                  bgcolor: "rgba(0,229,255,0.1)",
-                  borderColor: "rgba(0,229,255,0.3)",
-                  "&:hover": { bgcolor: "rgba(0,229,255,0.15)" },
+                  bgcolor: "rgba(217,119,87,0.1)",
+                  borderColor: "rgba(217,119,87,0.3)",
+                  "&:hover": { bgcolor: "rgba(217,119,87,0.15)" },
                 },
               },
             }}
@@ -630,7 +630,7 @@ export default function TransistorSimulator() {
                     fontSize: 11,
                     bgcolor: ACCENT,
                     color: "#000",
-                    "&:hover": { bgcolor: "#ea580c" },
+                    "&:hover": { bgcolor: "#B04724" },
                     textTransform: "none",
                   }}
                 >
@@ -656,7 +656,7 @@ export default function TransistorSimulator() {
                       textTransform: "none",
                       "&:hover": {
                         borderColor: SECONDARY,
-                        bgcolor: "rgba(0,229,255,0.08)",
+                        bgcolor: "rgba(217,119,87,0.08)",
                       },
                     }}
                   >
@@ -695,7 +695,7 @@ export default function TransistorSimulator() {
                             height: 20,
                             fontSize: 11,
                             fontFamily: "'Fira Code', monospace",
-                            bgcolor: "rgba(0,229,255,0.1)",
+                            bgcolor: "rgba(217,119,87,0.1)",
                             color: SECONDARY,
                           }}
                         />
@@ -828,7 +828,7 @@ function RamGrid({ cpu }: { cpu: CpuState }) {
                   i === cpu.mar
                     ? "rgba(249,115,22,0.12)"
                     : i === cpu.pc && cpu.tState === 0
-                      ? "rgba(0,229,255,0.08)"
+                      ? "rgba(217,119,87,0.08)"
                       : "transparent",
                 color: i === cpu.mar ? ACCENT : "rgba(255,255,255,0.5)",
               }}
@@ -1074,15 +1074,15 @@ function ProgramSelector({
                     fontSize: 10,
                     fontFamily: MONO,
                     bgcolor: active
-                      ? "rgba(0,229,255,0.12)"
+                      ? "rgba(217,119,87,0.12)"
                       : "rgba(255,255,255,0.04)",
                     color: active ? SECONDARY : "rgba(255,255,255,0.5)",
                     border: active
-                      ? "1px solid rgba(0,229,255,0.3)"
+                      ? "1px solid rgba(217,119,87,0.3)"
                       : "1px solid rgba(255,255,255,0.08)",
                     cursor: "pointer",
                     "&:hover": {
-                      bgcolor: "rgba(0,229,255,0.08)",
+                      bgcolor: "rgba(217,119,87,0.08)",
                       color: SECONDARY,
                     },
                   }}

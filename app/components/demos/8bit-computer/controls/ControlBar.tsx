@@ -7,7 +7,7 @@ import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { TStateIndicator } from "./TStateIndicator";
 
-const ACCENT = "#f97316";
+const ACCENT = "#D97757";
 
 interface ControlBarProps {
   tState: number;

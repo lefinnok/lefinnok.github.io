@@ -13,6 +13,8 @@ source: feat/portfolio-v2
 
 **Second pass** — After review, demos were restored as first-class content, the header gained scroll state, progress and a mobile menu, each track gained a sticky subnav with scrollspy, the home page gained Live, Selected work and From craft bands, and the tracks now cross-link with a page transition.
 
+**Demo pass** — Demos gained a paper frame with an ink stage, brand typography and ember accents; a `/demos` index and detail routes expose eight experiences, including the CNN visualiser and a 3D model gallery that were previously unreachable.
+
 **Verification** — `npm run typecheck` PASS. `npm run build` PASS, prerendering `/`, `/engineering`, `/craft`, `/about`, `/contact`, `/projects`, the three case pages and five craft pages, then writing the SPA fallback and `404.html`. Manual visual checks at 1440px and 390px. Independent review returned no remaining critical or major issues after fixes for the duplicate H1, link names, duplicate Eccentricity page, redirect metadata and data-derived prerender slugs.
 
 ## [S1] Problem
@@ -85,6 +87,16 @@ The first delivered pass under-used the demo material and left navigation and co
 - A home page that continues below the chooser: Live demos, Selected work, From craft and a contact cross-link.
 - Cross-links between tracks and a page transition on route change.
 
+### S2.9 Demo system
+
+Demos are promoted to a first-class system rather than black boxes inside paper pages.
+
+- `DemoFrame`: paper frame with eyebrow, title, description, related link, expand control and an ink stage. Expand pins the demo to the viewport and Escape closes it.
+- `demoTheme` now uses the site's type system and ember accent instead of cyan and Fira Code; hardcoded neon accents in the demos were replaced with ember, while semantic signal colours (green, red, violet, amber) remain.
+- `/demos` is an index of eight entries: CPU simulator, gesture recognition, UML generator, ML playground, CNN visualiser, service architecture, hardware pipeline and a 3D model gallery.
+- `/demos/:slug` mounts one demo per page with its own metadata; contextual embeds stay on Engineering and Craft.
+- The ML playground's two tabs (digit recognition and 2D training) share one entry; the architecture and hardware explainers behind the demos remain inside their instruments.
+
 ### S2.7 Performance and accessibility
 
 Demos stay lazy-loaded and mount only when visible. Fonts are self-hosted and subset. Targets: Lighthouse performance 90+ on both landings, no layout shift from fonts, 4.5:1 body contrast, visible focus rings, skip link, semantic heading order, keyboard-operable chooser.
@@ -98,6 +110,9 @@ CMS, blog, authentication, newsletter, multilingual UI, redesign of demo interna
 - [x] T11: Scroll-aware nav and mobile menu — acceptance: header condenses, progress line tracks scroll, mobile menu opens with links. (covers: S2.8)
 - [x] T12: Track subnav with scrollspy — acceptance: anchors jump with sticky offset and the active section follows scroll. (covers: S2.8)
 - [x] T13: Demos restored — acceptance: CPU, gesture, ML, UML, diagrams and 3D models render on the site. (covers: S2.8)
+- [x] T15: Demo frame and brand tokens — acceptance: demos render inside a paper frame with an ink stage and ember accents; expand works. (covers: S2.9)
+- [x] T16: Demo index and detail pages — acceptance: `/demos` lists eight entries and each detail page mounts its demo. (covers: S2.9)
+- [x] T17: Missing demos restored — acceptance: CNN visualiser, model gallery and ML tabs are reachable. (covers: S2.9)
 - [x] T14: Home and cross-track cohesion — acceptance: home has Live, work and craft bands; each track links to the other. (covers: S2.8)
 
 - [x] T1: Style tiles, exploration — five directions built and reviewed; Pathways selected, Engineering/Craft names settled, serif and metric strip rejected. (covers: S2.3)
@@ -119,3 +134,4 @@ CMS, blog, authentication, newsletter, multilingual UI, redesign of demo interna
 - 2026-11-09: Legacy redirects gained `noindex` and a static meta refresh. Prerender slugs are now derived from data, and unmapped legacy slugs go home rather than to the wrong track.
 - 2026-11-09: Contrast pass: ember darkened to `#B04724` on paper, `#D97757` on ink; muted text `#6E675C`; 44px button targets.
 - 2026-11-09: Human review found that demos had been cut to two, the nav had no scroll behaviour and mobile links were hidden, and the interior pages lacked cohesion. Restored all demos, added scroll-aware nav and subnav, added home bands and cross-links.
+- 2026-11-09: Second demo review found more demos in the codebase and no shared styling. Added DemoFrame, `/demos` index and detail routes, CNN and model gallery entries, and replaced neon accents with ember.

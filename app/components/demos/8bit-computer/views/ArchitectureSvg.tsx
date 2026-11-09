@@ -4,9 +4,9 @@ import { ModuleBlock } from "./ModuleBlock";
 import { LedStrip, ledStripWidth } from "./LedStrip";
 import { BusAnimation } from "./BusAnimation";
 
-const ACCENT = "#f97316";
-const BUS_COLOR = "#2a2a2a";
-const BUS_ACTIVE_COLOR = "#f97316";
+const ACCENT = "#D97757";
+const BUS_COLOR = "#2A2724";
+const BUS_ACTIVE_COLOR = "#D97757";
 const ADDR_BUS_COLOR = "#38bdf8"; // sky blue — dedicated MAR→RAM address lines
 const INSTR_BUS_COLOR = "#a78bfa"; // purple — dedicated IR→Control opcode lines
 const CTRL_BUS_COLOR = "#4ade80"; // green — control signal distribution
@@ -85,7 +85,7 @@ export function ArchitectureSvg({
       aria-label="8-bit computer architecture diagram"
     >
       {/* Background */}
-      <rect width="780" height="520" fill="#0a0a0a" rx={8} />
+      <rect width="780" height="520" fill="#121110" rx={8} />
 
       {/* Title */}
       <text
@@ -125,7 +125,7 @@ export function ArchitectureSvg({
               width={stripW + 12}
               height={18}
               rx={4}
-              fill="#0a0a0a"
+              fill="#121110"
               stroke={busActive ? `${BUS_ACTIVE_COLOR}30` : `${BUS_COLOR}40`}
               strokeWidth={0.5}
               style={{ transition: "stroke 0.3s" }}

@@ -115,7 +115,7 @@ export function DiagramTabs({
                 sx={{
                   fontFamily: "'Fira Code', monospace",
                   fontSize: 10,
-                  color: isActive ? "#f97316" : "text.secondary",
+                  color: isActive ? "#D97757" : "text.secondary",
                   userSelect: "none",
                   whiteSpace: "nowrap",
                 }}

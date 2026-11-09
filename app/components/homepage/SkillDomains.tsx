@@ -21,7 +21,7 @@ const DOMAINS = [
       "PCB design, embedded systems, and computer architecture.",
   },
   {
-    icon: <PsychologyIcon sx={{ fontSize: 28, color: "#f97316" }} />,
+    icon: <PsychologyIcon sx={{ fontSize: 28, color: "#D97757" }} />,
     title: "AI / ML",
     description:
       "Computer vision, neural networks, and machine learning pipelines.",

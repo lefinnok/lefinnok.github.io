@@ -74,6 +74,11 @@ export default function Engineering() {
             not a video.
           </p>
           <DemoBlock componentName="UmlGeneratorDemo" title="UML diagram generator" />
+          <div className="hero-actions" style={{ marginTop: 20 }}>
+            <Link className="btn" to="/demos">
+              All demos
+            </Link>
+          </div>
         </div>
       </section>
 

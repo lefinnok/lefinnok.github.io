@@ -21,6 +21,17 @@ const DEMO_COMPONENTS: Record<
   MlPlaygroundDemo: lazy(
     () => import("~/components/demos/ml-playground/MlPlaygroundDemo"),
   ),
+  CnnDemo: lazy(() => import("~/components/demos/ml-playground/CnnDemo")),
+  LanguagesDiagram: lazy(() =>
+    import("~/components/LanguagesDiagram").then((m) => ({
+      default: m.LanguagesDiagram,
+    }))
+  ),
+  HardwarePipelineDiagram: lazy(() =>
+    import("~/components/HardwarePipelineDiagram").then((m) => ({
+      default: m.HardwarePipelineDiagram,
+    }))
+  ),
 };
 
 interface InteractiveDemoSlotProps {
@@ -56,7 +67,7 @@ export function InteractiveDemoSlot({
   }
 
   return (
-    <Box sx={{ mt: 6 }}>
+    <Box sx={{ mt: 0 }}>
       <Suspense
         fallback={<MatrixLoader message="Loading demo..." height={300} />}
       >

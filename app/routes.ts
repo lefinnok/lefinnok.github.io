@@ -7,6 +7,8 @@ export default [
   route("craft", "routes/craft.tsx"),
   route("craft/case/:slug", "routes/case-study.tsx", { id: "craft-case" }),
   route("craft/:slug", "routes/craft-project.tsx"),
+  route("demos", "routes/demos.tsx"),
+  route("demos/:slug", "routes/demo-detail.tsx", { id: "demo-detail" }),
   route("about", "routes/about.tsx"),
   route("contact", "routes/contact.tsx"),
   route("projects", "routes/projects.tsx"),

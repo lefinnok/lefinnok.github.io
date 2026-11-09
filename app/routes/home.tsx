@@ -60,6 +60,11 @@ export default function Home() {
               </Link>
             </div>
           </div>
+          <div className="hero-actions" style={{ marginTop: 22 }}>
+            <Link className="btn" to="/demos">
+              All eight demos
+            </Link>
+          </div>
         </div>
       </section>
 

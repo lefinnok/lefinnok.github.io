@@ -117,11 +117,11 @@ const POSE_LABELS = ["Open Hand", "Fist", "Pointing", "Peace"];
 const HOLD_MS = 1800;
 const TRANSITION_MS = 1200;
 
-const ACCENT = "#00e5ff";
+const ACCENT = "#D97757";
 const SKELETON_COLOR = "rgba(255,255,255,0.25)";
-const ANALYSIS_COLOR = "rgba(0,229,255,0.12)";
+const ANALYSIS_COLOR = "rgba(217,119,87,0.12)";
 const JOINT_COLOR = "rgba(255,255,255,0.5)";
-const FINGERTIP_COLOR = "rgba(0,229,255,0.7)";
+const FINGERTIP_COLOR = "rgba(217,119,87,0.7)";
 
 // ── Animation helpers ────────────────────────────────────────────
 

@@ -197,8 +197,8 @@ export default function MlPlaygroundDemo() {
     <Paper
       variant="outlined"
       sx={{
-        bgcolor: "#0a0a0a",
-        borderColor: "#2a2a2a",
+        bgcolor: "#121110",
+        borderColor: "#2A2724",
         borderRadius: 2,
         overflow: "hidden",
       }}
@@ -207,7 +207,7 @@ export default function MlPlaygroundDemo() {
         value={state.activeTab}
         onChange={(_, v) => dispatch({ type: "SET_TAB", tab: v })}
         sx={{
-          borderBottom: "1px solid #2a2a2a",
+          borderBottom: "1px solid #2A2724",
           "& .MuiTab-root": {
             textTransform: "none",
             fontSize: "0.8rem",
@@ -215,7 +215,7 @@ export default function MlPlaygroundDemo() {
             color: "text.secondary",
             "&.Mui-selected": { color: "text.primary" },
           },
-          "& .MuiTabs-indicator": { backgroundColor: "#f97316" },
+          "& .MuiTabs-indicator": { backgroundColor: "#D97757" },
         }}
       >
         <Tab label="Digit Recognition" />

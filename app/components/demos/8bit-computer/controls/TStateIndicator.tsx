@@ -1,6 +1,6 @@
 import { Box, Stack } from "@mui/material";
 
-const ACCENT = "#f97316";
+const ACCENT = "#D97757";
 
 interface TStateIndicatorProps {
   tState: number;
