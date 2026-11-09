@@ -6,11 +6,12 @@ import { pageMeta } from "~/lib/meta";
 
 export const meta: Route.MetaFunction = ({ params }) => {
   const study = getCaseStudy(params.slug ?? "");
-  return pageMeta({
+  const meta = pageMeta({
     title: study ? `${study.title} | Lefinno Kwok` : "Case study | Lefinno Kwok",
     description: study?.lede,
     path: study ? `/${study.track}/case/${study.slug}` : "/engineering",
   });
+  return study ? meta : [...meta, { name: "robots", content: "noindex" }];
 };
 
 export default function CaseStudyPage() {

@@ -4,7 +4,8 @@ import { LineArt } from "./LineArt";
 export function Chooser() {
   return (
     <section className="chooser" aria-label="Choose a track">
-      <Link to="/engineering" className="half half--engineering">
+      <h1 className="sr-only">Lefinno Kwok: engineering and craft</h1>
+      <Link to="/engineering" className="half half--engineering" aria-labelledby="chooser-engineering">
         <div className="half__top">
           <span className="mono">01 / Engineering</span>
           <span className="mono" aria-hidden="true">
@@ -12,7 +13,7 @@ export function Chooser() {
           </span>
         </div>
         <div className="half__mid">
-          <h1>Engineering</h1>
+          <h2 id="chooser-engineering">Engineering</h2>
           <p>
             AI systems, integration, infrastructure and research. Judged on
             correctness, reliability and delivery.
@@ -31,7 +32,7 @@ export function Chooser() {
 
       <div className="seam" aria-hidden="true" />
 
-      <Link to="/craft" className="half half--craft">
+      <Link to="/craft" className="half half--craft" aria-labelledby="chooser-craft">
         <div className="half__top">
           <span className="mono">02 / Craft</span>
           <span className="mono" aria-hidden="true">
@@ -39,7 +40,7 @@ export function Chooser() {
           </span>
         </div>
         <div className="half__mid">
-          <h1>Craft</h1>
+          <h2 id="chooser-craft">Craft</h2>
           <p>
             Games, hardware and interactive work. Judged on experience,
             interaction and finish.

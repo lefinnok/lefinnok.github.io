@@ -11,7 +11,16 @@ const MAP: Record<string, string> = {
   "retro-handheld": "/craft/retro-handheld",
 };
 
+export const meta = ({ params }: { params: { slug?: string } }) => {
+  const to = MAP[params.slug ?? ""] ?? "/";
+  return [
+    { title: "Redirecting | Lefinno Kwok" },
+    { name: "robots", content: "noindex" },
+    { httpEquiv: "refresh", content: `0; url=${to}` },
+  ];
+};
+
 export default function LegacyProjectRedirect() {
   const { slug } = useParams();
-  return <Navigate to={MAP[slug ?? ""] ?? "/craft"} replace />;
+  return <Navigate to={MAP[slug ?? ""] ?? "/"} replace />;
 }

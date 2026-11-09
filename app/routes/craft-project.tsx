@@ -1,5 +1,5 @@
 import type { Route } from "./+types/craft-project";
-import { Link, useParams } from "react-router";
+import { Link, Navigate, useParams } from "react-router";
 import { DemoBlock } from "~/components/DemoBlock";
 import { LineArt } from "~/components/LineArt";
 import { getCraftProject } from "~/data/craftProjects";
@@ -7,11 +7,15 @@ import { pageMeta } from "~/lib/meta";
 
 export const meta: Route.MetaFunction = ({ params }) => {
   const project = getCraftProject(params.slug ?? "");
-  return pageMeta({
+  const meta = pageMeta({
     title: project ? `${project.title} | Lefinno Kwok` : "Project | Lefinno Kwok",
     description: project?.summary,
     path: project ? `/craft/${project.slug}` : "/craft",
   });
+  if (!project || project.slug === "eccentricity") {
+    return [...meta, { name: "robots", content: "noindex" }];
+  }
+  return meta;
 };
 
 export default function CraftProjectPage() {
@@ -33,6 +37,10 @@ export default function CraftProjectPage() {
   }
 
   const isCase = project.slug === "eccentricity";
+
+  if (isCase) {
+    return <Navigate to="/craft/case/eccentricity" replace />;
+  }
 
   return (
     <>
