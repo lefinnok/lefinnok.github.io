@@ -31,7 +31,7 @@ source: feat/portfolio-v2
 
 **Architecture pass** — UML now explains the pipeline before the live demo and requires a user-supplied key; Systems leads with a general workflow and presents the diagrams as two artifacts.
 
-**Transition pass** — The Engineering instrument section returned to the paper background; only the demo cards remain dark. **Frame refinement** — Thumbnail frames are clean paper/dark outlines only; the external geometry was removed. **Content pass** — Thumbnail mounts were lightened, event roles and PDSS model IDs were corrected, Craft was reframed around fun and usefulness, and the T-shaped model was added to Capabilities. **Ornament pass** — Thumbnail mounts gained thin geometric decoration; project actions and demo distribution were committed in the preceding pass. **Structure pass** — Demos were distributed into Engineering, Craft and Systems, the standalone Demos chapter was removed, and project actions are visible on collapsed rows. **Positioning pass** — The portfolio now leads with generalist breadth and specialist depth, with a six-part capability map and no oversized glyph. All 3D models are bounding-box centred and pulled back, with regenerated thumbnails. Case study rows also received framed, purpose-drawn diagrams.
+**Revert pass** — All demos moved back to Craft, Engineering ends at Current, and the UML architecture is a collapsed details panel. **Frame refinement** — Thumbnail frames are clean paper/dark outlines only; the external geometry was removed. **Content pass** — Thumbnail mounts were lightened, event roles and PDSS model IDs were corrected, Craft was reframed around fun and usefulness, and the T-shaped model was added to Capabilities. **Ornament pass** — Thumbnail mounts gained thin geometric decoration; project actions and demo distribution were committed in the preceding pass. **Structure pass** — Demos were distributed into Engineering, Craft and Systems, the standalone Demos chapter was removed, and project actions are visible on collapsed rows. **Positioning pass** — The portfolio now leads with generalist breadth and specialist depth, with a six-part capability map and no oversized glyph. All 3D models are bounding-box centred and pulled back, with regenerated thumbnails. Case study rows also received framed, purpose-drawn diagrams.
 
 **Verification** — `npm run typecheck` PASS. `npm run build` PASS, prerendering `/`, `/engineering`, `/craft`, `/about`, `/contact`, `/projects`, the three case pages and five craft pages, then writing the SPA fallback and `404.html`. Manual visual checks at 1440px and 390px. Independent review returned no remaining critical or major issues after fixes for the duplicate H1, link names, duplicate Eccentricity page, redirect metadata and data-derived prerender slugs.
 
@@ -49,8 +49,8 @@ The site is one page. `/` carries every section in one scroll:
 
 | Anchor | Content |
 |---|---|
-| `#engineering` | Paper section: positioning, PDSS and GGJHK cases, experience, capabilities, current role, and an instrument section with the CPU, ML playground, CNN visualiser and UML generator. The section surface stays paper; only the demo cards are dark. |
-| `#craft` | Ink section: Eccentricity, the gesture installation demo, project blocks, chronology. |
+| `#engineering` | Paper section: positioning, PDSS and GGJHK cases, experience, capabilities and current role. No demo instruments. |
+| `#craft` | Ink section: Eccentricity, all five demos (gesture, CPU, ML, CNN, UML), project blocks, chronology. |
 | `#systems` | Ink section: general workflow and the two artifact diagrams. |
 | `#about` | Paper section: generalist positioning, facts, trajectory. |
 | `#contact` | Paper section: email, LinkedIn, GitHub, CV. |
@@ -154,11 +154,11 @@ Every demo and project carries a year and a context line, rendered in the frame 
 
 ### S2.24 Demo distribution
 
-There is no standalone Demos chapter. Demos live with the discipline they belong to:
+There is no standalone Demos chapter. Demos live in Craft, where the dark instrument frames belong:
 
-- Engineering instruments: CPU simulator, ML playground, CNN visualiser and UML generator (with its architecture walkthrough) in a paper instrument section inside Engineering.
-- Craft instrument: gesture recognition installation.
+- Craft instruments: gesture recognition, CPU simulator, ML playground, CNN visualiser and UML generator.
 - System artifacts: service architecture and hardware pipeline in Systems.
+- Engineering carries the cases, experience and capabilities only.
 
 ### S2.25 Project actions
 
@@ -260,9 +260,13 @@ Capabilities opens with a small T diagram: the bar is product, software, hardwar
 
 Craft leads with "Fun to use. Useful when it counts." and frames the work as games, tools and physical objects judged on enjoyment and usefulness.
 
-### S2.30 Paper instrument section
+### S2.30 Craft instrument stack
 
-The Engineering instruments are no longer a dark inset band. The section keeps the paper ground and paper sticky heading; only the individual demo frames are dark. This removes the abrupt dark interval before the paper-to-ink transition into Craft.
+All five demos returned to Craft. The Engineering chapter stays paper and ends at Current; this removes the dark interval from Engineering entirely and keeps the paper-to-ink transition intact.
+
+### S2.31 UML architecture on click
+
+The UML generator's architecture is now a native `<details>` panel, closed by default. Opening it reveals the pipeline, trust boundary and output contract; the live UML demo follows immediately after. The panel header shows Open/Close state and uses the page accent.
 
 ### S2.7 Performance and accessibility
 
@@ -282,7 +286,8 @@ CMS, blog, authentication, newsletter, multilingual UI, redesign of demo interna
 - [x] T46: Case accuracy — acceptance: event roles and PDSS model IDs match the recorded sources. (covers: S2.28)
 - [x] T45: Craft framing — acceptance: Craft leads with fun and usefulness. (covers: S2.29)
 - [x] T44: T-shaped framing — acceptance: Engineering uses the T concretely for range and depth. (covers: S2.27)
-- [x] T48: Paper instrument section — acceptance: the instruments section uses the paper page background and does not break the transition. (covers: S2.30)
+- [x] T50: UML architecture click — acceptance: architecture is collapsed behind a click and the live demo follows. (covers: S2.31)
+- [x] T49: Demos back in Craft — acceptance: all five demos sit in Craft and Engineering ends at Current. (covers: S2.30)
 - [x] T47: Thumbnail outline — acceptance: thumbnails use a simple 1px frame with no decorative geometry. (covers: S2.26)
 - [x] T43: Thumbnail ornament — acceptance: thumbnail frames carry visible thin geometric decoration without covering the content. (covers: S2.26)
 - [x] T42: Demo distribution — acceptance: no standalone Demos section; instruments sit in Engineering, gesture in Craft, diagrams in Systems. (covers: S2.24)

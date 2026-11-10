@@ -28,8 +28,7 @@ export const meta: Route.MetaFunction = () =>
 const engineeringCases = caseStudies.filter((study) => study.track === "engineering");
 const eccentricity = craftProjects.find((project) => project.slug === "eccentricity");
 const craftOnly = craftProjects.filter((project) => project.slug !== "eccentricity");
-const craftDemos = ["gesture-recognition"];
-const engineeringDemos = ["cpu-simulator", "ml-playground", "cnn-visualiser"];
+const craftDemos = ["gesture-recognition", "cpu-simulator", "ml-playground", "cnn-visualiser"];
 const systemsDemos = demos.filter((demo) => demo.category === "diagram");
 
 function demoBySlug(slug: string) {
@@ -200,52 +199,6 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="instrument-band">
-        <div className="container">
-          <SectionHead num="05" title="Instruments" range="Engineering demos" />
-          <p className="instruments__lede">
-            Four working systems from the engineering side: a transistor
-            computer, a training playground, a CNN inspector and a
-            language-to-diagram tool.
-          </p>
-          {engineeringDemos.map((slug, index) => {
-            const demo = demoBySlug(slug);
-            return (
-              <div key={slug} id={`demo-${slug}`} className="demo-anchor">
-                <DemoBlock
-                  componentName={demo.component!}
-                  title={demo.title}
-                  description={demo.description}
-                  year={demo.year}
-                  context={demo.context}
-                  kicker={demo.kicker}
-                  related={demo.related}
-                  index={String(index + 1).padStart(2, "0")}
-                />
-              </div>
-            );
-          })}
-
-          <SectionHead num="06" title="UML generator" range="Architecture" />
-          <UmlArchitecture />
-          {demos
-            .filter((demo) => demo.slug === "uml-generator")
-            .map((demo) => (
-              <div key={demo.slug} id={`demo-${demo.slug}`} className="demo-anchor">
-                <DemoBlock
-                  componentName={demo.component!}
-                  title={demo.title}
-                  description={demo.description}
-                  year={demo.year}
-                  context={demo.context}
-                  kicker={demo.kicker}
-                  related={demo.related}
-                  index="04"
-                />
-              </div>
-            ))}
-        </div>
-        </div>
       </section>
 
       <div id="bg-gap-1" className="bg-gap" aria-hidden="true" />
@@ -311,6 +264,11 @@ export default function Home() {
 
         <div className="container">
           <SectionHead num="02" title="Demos" range="Run them here" />
+          <p className="instruments__lede">
+            Five working systems from both sides: a gesture installation, a
+            transistor computer, a training playground, a CNN inspector and a
+            language-to-diagram tool.
+          </p>
           {craftDemos.map((slug, index) => {
             const demo = demoBySlug(slug);
             return (
@@ -328,6 +286,37 @@ export default function Home() {
               </div>
             );
           })}
+
+          <details className="uml-how">
+            <summary>
+              <span>
+                <span className="uml-how__meta">UML generator / architecture</span>
+                <span className="uml-how__title">How it works</span>
+              </span>
+              <span className="uml-how__action">
+                <span className="uml-how__action-open">Open</span>
+                <span className="uml-how__action-close">Close</span>
+              </span>
+            </summary>
+            <UmlArchitecture />
+          </details>
+
+          {demos
+            .filter((demo) => demo.slug === "uml-generator")
+            .map((demo) => (
+              <div key={demo.slug} id={`demo-${demo.slug}`} className="demo-anchor">
+                <DemoBlock
+                  componentName={demo.component!}
+                  title={demo.title}
+                  description={demo.description}
+                  year={demo.year}
+                  context={demo.context}
+                  kicker={demo.kicker}
+                  related={demo.related}
+                  index="05"
+                />
+              </div>
+            ))}
         </div>
 
         <div className="container">
