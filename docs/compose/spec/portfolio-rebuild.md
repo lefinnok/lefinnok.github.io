@@ -31,7 +31,7 @@ source: feat/portfolio-v2
 
 **Architecture pass** — UML now explains the pipeline before the live demo and requires a user-supplied key; Systems leads with a general workflow and presents the diagrams as two artifacts.
 
-**Positioning pass** — The portfolio now leads with generalist breadth and specialist depth, with a six-part capability map and no oversized glyph. All 3D models are bounding-box centred and pulled back, with regenerated thumbnails. Case study rows also received framed, purpose-drawn diagrams.
+**Structure pass** — Demos were distributed into Engineering, Craft and Systems, the standalone Demos chapter was removed, and project actions are visible on collapsed rows. **Positioning pass** — The portfolio now leads with generalist breadth and specialist depth, with a six-part capability map and no oversized glyph. All 3D models are bounding-box centred and pulled back, with regenerated thumbnails. Case study rows also received framed, purpose-drawn diagrams.
 
 **Verification** — `npm run typecheck` PASS. `npm run build` PASS, prerendering `/`, `/engineering`, `/craft`, `/about`, `/contact`, `/projects`, the three case pages and five craft pages, then writing the SPA fallback and `404.html`. Manual visual checks at 1440px and 390px. Independent review returned no remaining critical or major issues after fixes for the duplicate H1, link names, duplicate Eccentricity page, redirect metadata and data-derived prerender slugs.
 
@@ -49,11 +49,10 @@ The site is one page. `/` carries every section in one scroll:
 
 | Anchor | Content |
 |---|---|
-| `#engineering` | Paper section: positioning, PDSS and GGJHK case studies inline, experience, capabilities, current role. |
-| `#craft` | Ink section: Eccentricity, four demos inline (CPU, gesture, ML, CNN), project blocks, chronology. |
-| `#systems` | Ink section: the two architecture diagrams, separated from the interactive demos. |
-| `#demos` | Ink section: index of the interactive demos, the UML generator and the 3D gallery. |
-| `#about` | Paper section: bio, facts, trajectory. |
+| `#engineering` | Paper section: positioning, PDSS and GGJHK cases, experience, capabilities, current role, and a dark instrument bench with the CPU, ML playground, CNN visualiser and UML generator. |
+| `#craft` | Ink section: Eccentricity, the gesture installation demo, project blocks, chronology. |
+| `#systems` | Ink section: general workflow and the two artifact diagrams. |
+| `#about` | Paper section: generalist positioning, facts, trajectory. |
 | `#contact` | Paper section: email, LinkedIn, GitHub, CV. |
 
 Navigation is anchor based. Any old URL (`/engineering`, `/craft`, `/demos/:slug`, `/engineering/case/:slug`, `/projects/...`) is handled by the catch-all route, which redirects to the matching anchor. There are no detail routes. Prerender is `/` only; the sitemap lists only `/`.
@@ -153,6 +152,18 @@ Every demo and project carries a year and a context line, rendered in the frame 
 - Navigation underlines animate on hover and active state; thumbnails scale on hover; demo card arrows slide.
 - Reduced-motion disables smooth scroll, ghost drift and title animation.
 
+### S2.24 Demo distribution
+
+There is no standalone Demos chapter. Demos live with the discipline they belong to:
+
+- Engineering instruments: CPU simulator, ML playground, CNN visualiser and UML generator (with its architecture walkthrough) in a dark inset bench inside Engineering.
+- Craft instrument: gesture recognition installation.
+- System artifacts: service architecture and hardware pipeline in Systems.
+
+### S2.25 Project actions
+
+Project rows expose their actions while collapsed: demo, play, report and model. The expand control is a separate button, so links are not nested inside the row toggle. Demo anchors point at the relocated instruments.
+
 ### S2.13 Collapsible long-form items
 
 Case studies and project blocks are collapsed by default:
@@ -243,6 +254,8 @@ CMS, blog, authentication, newsletter, multilingual UI, redesign of demo interna
 - [x] T13: Demos restored — acceptance: CPU, gesture, ML, UML, diagrams and 3D models render on the site. (covers: S2.8)
 - [x] T15: Demo frame and brand tokens — acceptance: demos render inside a paper frame with an ink stage and ember accents; expand works. (covers: S2.9)
 - [x] T16: Demo index and detail pages — acceptance: `/demos` lists eight entries and each detail page mounts its demo. (covers: S2.9)
+- [x] T42: Demo distribution — acceptance: no standalone Demos section; instruments sit in Engineering, gesture in Craft, diagrams in Systems. (covers: S2.24)
+- [x] T41: Visible project actions — acceptance: project links are available without expanding. (covers: S2.25)
 - [x] T39: Framed case thumbnails — acceptance: case diagrams are legible in the list and sit in a framed plate. (covers: S2.23)
 - [x] T38: Generalist positioning — acceptance: hero, capabilities, about and meta avoid AI-engineer framing and audit emphasis. (covers: S2.21)
 - [x] T37: Centred 3D models — acceptance: all models are centred and have margin in stills and live frames. (covers: S2.22)

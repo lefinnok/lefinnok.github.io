@@ -7,7 +7,6 @@ export function SiteFooter() {
           <div className="footer-links">
             <a href="#engineering">Engineering</a>
             <a href="#craft">Craft</a>
-            <a href="#demos">Demos</a>
             <a href="#about">About</a>
             <a href="#contact">Contact</a>
             <a href="https://github.com/lefinnok" target="_blank" rel="noreferrer">

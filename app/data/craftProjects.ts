@@ -24,6 +24,7 @@ export const craftProjects: CraftProject[] = [
     thumbnail: "/thumbs/8-bit-computer.png",
     model: { path: "/models/Transistor.fbx", cameraZ: 80, cameraY: -30 },
     demo: "TransistorSimulator",
+    demoAnchor: "demo-cpu-simulator",
   },
   {
     slug: "binmin",
@@ -48,6 +49,7 @@ export const craftProjects: CraftProject[] = [
     thumbnail: "/thumbs/gesture-recognition.png",
     model: { path: "/models/Gesture.fbx", cameraZ: 10, cameraY: 0 },
     demo: "GestureRecognitionDemo",
+    demoAnchor: "demo-gesture-recognition",
   },
   {
     slug: "retro-handheld",

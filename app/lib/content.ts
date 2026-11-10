@@ -56,4 +56,5 @@ export interface CraftProject {
   details?: string[];
   links?: { label: string; url: string }[];
   demo?: string;
+  demoAnchor?: string;
 }

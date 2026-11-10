@@ -37,6 +37,7 @@ export function ProjectBlock({
 
   return (
     <article id={anchor} className={`project-block ${open ? "is-open" : ""}`}>
+      <div className="project-block__head">
       <button
         type="button"
         className="project-block__toggle"
@@ -82,8 +83,36 @@ export function ProjectBlock({
             ))}
           </span>
         </span>
-        <span className="project-block__action">{open ? "Collapse" : "Open"}</span>
       </button>
+
+      <div className="project-block__actions">
+        {project.demoAnchor ? (
+          <a className="project-action" href={`#${project.demoAnchor}`}>
+            Demo ↗
+          </a>
+        ) : null}
+        {project.links?.map((link) => (
+          <a
+            key={link.url}
+            className="project-action"
+            href={link.url}
+            target={link.url.startsWith("http") ? "_blank" : undefined}
+            rel={link.url.startsWith("http") ? "noreferrer" : undefined}
+          >
+            {link.label} ↗
+          </a>
+        ))}
+        <button
+          type="button"
+          className="project-action project-action--expand"
+          aria-expanded={open}
+          aria-controls={`${anchor}-body`}
+          onClick={() => setOpen((value) => !value)}
+        >
+          {open ? "Close model" : "Model"}
+        </button>
+      </div>
+      </div>
 
       {open ? (
         <div className="project-block__body" id={`${anchor}-body`}>
@@ -101,24 +130,6 @@ export function ProjectBlock({
               <FbxModelViewer config={project.model} height={320} />
             </ModelFrame>
           ) : null}
-          <div className="hero-actions">
-            {project.demo ? (
-              <a className="btn" href={`#demo-${project.slug}`}>
-                Open the demo
-              </a>
-            ) : null}
-            {project.links?.map((link) => (
-              <a
-                key={link.url}
-                className="btn"
-                href={link.url}
-                target={link.url.startsWith("http") ? "_blank" : undefined}
-                rel={link.url.startsWith("http") ? "noreferrer" : undefined}
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
         </div>
       ) : null}
     </article>

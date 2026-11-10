@@ -30,7 +30,7 @@ function target(pathname: string): string {
     return map[slug ?? ""] ?? "/#engineering";
   }
   if (pathname === "/craft") return "/#craft";
-  if (pathname === "/demos") return "/#demos";
+  if (pathname === "/demos") return "/#systems";
   if (pathname === "/about") return "/#about";
   if (pathname === "/contact") return "/#contact";
   if (pathname === "/engineering" || pathname === "/projects") return "/#engineering";

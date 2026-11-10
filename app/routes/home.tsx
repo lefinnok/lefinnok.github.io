@@ -27,11 +27,9 @@ export const meta: Route.MetaFunction = () =>
 const engineeringCases = caseStudies.filter((study) => study.track === "engineering");
 const eccentricity = craftProjects.find((project) => project.slug === "eccentricity");
 const craftOnly = craftProjects.filter((project) => project.slug !== "eccentricity");
-const craftDemos = ["cpu-simulator", "gesture-recognition", "ml-playground", "cnn-visualiser"];
-const interactiveDemos = demos.filter((demo) => demo.category === "interactive");
+const craftDemos = ["gesture-recognition"];
+const engineeringDemos = ["cpu-simulator", "ml-playground", "cnn-visualiser"];
 const systemsDemos = demos.filter((demo) => demo.category === "diagram");
-const galleryDemos = demos.filter((demo) => demo.category === "gallery");
-const demosIndex = [...interactiveDemos, ...galleryDemos];
 
 function demoBySlug(slug: string) {
   return demos.find((demo) => demo.slug === slug)!;
@@ -199,6 +197,53 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        <div className="instrument-band">
+        <div className="container">
+          <SectionHead num="05" title="Instruments" range="Engineering demos" />
+          <p className="instruments__lede">
+            Four working systems from the engineering side: a transistor
+            computer, a training playground, a CNN inspector and a
+            language-to-diagram tool.
+          </p>
+          {engineeringDemos.map((slug, index) => {
+            const demo = demoBySlug(slug);
+            return (
+              <div key={slug} id={`demo-${slug}`} className="demo-anchor">
+                <DemoBlock
+                  componentName={demo.component!}
+                  title={demo.title}
+                  description={demo.description}
+                  year={demo.year}
+                  context={demo.context}
+                  kicker={demo.kicker}
+                  related={demo.related}
+                  index={String(index + 1).padStart(2, "0")}
+                />
+              </div>
+            );
+          })}
+
+          <SectionHead num="06" title="UML generator" range="Architecture" />
+          <UmlArchitecture />
+          {demos
+            .filter((demo) => demo.slug === "uml-generator")
+            .map((demo) => (
+              <div key={demo.slug} id={`demo-${demo.slug}`} className="demo-anchor">
+                <DemoBlock
+                  componentName={demo.component!}
+                  title={demo.title}
+                  description={demo.description}
+                  year={demo.year}
+                  context={demo.context}
+                  kicker={demo.kicker}
+                  related={demo.related}
+                  index="04"
+                />
+              </div>
+            ))}
+        </div>
+        </div>
       </section>
 
       <div id="bg-gap-1" className="bg-gap" aria-hidden="true" />
@@ -217,8 +262,8 @@ export default function Home() {
             <a className="btn btn--solid" href="#case-eccentricity">
               Eccentricity
             </a>
-            <a className="btn" href="#demos">
-              All demos
+            <a className="btn" href="#systems">
+              Systems work
             </a>
           </div>
         </div>
@@ -341,86 +386,13 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="demos" data-theme="ink" className="page-section page-section--ink">
-        <div className="container section-hero">
-          <GhostWord word="DEMOS" />
-          <span className="eyebrow">Demos / 04</span>
-          <h2 className="section-hero__title">Things that run here.</h2>
-          <p className="lede">
-            Working systems, not screenshots. The four instruments on Craft are
-            above, the UML generator is below; the diagrams have their own
-            section. Every one carries the year it was made.
-          </p>
-        </div>
-
-        <div className="container">
-          <div className="demos-grid">
-            {demosIndex.map((demo) => (
-              <a key={demo.slug} href={`#demo-${demo.slug}`} className="demo-card">
-                <span className="eyebrow">
-                  {demo.kicker} · {demo.year}
-                </span>
-                <h3>{demo.title}</h3>
-                <p>{demo.description}</p>
-                <span className="demo-card__open">Jump to demo →</span>
-              </a>
-            ))}
-          </div>
-          <div className="hero-actions" style={{ marginTop: 22 }}>
-            <a className="btn" href="#systems">
-              Diagrams live in Systems
-            </a>
-          </div>
-        </div>
-
-        <div className="container">
-          <SectionHead num="01" title="How it works" range="UML generator" />
-          <UmlArchitecture />
-          <SectionHead num="02" title="Live demo" range="Your key, your model" />
-          {interactiveDemos
-            .filter((demo) => demo.slug === "uml-generator")
-            .map((demo, index) => (
-              <div key={demo.slug} id={`demo-${demo.slug}`} className="demo-anchor">
-                <DemoBlock
-                  componentName={demo.component!}
-                  title={demo.title}
-                  description={demo.description}
-                  year={demo.year}
-                  context={demo.context}
-                  kicker={demo.kicker}
-                  related={demo.related}
-                  index={String(index + 1).padStart(2, "0")}
-                />
-              </div>
-            ))}
-
-          <div id="demo-3d-models" className="demo-anchor">
-            <ModelFrame
-              label="3D model gallery"
-              meta="2020 to 2026"
-              dimensions="Six project models"
-            >
-              <div className="model-links">
-                {craftProjects.filter((project) => project.model).map((project) => (
-                  <a key={project.slug} href={`#project-${project.slug}`}>
-                    <span className="mono">{project.year}</span>
-                    <strong>{project.title}</strong>
-                    <span className="mono accent">Jump to project →</span>
-                  </a>
-                ))}
-              </div>
-            </ModelFrame>
-          </div>
-        </div>
-      </section>
-
       <div id="bg-gap-2" className="bg-gap" aria-hidden="true" />
 
       <section id="about" data-theme="paper" className="page-section page-section--paper">
         <div className="container about-hero">
           <GhostWord word="ABOUT" />
           <div>
-            <span className="eyebrow">About / 05</span>
+            <span className="eyebrow">About / 04</span>
             <h2 className="section-hero__title">A generalist with a specialization.</h2>
             <p>
               I am a builder in Hong Kong. Generalist by default, with a
@@ -489,7 +461,7 @@ export default function Home() {
 
       <section id="contact" data-theme="paper" className="page-section page-section--paper">
         <div className="container contact">
-          <span className="eyebrow">Contact / 06</span>
+          <span className="eyebrow">Contact / 05</span>
           <h2 className="section-hero__title">Start a conversation.</h2>
           <a className="contact__mail" href="mailto:lefinnokwok@gmail.com">
             lefinnokwok@gmail.com
