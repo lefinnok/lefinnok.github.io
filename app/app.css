@@ -4038,3 +4038,24 @@ html.lenis body {
     min-height: 38px;
   }
 }
+
+/* instruments are part of the paper Engineering chapter */
+.instrument-band {
+  --paper: #f2efe9;
+  --paper-2: #f8f5f0;
+  --ink: #151412;
+  --line: rgba(21, 20, 18, 0.16);
+  --line-inv: rgba(242, 239, 233, 0.18);
+  --muted: #6e675c;
+  --body-muted: #5f594f;
+  --accent: #b04724;
+  background: transparent;
+  color: var(--ink);
+  border-top: 1px solid var(--line);
+  border-bottom: 0;
+}
+
+.instrument-band .section-head {
+  background: var(--paper);
+  color: var(--ink);
+}
