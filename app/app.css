@@ -3682,3 +3682,135 @@ html.lenis body {
     padding-right: 246px;
   }
 }
+
+/* thin geometric registration marks on thumbnail frames */
+.thumb-marks {
+  position: absolute;
+  inset: 5px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.thumb-marks__corner {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  border-color: rgba(217, 119, 87, 0.7);
+  border-style: solid;
+}
+
+.thumb-marks__corner--tl {
+  left: 0;
+  top: 0;
+  border-width: 1px 0 0 1px;
+}
+
+.thumb-marks__corner--tr {
+  right: 0;
+  top: 0;
+  border-width: 1px 1px 0 0;
+}
+
+.thumb-marks__corner--bl {
+  left: 0;
+  bottom: 0;
+  border-width: 0 0 1px 1px;
+}
+
+.thumb-marks__corner--br {
+  right: 0;
+  bottom: 0;
+  border-width: 0 1px 1px 0;
+}
+
+.thumb-marks__rule {
+  position: absolute;
+  left: 27px;
+  right: 27px;
+  height: 1px;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(242, 239, 233, 0.24) 0 3px,
+    transparent 3px 8px
+  );
+}
+
+.thumb-marks__rule--top {
+  top: 0;
+}
+
+.thumb-marks__rule--bottom {
+  bottom: 0;
+}
+
+.thumb-marks__ring {
+  position: absolute;
+  right: 27px;
+  top: 7px;
+  width: 17px;
+  height: 17px;
+  border: 1px dotted rgba(242, 239, 233, 0.3);
+  border-radius: 50%;
+}
+
+.thumb-marks__diagonal {
+  position: absolute;
+  left: 7px;
+  top: 7px;
+  width: 30px;
+  height: 1px;
+  background: rgba(217, 119, 87, 0.35);
+  transform: rotate(45deg);
+  transform-origin: left center;
+}
+
+/* larger mounted frame for thumbnail ornament */
+.case-block__thumb,
+.project-block__thumb {
+  height: 150px;
+  padding: 12px;
+}
+
+.case-block__thumb-canvas {
+  padding: 7px;
+}
+
+.thumb-marks {
+  inset: 4px;
+}
+
+.thumb-marks__shapes {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.thumb-marks__corner {
+  border-color: rgba(217, 119, 87, 0.85);
+}
+
+.thumb-marks__rule {
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(242, 239, 233, 0.38) 0 3px,
+    transparent 3px 8px
+  );
+}
+
+.thumb-marks__ring {
+  border-color: rgba(242, 239, 233, 0.42);
+}
+
+.thumb-marks__diagonal {
+  background: rgba(217, 119, 87, 0.5);
+}
+
+.case-block__thumb {
+  position: relative;
+}
+
+.thumb-marks__shapes {
+  overflow: hidden;
+}

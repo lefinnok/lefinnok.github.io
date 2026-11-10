@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { CaseStudy } from "~/lib/content";
 import { CaseFigure } from "./CaseFigure";
 import { CaseThumb } from "./CaseThumb";
+import { ThumbMarks } from "./ThumbMarks";
 
 export function CaseStudyBlock({ study }: { study: CaseStudy }) {
   const anchor = `case-${study.slug}`;
@@ -44,6 +45,7 @@ export function CaseStudyBlock({ study }: { study: CaseStudy }) {
           <span className="case-block__thumb-canvas">
             <CaseThumb kind={thumbKind} />
           </span>
+          <ThumbMarks />
         </span>
         <span className="case-block__intro">
           <span className="eyebrow">Case study</span>

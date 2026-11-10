@@ -3,6 +3,7 @@ import type { CraftProject } from "~/lib/content";
 import { ModelFrame } from "./ModelFrame";
 import { FbxModelViewer } from "./FbxModelViewer";
 import { LineArt } from "./LineArt";
+import { ThumbMarks } from "./ThumbMarks";
 
 export function ProjectBlock({
   project,
@@ -72,6 +73,7 @@ export function ProjectBlock({
               />
             </span>
           ) : null}
+          <ThumbMarks />
         </span>
         <span className="project-block__intro">
           <span className="mono accent">{project.year}</span>
