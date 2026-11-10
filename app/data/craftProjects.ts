@@ -62,6 +62,28 @@ export const craftProjects: CraftProject[] = [
     ],
   },
   {
+    slug: "intern-medallion",
+    title: "Intern LED Medallion",
+    year: "2024",
+    summary:
+      "A Bluetooth-controlled LED medallion for the 2024 HKSTP intern cohort: a KiCad-drawn, manufactured ESP32 board inside a FreeCAD chassis printed in resin and metal.",
+    tags: ["Electronics", "PCB", "BLE", "3D printing"],
+    art: "grid",
+    model: {
+      path: "/models/medallion.stl",
+      cameraZ: 30,
+      cameraY: -8,
+      wireframe: false,
+      scale: 0.1,
+      initialRotation: 3.14159,
+    },
+    details: [
+      "A 63mm circular board designed in KiCad around an ESP32-WROOM-32E and a TLC59116 16-channel LED driver, then manufactured for the 2024 HKSTP summer intern cohort.",
+      "The chassis was modelled in FreeCAD and 3D printed in resin and metal. Firmware drives the display over I2C; a Flutter BLE app switches between appreciation and clock screens, with brightness and blink control.",
+      "The viewer uses the full-assembly STL exported from the FreeCAD model.",
+    ],
+  },
+  {
     slug: "space-saver",
     title: "Space Saver",
     year: "2018",

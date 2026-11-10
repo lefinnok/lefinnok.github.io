@@ -58,6 +58,11 @@ export function ProjectBlock({
 
       {open ? (
         <div className="project-block__body" id={`${anchor}-body`}>
+          {project.details?.map((paragraph) => (
+            <p key={paragraph.slice(0, 40)} className="project-block__detail">
+              {paragraph}
+            </p>
+          ))}
           {showModel && project.model ? (
             <DemoSurface>
               <FbxModelViewer config={project.model} height={300} />

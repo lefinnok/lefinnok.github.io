@@ -9,6 +9,8 @@ export interface ProjectModelConfig {
   cameraZ: number;
   cameraY: number;
   scale?: number;
+  initialRotation?: number;
+  wireframe?: boolean;
 }
 
 export interface Project {

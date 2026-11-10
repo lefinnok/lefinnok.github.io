@@ -42,7 +42,15 @@ export interface CraftProject {
   summary: string;
   tags: string[];
   art: "arch" | "waves" | "grid" | "connector";
-  model?: { path: string; cameraZ: number; cameraY: number; scale?: number };
+  model?: {
+    path: string;
+    cameraZ: number;
+    cameraY: number;
+    scale?: number;
+    initialRotation?: number;
+    wireframe?: boolean;
+  };
+  details?: string[];
   links?: { label: string; url: string }[];
   demo?: string;
 }

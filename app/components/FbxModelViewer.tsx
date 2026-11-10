@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Box } from "@mui/material";
 import * as THREE from "three";
-import { FBXLoader, OBJLoader } from "three-stdlib";
+import { FBXLoader, OBJLoader, STLLoader } from "three-stdlib";
 import { useReducedMotion } from "~/hooks/useReducedMotion";
 import { MatrixLoader } from "~/components/MatrixLoader";
 import type { ProjectModelConfig } from "~/lib/types";
@@ -73,27 +73,36 @@ export function FbxModelViewer({
     let model: THREE.Group | null = null;
     let animationId: number | null = null;
     let isVisible = true;
-    let spinAngle = INITIAL_ROTATION;
+    const startRotation = config.initialRotation ?? INITIAL_ROTATION;
+    let spinAngle = startRotation;
     // Current display rotation (lerped)
-    let currentRotY = INITIAL_ROTATION;
+    let currentRotY = startRotation;
     let currentRotX = 0;
 
     const isObj = config.path.toLowerCase().endsWith(".obj");
+    const isStl = config.path.toLowerCase().endsWith(".stl");
 
     const onModelLoaded = (group: THREE.Group) => {
       const scale = config.scale ?? 0.1;
       group.scale.set(scale, scale, scale);
-      group.rotation.y = INITIAL_ROTATION;
+      group.rotation.y = startRotation;
 
       group.traverse((child) => {
         if ((child as THREE.Mesh).isMesh) {
           const mesh = child as THREE.Mesh;
-          const wireframeMat = new THREE.MeshStandardMaterial({
-            color: 0xffffff,
-            emissive: 0x111111,
-            wireframe: true,
-          });
-          mesh.material = wireframeMat;
+          mesh.material =
+            config.wireframe === false
+              ? new THREE.MeshStandardMaterial({
+                  color: 0xc9c2b7,
+                  roughness: 0.55,
+                  metalness: 0.12,
+                  side: THREE.DoubleSide,
+                })
+              : new THREE.MeshStandardMaterial({
+                  color: 0xffffff,
+                  emissive: 0x111111,
+                  wireframe: true,
+                });
         }
       });
 
@@ -104,7 +113,20 @@ export function FbxModelViewer({
       setModelLoading(false);
     };
 
-    if (isObj) {
+    if (isStl) {
+      const loader = new STLLoader();
+      loader.load(config.path, (geometry) => {
+        geometry.computeVertexNormals();
+        const group = new THREE.Group();
+        group.add(
+          new THREE.Mesh(
+            geometry,
+            new THREE.MeshStandardMaterial({ color: 0xffffff })
+          )
+        );
+        onModelLoaded(group);
+      });
+    } else if (isObj) {
       const loader = new OBJLoader();
       loader.load(config.path, onModelLoaded);
     } else {
@@ -121,7 +143,7 @@ export function FbxModelViewer({
 
       if (followMouse && mouseInViewportRef.current) {
         // Track mouse: offset initial rotation by mouse position
-        const targetY = INITIAL_ROTATION + mouseRef.current.x * MOUSE_TRACK_RANGE;
+        const targetY = startRotation + mouseRef.current.x * MOUSE_TRACK_RANGE;
         const targetX = -mouseRef.current.y * MOUSE_TRACK_RANGE * 0.5; // less vertical range
 
         currentRotY += (targetY - currentRotY) * LERP_SPEED;
@@ -132,7 +154,7 @@ export function FbxModelViewer({
         spinAngle = currentRotY;
       } else if (localHoveredRef.current || externalHoveredRef.current) {
         // Lerp toward initial rotation and hold
-        const targetY = INITIAL_ROTATION;
+        const targetY = startRotation;
         const diffY = targetY - model.rotation.y;
         const normalizedDiffY =
           ((diffY + Math.PI) % (Math.PI * 2)) - Math.PI;
