@@ -3920,3 +3920,162 @@ html.lenis body {
     gap: 22px;
   }
 }
+
+/* clean thumbnail frame with geometry outside the box */
+.case-block__thumb,
+.project-block__thumb {
+  position: relative;
+  height: 140px;
+  padding: 0;
+  background: none;
+  border: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.case-block__thumb::before,
+.project-block__thumb::before {
+  display: none;
+}
+
+.case-block__thumb-inner,
+.project-block__thumb-inner {
+  position: relative;
+  z-index: 2;
+  display: block;
+  height: 100%;
+  padding: 8px;
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.case-block__thumb-inner {
+  background:
+    radial-gradient(110% 100% at 50% 0%, rgba(176, 71, 36, 0.06) 0%, transparent 58%),
+    #f4f0e8;
+}
+
+.project-block__thumb-inner {
+  background:
+    radial-gradient(110% 100% at 50% 0%, rgba(217, 119, 87, 0.08) 0%, transparent 58%),
+    linear-gradient(180deg, #1a1715 0%, #121110 100%);
+}
+
+.case-block__thumb-inner {
+  border-color: rgba(21, 20, 18, 0.2);
+}
+
+.case-block__thumb-canvas {
+  height: 100%;
+}
+
+.project-block__thumb img {
+  width: 100%;
+  height: 100%;
+}
+
+.project-block__preview {
+  inset: 8px;
+}
+
+.case-block__intro,
+.project-block__intro,
+.project-block__actions {
+  position: relative;
+  z-index: 3;
+}
+
+.case-block__action {
+  position: relative;
+  z-index: 3;
+}
+
+.thumb-decor {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  color: var(--thumb-accent);
+}
+
+.thumb-decor__arc {
+  position: absolute;
+  left: -26px;
+  top: -24px;
+  width: 118px;
+  height: 118px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  opacity: 0.45;
+}
+
+.thumb-decor__arc--inner {
+  left: -8px;
+  top: -6px;
+  width: 78px;
+  height: 78px;
+  opacity: 0.25;
+}
+
+.thumb-decor__diag {
+  position: absolute;
+  left: -16px;
+  bottom: 30px;
+  width: 76px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.55;
+  transform: rotate(-45deg);
+  transform-origin: left center;
+}
+
+.thumb-decor__diag--second {
+  bottom: 18px;
+  width: 48px;
+  opacity: 0.28;
+}
+
+.thumb-decor__triangle {
+  position: absolute;
+  left: -12px;
+  bottom: -10px;
+  width: 26px;
+  height: 22px;
+  background: currentColor;
+  opacity: 0.32;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.thumb-decor__ring {
+  position: absolute;
+  right: -18px;
+  top: 16px;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--thumb-line);
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+.thumb-decor__arc {
+  left: -22px;
+  top: -20px;
+  width: 98px;
+  height: 98px;
+  opacity: 0.4;
+}
+
+.thumb-decor__diag {
+  left: -14px;
+  bottom: 26px;
+  width: 64px;
+  opacity: 0.45;
+}
+
+.thumb-decor__triangle {
+  left: -10px;
+  bottom: -8px;
+  width: 22px;
+  height: 18px;
+  opacity: 0.25;
+}

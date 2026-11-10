@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type { CaseStudy } from "~/lib/content";
 import { CaseFigure } from "./CaseFigure";
 import { CaseThumb } from "./CaseThumb";
-import { ThumbMarks } from "./ThumbMarks";
+import { ThumbDecor } from "./ThumbDecor";
 
 export function CaseStudyBlock({ study }: { study: CaseStudy }) {
   const anchor = `case-${study.slug}`;
@@ -42,10 +42,12 @@ export function CaseStudyBlock({ study }: { study: CaseStudy }) {
         onClick={() => setOpen((value) => !value)}
       >
         <span className="case-block__thumb" aria-hidden="true">
-          <span className="case-block__thumb-canvas">
-            <CaseThumb kind={thumbKind} />
+          <ThumbDecor />
+          <span className="case-block__thumb-inner">
+            <span className="case-block__thumb-canvas">
+              <CaseThumb kind={thumbKind} />
+            </span>
           </span>
-          <ThumbMarks />
         </span>
         <span className="case-block__intro">
           <span className="eyebrow">Case study</span>

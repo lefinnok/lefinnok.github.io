@@ -3,7 +3,7 @@ import type { CraftProject } from "~/lib/content";
 import { ModelFrame } from "./ModelFrame";
 import { FbxModelViewer } from "./FbxModelViewer";
 import { LineArt } from "./LineArt";
-import { ThumbMarks } from "./ThumbMarks";
+import { ThumbDecor } from "./ThumbDecor";
 
 export function ProjectBlock({
   project,
@@ -54,26 +54,28 @@ export function ProjectBlock({
         }}
       >
         <span className="project-block__thumb" aria-hidden="true">
-          {project.thumbnail ? (
-            <img src={project.thumbnail} alt="" loading="lazy" decoding="async" />
-          ) : (
-            <LineArt variant={project.art} className="" />
-          )}
-          {preview && project.model ? (
-            <span className="project-block__preview">
-              <FbxModelViewer
-                config={{
-                  ...project.model,
-                  scale:
-                    (project.model.scale ?? 0.1) *
-                    ({ eccentricity: 2, "8-bit-computer": 2.3, binmin: 1.7, "gesture-recognition": 1.5, "retro-handheld": 1.9, "intern-medallion": 1.1, "space-saver": 1.6 }[project.slug] ?? 1.5),
-                }}
-                height="100%"
-                rotationSpeed={0.012}
-              />
-            </span>
-          ) : null}
-          <ThumbMarks />
+          <ThumbDecor />
+          <span className="project-block__thumb-inner">
+            {project.thumbnail ? (
+              <img src={project.thumbnail} alt="" loading="lazy" decoding="async" />
+            ) : (
+              <LineArt variant={project.art} className="" />
+            )}
+            {preview && project.model ? (
+              <span className="project-block__preview">
+                <FbxModelViewer
+                  config={{
+                    ...project.model,
+                    scale:
+                      (project.model.scale ?? 0.1) *
+                      ({ eccentricity: 2, "8-bit-computer": 2.3, binmin: 1.7, "gesture-recognition": 1.5, "retro-handheld": 1.9, "intern-medallion": 1.1, "space-saver": 1.6 }[project.slug] ?? 1.5),
+                  }}
+                  height="100%"
+                  rotationSpeed={0.012}
+                />
+              </span>
+            ) : null}
+          </span>
         </span>
         <span className="project-block__intro">
           <span className="mono accent">{project.year}</span>
