@@ -253,7 +253,7 @@ Model and case thumbnails use a clean 210x140 frame:
 
 - Case thumbnails use a light paper frame; project thumbnails use a thin dark frame.
 - The frame is a single 1px outline. There is no overlay geometry, dashed border, corner mark or shape.
-- Still images, live previews and case diagrams sit inside the outline; copy stays outside it.
+- Still images, live previews and case diagrams sit inside the outline; case diagrams paint directly on the framed paper with no inner white canvas. Copy stays outside it.
 
 ### S2.27 T-shaped engineering framing
 

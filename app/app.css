@@ -4127,3 +4127,10 @@ html.lenis body {
 .uml-how .uml-arch {
   margin-top: 24px;
 }
+
+/* the case diagram sits directly on the framed paper; no inner white canvas */
+.case-block__thumb-canvas {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
