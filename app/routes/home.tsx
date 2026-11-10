@@ -68,7 +68,7 @@ export default function Home() {
             <a className="btn btn--solid" href="#case-pdss">
               Read the PDSS case
             </a>
-            <a className="btn" href="#contact">
+            <a className="btn" href="#contact-title">
               Get in touch
             </a>
           </div>

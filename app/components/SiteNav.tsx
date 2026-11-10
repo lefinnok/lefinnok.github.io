@@ -88,7 +88,7 @@ export function SiteNav() {
         </nav>
 
         <div className="nav-actions">
-          <a href="#contact" className="btn nav-cv">
+          <a href="#contact-title" className="btn nav-cv">
             CV
           </a>
           <button
