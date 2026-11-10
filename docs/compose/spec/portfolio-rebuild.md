@@ -31,6 +31,8 @@ source: feat/portfolio-v2
 
 **Architecture pass** — UML now explains the pipeline before the live demo and requires a user-supplied key; Systems leads with a general workflow and presents the diagrams as two artifacts.
 
+**Thumbnail pass** — Project rows now show stills of their actual models, generated once from the viewer; expanded rows keep the live FreeCAD/FBX/OBJ view.
+
 **Verification** — `npm run typecheck` PASS. `npm run build` PASS, prerendering `/`, `/engineering`, `/craft`, `/about`, `/contact`, `/projects`, the three case pages and five craft pages, then writing the SPA fallback and `404.html`. Manual visual checks at 1440px and 390px. Independent review returned no remaining critical or major issues after fixes for the duplicate H1, link names, duplicate Eccentricity page, redirect metadata and data-derived prerender slugs.
 
 ## [S1] Problem
@@ -191,6 +193,15 @@ The demo frame is a dark screen card, deliberately unlike the solid model plinth
 
 The Systems section now leads with a generalized five-step workflow: Frame, Model, Build the narrow path, Verify, Operate and hand over. The two diagrams are presented afterwards as **Artifacts** from that path, explicitly described as examples rather than a taxonomy of the work.
 
+### S2.20 Model thumbnails
+
+Collapsed project rows now use stills rendered from the same 3D models as the expanded `ModelFrame`:
+
+- Seven 480x300 PNGs in `public/thumbs`, captured from the live viewer with per-model camera zoom.
+- The saved images are static, so the project list does not mount WebGL for every row.
+- Expanding a row still opens the live rotating model in the technical plinth.
+- The generic `LineArt` variant remains as a fallback when a project has no model thumbnail.
+
 ### S2.7 Performance and accessibility
 
 Demos stay lazy-loaded and mount only when visible. Fonts are self-hosted and subset. Targets: Lighthouse performance 90+ on both landings, no layout shift from fonts, 4.5:1 body contrast, visible focus rings, skip link, semantic heading order, keyboard-operable chooser.
@@ -206,6 +217,7 @@ CMS, blog, authentication, newsletter, multilingual UI, redesign of demo interna
 - [x] T13: Demos restored — acceptance: CPU, gesture, ML, UML, diagrams and 3D models render on the site. (covers: S2.8)
 - [x] T15: Demo frame and brand tokens — acceptance: demos render inside a paper frame with an ink stage and ember accents; expand works. (covers: S2.9)
 - [x] T16: Demo index and detail pages — acceptance: `/demos` lists eight entries and each detail page mounts its demo. (covers: S2.9)
+- [x] T34: Model thumbnails — acceptance: project rows show stills of their actual models. (covers: S2.20)
 - [x] T33: UML architecture and key-only setup — acceptance: no free proxy path, architecture visible before the demo. (covers: S2.18)
 - [x] T32: Generalized workflow — acceptance: Systems leads with workflow and frames diagrams as artifacts. (covers: S2.19)
 - [x] T31: Demo frame — acceptance: demos use a dark screen card distinct from the model plinth, with no white plate. (covers: S2.17)

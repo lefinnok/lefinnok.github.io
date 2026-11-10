@@ -44,7 +44,11 @@ export function ProjectBlock({
         onClick={() => setOpen((value) => !value)}
       >
         <span className="project-block__thumb" aria-hidden="true">
-          <LineArt variant={project.art} className="" />
+          {project.thumbnail ? (
+            <img src={project.thumbnail} alt="" loading="lazy" decoding="async" />
+          ) : (
+            <LineArt variant={project.art} className="" />
+          )}
         </span>
         <span className="project-block__intro">
           <span className="mono accent">{project.year}</span>

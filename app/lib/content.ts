@@ -42,6 +42,7 @@ export interface CraftProject {
   summary: string;
   tags: string[];
   art: "arch" | "waves" | "grid" | "connector";
+  thumbnail?: string;
   model?: {
     path: string;
     cameraZ: number;
