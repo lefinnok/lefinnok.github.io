@@ -6,7 +6,7 @@ import { GhostWord } from "~/components/GhostWord";
 import { CaseStudyBlock } from "~/components/CaseStudyBlock";
 import { ProjectBlock } from "~/components/ProjectBlock";
 import { DemoBlock } from "~/components/DemoBlock";
-import { DemoSurface } from "~/components/DemoSurface";
+import { ModelFrame } from "~/components/ModelFrame";
 import { Timeline } from "~/components/Timeline";
 import { FbxModelViewer } from "~/components/FbxModelViewer";
 import { LineArt } from "~/components/LineArt";
@@ -207,12 +207,16 @@ export default function Home() {
                 </a>
               </div>
             </div>
-            <DemoSurface>
+            <ModelFrame
+              label="Dynamo"
+              meta="2026 · OBJ"
+              dimensions="Godot game asset"
+            >
               <FbxModelViewer
                 config={{ path: "/models/dynamo.obj", cameraZ: 2.2, cameraY: 0, scale: 1.6 }}
                 height={340}
               />
-            </DemoSurface>
+            </ModelFrame>
           </div>
         </div>
 

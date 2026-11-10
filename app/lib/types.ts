@@ -11,6 +11,8 @@ export interface ProjectModelConfig {
   scale?: number;
   initialRotation?: number;
   wireframe?: boolean;
+  label?: string;
+  dimensions?: string;
 }
 
 export interface Project {

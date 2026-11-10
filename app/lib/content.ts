@@ -49,6 +49,8 @@ export interface CraftProject {
     scale?: number;
     initialRotation?: number;
     wireframe?: boolean;
+    label?: string;
+    dimensions?: string;
   };
   details?: string[];
   links?: { label: string; url: string }[];

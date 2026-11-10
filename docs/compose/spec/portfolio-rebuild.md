@@ -25,6 +25,8 @@ source: feat/portfolio-v2
 
 **Electronics pass** — Added the HKSTP intern medallion to Craft with a FreeCAD assembly viewer, KiCad and manufacturing detail, and the same record in the career catalog.
 
+**Frame pass** — Interactive demos keep the paper frame; 3D work now sits in a technical model plinth with grid, corner marks, CAD label and dimensions.
+
 **Verification** — `npm run typecheck` PASS. `npm run build` PASS, prerendering `/`, `/engineering`, `/craft`, `/about`, `/contact`, `/projects`, the three case pages and five craft pages, then writing the SPA fallback and `404.html`. Manual visual checks at 1440px and 390px. Independent review returned no remaining critical or major issues after fixes for the duplicate H1, link names, duplicate Eccentricity page, redirect metadata and data-derived prerender slugs.
 
 ## [S1] Problem
@@ -161,6 +163,7 @@ The HKSTP intern gift is a Craft project entry:
 - 2024, KiCad-designed and manufactured 63mm circular ESP32 board with a TLC59116 16-channel LED driver.
 - FreeCAD-modelled chassis, 3D printed in resin and metal, plus a Flutter BLE controller for appreciation and clock screens.
 - The project viewer supports STL directly and uses the full FreeCAD assembly export with a solid, double-sided material rather than the wireframe treatment used for stylised models.
+- 3D work sits in a distinct `ModelFrame`: model label and format in a top bar, a gridded stage with corner registration marks and a vertical CAD label, and a footer with dimensions and rotation state. It is deliberately not the paper DemoFrame used for interactive demos.
 - Collapsed row carries the one-line summary and tags; expanded body carries the technical detail and the rotating chassis.
 
 ### S2.7 Performance and accessibility
@@ -178,6 +181,7 @@ CMS, blog, authentication, newsletter, multilingual UI, redesign of demo interna
 - [x] T13: Demos restored — acceptance: CPU, gesture, ML, UML, diagrams and 3D models render on the site. (covers: S2.8)
 - [x] T15: Demo frame and brand tokens — acceptance: demos render inside a paper frame with an ink stage and ember accents; expand works. (covers: S2.9)
 - [x] T16: Demo index and detail pages — acceptance: `/demos` lists eight entries and each detail page mounts its demo. (covers: S2.9)
+- [x] T30: Model frame — acceptance: 3D work has a technical plinth frame distinct from demo frames. (covers: S2.16)
 - [x] T29: Electronics entry — acceptance: the HKSTP medallion is a Craft project with CAD visual and manufacturing detail. (covers: S2.16)
 - [x] T28: Chapter rail — acceptance: labels and numbers are always visible on a progress spine, with no dot constellation and no content overlap. (covers: S2.12)
 - [x] T26: Systems section — acceptance: diagrams have their own section and nav item, separate from demos. (covers: S2.14)

@@ -76,6 +76,8 @@ export const craftProjects: CraftProject[] = [
       wireframe: false,
       scale: 0.1,
       initialRotation: 3.14159,
+      label: "FreeCAD assembly",
+      dimensions: "63 mm board / 276 mm chassis",
     },
     details: [
       "A 63mm circular board designed in KiCad around an ESP32-WROOM-32E and a TLC59116 16-channel LED driver, then manufactured for the 2024 HKSTP summer intern cohort.",

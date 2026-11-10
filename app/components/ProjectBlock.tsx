@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { CraftProject } from "~/lib/content";
-import { DemoSurface } from "./DemoSurface";
+import { ModelFrame } from "./ModelFrame";
 import { FbxModelViewer } from "./FbxModelViewer";
 import { LineArt } from "./LineArt";
 
@@ -64,9 +64,13 @@ export function ProjectBlock({
             </p>
           ))}
           {showModel && project.model ? (
-            <DemoSurface>
-              <FbxModelViewer config={project.model} height={300} />
-            </DemoSurface>
+            <ModelFrame
+              label={project.model.label ?? "3D model"}
+              meta={`${project.year} · ${project.model.path.split(".").pop()?.toUpperCase()}`}
+              dimensions={project.model.dimensions}
+            >
+              <FbxModelViewer config={project.model} height={320} />
+            </ModelFrame>
           ) : null}
           <div className="hero-actions">
             {project.demo ? (
