@@ -3,3 +3,6 @@ build/
 .react-router/
 .env
 *.local
+
+# Career catalog: personal, never published
+career/
