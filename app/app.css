@@ -3464,3 +3464,67 @@ html.lenis body {
     height: 132px;
   }
 }
+
+/* ---------- capability map ---------- */
+
+.capabilities__lede {
+  margin: 0 0 28px;
+  max-width: 72ch;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--body-muted);
+}
+
+.skill-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 34px;
+}
+
+.skill-block {
+  border-top: 1px solid var(--line);
+  padding: 14px 0 24px;
+}
+
+.skill-block__top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.skill-block__num {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+}
+
+.skill-block__tag {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.skill-block h3 {
+  margin: 12px 0 8px;
+  font-size: 18px;
+}
+
+.skill-block p {
+  font-size: 13.5px;
+}
+
+@media (max-width: 1050px) {
+  .skill-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .skill-grid {
+    grid-template-columns: 1fr;
+  }
+}

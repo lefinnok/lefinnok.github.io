@@ -14,15 +14,15 @@ export function Chooser() {
         <div className="half__mid">
           <h2 id="chooser-engineering">Engineering</h2>
           <p>
-            AI systems, integration, infrastructure and research. Judged on
-            correctness, reliability and delivery.
+            Product, software, systems and research. Broad by default, deep
+            where it matters.
           </p>
         </div>
         <div className="half__bottom">
           <div className="preview">
             <span>Currently</span>
             <strong>Analyst, Deloitte</strong>
-            <span>Enterprise AI platform, 2026 to present</span>
+            <span>Enterprise platform, 2026 to present</span>
           </div>
           <span className="enter">Enter engineering</span>
         </div>

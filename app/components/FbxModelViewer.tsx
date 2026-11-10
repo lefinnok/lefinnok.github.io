@@ -53,7 +53,12 @@ export function FbxModelViewer({
       0.1,
       1000
     );
-    camera.position.set(0, config.cameraY, config.cameraZ);
+    camera.position.set(
+      0,
+      config.cameraY * 1.14,
+      config.cameraZ * 1.14
+    );
+    camera.lookAt(0, 0, 0);
 
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
@@ -86,6 +91,10 @@ export function FbxModelViewer({
       const scale = config.scale ?? 0.1;
       group.scale.set(scale, scale, scale);
       group.rotation.y = startRotation;
+
+      const bounds = new THREE.Box3().setFromObject(group);
+      const center = bounds.getCenter(new THREE.Vector3());
+      group.position.sub(center);
 
       group.traverse((child) => {
         if ((child as THREE.Mesh).isMesh) {

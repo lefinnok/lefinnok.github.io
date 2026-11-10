@@ -11,8 +11,6 @@ import { UmlArchitecture } from "~/components/UmlArchitecture";
 import { Workflow } from "~/components/Workflow";
 import { Timeline } from "~/components/Timeline";
 import { FbxModelViewer } from "~/components/FbxModelViewer";
-import { LineArt } from "~/components/LineArt";
-import { ScrollDraw } from "~/components/ScrollDraw";
 import { caseStudies } from "~/data/caseStudies";
 import { craftProjects } from "~/data/craftProjects";
 import { demos } from "~/data/demos";
@@ -22,7 +20,7 @@ import { usePageBackground } from "~/hooks/usePageBackground";
 
 export const meta: Route.MetaFunction = () =>
   pageMeta({
-    title: "Lefinno Kwok | Engineering and craft",
+    title: "Lefinno Kwok | Generalist with a specialization",
     path: "/",
   });
 
@@ -60,11 +58,12 @@ export default function Home() {
         <div className="container section-hero">
           <GhostWord word="ENGINEERING" />
           <span className="eyebrow">Engineering / 01</span>
-          <h2 className="section-hero__title">I build AI systems that can be audited.</h2>
+          <h2 className="section-hero__title">Broad by default. Deep where it matters.</h2>
           <p className="lede">
-            Integration, infrastructure and research for systems where being
-            wrong is expensive. The work below is public; client engagements
-            are described only at the level of the engagement.
+            I am a generalist with a specialization in AI and ML. I move
+            between product, software, hardware and research, and go deep where
+            the risk is. Most of what I do is make an idea real, then explain it
+            clearly enough that someone else can run it.
           </p>
           <div className="hero-actions">
             <a className="btn btn--solid" href="#case-pdss">
@@ -89,42 +88,83 @@ export default function Home() {
         </div>
 
         <div className="container">
-          <SectionHead num="03" title="Capabilities" />
+          <SectionHead num="03" title="Capabilities" range="Range and depth" />
+          <p className="capabilities__lede">
+            Generalist breadth with specialist depth. I am most useful at the
+            seam between disciplines: scoping the idea, building the system, and
+            translating it for the people who have to run it.
+          </p>
           <div className="skill-grid">
             <div className="skill-block">
-              <h3>AI systems</h3>
+              <div className="skill-block__top">
+                <span className="skill-block__num">01</span>
+                <span className="skill-block__tag">Range</span>
+              </div>
+              <h3>Product and delivery</h3>
               <p>
-                LLM orchestration, evaluation design, Bayesian networks,
-                decision processes, multi-criteria analysis, uncertainty
-                quantification and provenance.
+                Scoping ambiguous briefs, writing proposals, coordinating across
+                teams, and carrying an idea from demo to something someone else
+                can run.
               </p>
             </div>
             <div className="skill-block">
-              <h3>Integration</h3>
+              <div className="skill-block__top">
+                <span className="skill-block__num">02</span>
+                <span className="skill-block__tag">Range</span>
+              </div>
+              <h3>Software</h3>
               <p>
-                Single sign-on, directory synchronisation, data access
-                services, alerting and vendor adaptation, in Go, Rust and Java.
+                TypeScript and React, Go, Rust, Java and Python. Frontends,
+                APIs, data access and integration; typed boundaries over glue.
               </p>
             </div>
             <div className="skill-block">
-              <h3>Infrastructure</h3>
+              <div className="skill-block__top">
+                <span className="skill-block__num">03</span>
+                <span className="skill-block__tag">Specialization</span>
+              </div>
+              <h3>AI and ML</h3>
               <p>
-                Linux, Docker, Kubernetes, systemd, Caddy, offline deployment,
-                high availability, audit trails and backups.
+                LLM orchestration, evaluation design, Bayesian decision models,
+                computer vision, uncertainty and provenance. The area where I go
+                deepest.
               </p>
             </div>
             <div className="skill-block">
-              <h3>Research</h3>
+              <div className="skill-block__top">
+                <span className="skill-block__num">04</span>
+                <span className="skill-block__tag">Depth</span>
+              </div>
+              <h3>Systems and infrastructure</h3>
+              <p>
+                Linux, Docker, Kubernetes, networking, offline deployment, high
+                availability, observability and backups.
+              </p>
+            </div>
+            <div className="skill-block">
+              <div className="skill-block__top">
+                <span className="skill-block__num">05</span>
+                <span className="skill-block__tag">Range</span>
+              </div>
+              <h3>Hardware and interaction</h3>
+              <p>
+                KiCad boards, ESP32 firmware, FreeCAD and 3D printing, game
+                engines and interactive installations.
+              </p>
+            </div>
+            <div className="skill-block">
+              <div className="skill-block__top">
+                <span className="skill-block__num">06</span>
+                <span className="skill-block__tag">Range</span>
+              </div>
+              <h3>Research and communication</h3>
               <p>
                 Literature-grounded design, baseline evaluation, failure
-                analysis and technical writing. Comfortable publishing
-                limitations, not just results.
+                analysis and technical writing. Explaining tradeoffs to
+                technical and non-technical teams.
               </p>
             </div>
           </div>
-          <ScrollDraw>
-            <LineArt variant="connector" className="" />
-          </ScrollDraw>
         </div>
 
         <div className="container">
@@ -273,7 +313,7 @@ export default function Home() {
           <h2 className="section-hero__title">One workflow, many systems.</h2>
           <p className="lede">
             A repeatable path from an unclear problem to something that can be
-            operated and audited. The same five moves apply to a service, a
+            operated and maintained. The same five moves apply to a service, a
             board or a model. The drawings below are two artifacts from that
             path, not a catalogue of the only shapes I work in.
           </p>
@@ -381,19 +421,19 @@ export default function Home() {
           <GhostWord word="ABOUT" />
           <div>
             <span className="eyebrow">About / 05</span>
-            <h2 className="section-hero__title">Two registers, one builder.</h2>
+            <h2 className="section-hero__title">A generalist with a specialization.</h2>
             <p>
-              I am an AI platform engineer in Hong Kong. I build systems where
-              correctness matters, and I make games and hardware where
-              experience matters. The two are not a side project and a job;
-              they are the same practice applied to different materials.
+              I am a builder in Hong Kong. Generalist by default, with a
+              specialization in AI and ML. I move between product, software,
+              hardware and research; the common thread is making an idea real
+              and explaining it clearly enough that someone else can run it.
             </p>
             <p>
               I studied computer science at HKU, worked across an embedded
-              startup, a science park and a consultancy, and now deploy an
-              enterprise AI platform. What I care about is the unglamorous
-              middle: provenance, audit trails, integration, tests, release
-              processes.
+              startup, a science park and a consultancy, and now build an
+              enterprise AI platform. I care about the unglamorous middle:
+              integration, tests, release processes, and the parts that decide
+              whether a system survives contact with reality.
             </p>
           </div>
           <div className="about-facts">
@@ -473,7 +513,7 @@ export default function Home() {
             </a>
           </div>
           <p className="footer-note" style={{ marginTop: 40, maxWidth: "56ch" }}>
-            Based in Hong Kong. Available for conversations about AI
+            Based in Hong Kong. Available for conversations about product,
             engineering, platform roles and game development. Client work is
             discussed at the level of engineering, never at the level of the
             client.
