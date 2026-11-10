@@ -3,7 +3,6 @@ import type { CraftProject } from "~/lib/content";
 import { ModelFrame } from "./ModelFrame";
 import { FbxModelViewer } from "./FbxModelViewer";
 import { LineArt } from "./LineArt";
-import { ThumbDecor } from "./ThumbDecor";
 
 export function ProjectBlock({
   project,
@@ -54,7 +53,6 @@ export function ProjectBlock({
         }}
       >
         <span className="project-block__thumb" aria-hidden="true">
-          <ThumbDecor />
           <span className="project-block__thumb-inner">
             {project.thumbnail ? (
               <img src={project.thumbnail} alt="" loading="lazy" decoding="async" />

@@ -31,7 +31,7 @@ source: feat/portfolio-v2
 
 **Architecture pass** — UML now explains the pipeline before the live demo and requires a user-supplied key; Systems leads with a general workflow and presents the diagrams as two artifacts.
 
-**Frame refinement** — Thumbnail frames were reduced to clean paper/dark borders, with a single arc, diagonal and triangle sitting outside and behind them. **Content pass** — Thumbnail mounts were lightened, event roles and PDSS model IDs were corrected, Craft was reframed around fun and usefulness, and the T-shaped model was added to Capabilities. **Ornament pass** — Thumbnail mounts gained thin geometric decoration; project actions and demo distribution were committed in the preceding pass. **Structure pass** — Demos were distributed into Engineering, Craft and Systems, the standalone Demos chapter was removed, and project actions are visible on collapsed rows. **Positioning pass** — The portfolio now leads with generalist breadth and specialist depth, with a six-part capability map and no oversized glyph. All 3D models are bounding-box centred and pulled back, with regenerated thumbnails. Case study rows also received framed, purpose-drawn diagrams.
+**Frame refinement** — Thumbnail frames are clean paper/dark outlines only; the external geometry was removed. **Content pass** — Thumbnail mounts were lightened, event roles and PDSS model IDs were corrected, Craft was reframed around fun and usefulness, and the T-shaped model was added to Capabilities. **Ornament pass** — Thumbnail mounts gained thin geometric decoration; project actions and demo distribution were committed in the preceding pass. **Structure pass** — Demos were distributed into Engineering, Craft and Systems, the standalone Demos chapter was removed, and project actions are visible on collapsed rows. **Positioning pass** — The portfolio now leads with generalist breadth and specialist depth, with a six-part capability map and no oversized glyph. All 3D models are bounding-box centred and pulled back, with regenerated thumbnails. Case study rows also received framed, purpose-drawn diagrams.
 
 **Verification** — `npm run typecheck` PASS. `npm run build` PASS, prerendering `/`, `/engineering`, `/craft`, `/about`, `/contact`, `/projects`, the three case pages and five craft pages, then writing the SPA fallback and `404.html`. Manual visual checks at 1440px and 390px. Independent review returned no remaining critical or major issues after fixes for the duplicate H1, link names, duplicate Eccentricity page, redirect metadata and data-derived prerender slugs.
 
@@ -243,9 +243,9 @@ Case study rows use a dedicated small diagram rather than scaling the full 800px
 
 Model and case thumbnails use a clean 210x140 frame:
 
-- Case thumbnails use a light paper frame; project thumbnails use a thin dark frame. The frame itself carries no internal pattern.
-- Geometry sits outside the frame, behind it: one thin ember arc, one diagonal rule and one small triangle at the lower-left. The overlay is not clipped and can cross into the page background.
-- Text and actions sit above the decoration (z-index), so the geometry never covers copy.
+- Case thumbnails use a light paper frame; project thumbnails use a thin dark frame.
+- The frame is a single 1px outline. There is no overlay geometry, dashed border, corner mark or shape.
+- Still images, live previews and case diagrams sit inside the outline; copy stays outside it.
 
 ### S2.27 T-shaped engineering framing
 
@@ -278,7 +278,7 @@ CMS, blog, authentication, newsletter, multilingual UI, redesign of demo interna
 - [x] T46: Case accuracy — acceptance: event roles and PDSS model IDs match the recorded sources. (covers: S2.28)
 - [x] T45: Craft framing — acceptance: Craft leads with fun and usefulness. (covers: S2.29)
 - [x] T44: T-shaped framing — acceptance: Engineering uses the T concretely for range and depth. (covers: S2.27)
-- [x] T47: Thumbnail geometry — acceptance: clean frames with minimal geometry outside and behind the box, never over content. (covers: S2.26)
+- [x] T47: Thumbnail outline — acceptance: thumbnails use a simple 1px frame with no decorative geometry. (covers: S2.26)
 - [x] T43: Thumbnail ornament — acceptance: thumbnail frames carry visible thin geometric decoration without covering the content. (covers: S2.26)
 - [x] T42: Demo distribution — acceptance: no standalone Demos section; instruments sit in Engineering, gesture in Craft, diagrams in Systems. (covers: S2.24)
 - [x] T41: Visible project actions — acceptance: project links are available without expanding. (covers: S2.25)
