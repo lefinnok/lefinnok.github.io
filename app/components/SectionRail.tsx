@@ -11,6 +11,7 @@ const SECTIONS = [
 
 export function SectionRail() {
   const [active, setActive] = useState("engineering");
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const nodes = SECTIONS.map((section) =>
@@ -32,17 +33,39 @@ export function SectionRail() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const onScroll = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
   return (
     <nav className="section-rail" aria-label="Sections">
-      {SECTIONS.map((section) => (
+      <span className="section-rail__track" aria-hidden="true">
+        <span
+          className="section-rail__fill"
+          style={{ transform: `scaleY(${progress})` }}
+        />
+      </span>
+      {SECTIONS.map((section, index) => (
         <a
           key={section.id}
           href={`#${section.id}`}
           className={active === section.id ? "is-active" : ""}
           aria-current={active === section.id ? "location" : undefined}
         >
-          <span className="section-rail__dot" aria-hidden="true" />
           <span className="section-rail__label">{section.label}</span>
+          <span className="section-rail__num">
+            {String(index + 1).padStart(2, "0")}
+          </span>
         </a>
       ))}
     </nav>

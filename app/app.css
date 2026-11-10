@@ -1573,11 +1573,9 @@ svg {
 @keyframes page-in {
   from {
     opacity: 0;
-    transform: translateY(8px);
   }
   to {
     opacity: 1;
-    transform: none;
   }
 }
 
@@ -2077,51 +2075,107 @@ html[data-track="demos"] .demo-surface {
 /* section rail */
 .section-rail {
   position: fixed;
-  right: 22px;
+  right: 24px;
   top: 50%;
   transform: translateY(-50%);
   z-index: 35;
-  display: grid;
-  gap: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  padding-left: 20px;
+  width: 158px;
+}
+
+.section-rail__track {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  bottom: 2px;
+  width: 1px;
+  background: rgba(242, 239, 233, 0.28);
+}
+
+.section-rail__fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #b04724;
+  transform-origin: top;
 }
 
 .section-rail a {
+  position: relative;
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 9px;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  width: 100%;
   font-family: var(--mono);
-  font-size: 8.5px;
-  letter-spacing: 0.12em;
+  font-size: 10px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #8b8579;
+  color: #b8b0a6;
+  transition: color 0.2s ease;
 }
 
-.section-rail__dot {
-  width: 6px;
-  height: 6px;
-  border: 1px solid currentColor;
-  border-radius: 50%;
-  display: block;
+.section-rail a::before {
+  content: "";
+  position: absolute;
+  left: -20px;
+  top: 50%;
+  width: 8px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.45;
+  transition: width 0.2s ease, opacity 0.2s ease;
 }
 
-.section-rail__label {
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-.section-rail a:hover .section-rail__label,
-.section-rail a.is-active .section-rail__label {
-  opacity: 1;
+.section-rail a:hover {
+  color: #f2efe9;
 }
 
 .section-rail a.is-active {
-  color: var(--accent);
+  color: #f2efe9;
 }
 
-.section-rail a.is-active .section-rail__dot {
-  background: var(--accent);
-  border-color: var(--accent);
+.section-rail a.is-active .section-rail__num {
+  color: #d97757;
+  opacity: 1;
+}
+
+.section-rail a.is-active::before {
+  width: 24px;
+  opacity: 1;
+  background: #d97757;
+}
+
+.section-rail__num {
+  font-size: 8px;
+  opacity: 0.65;
+}
+
+html[data-bg="paper"] .section-rail a {
+  color: #5f594f;
+}
+
+html[data-bg="paper"] .section-rail__track {
+  background: rgba(21, 20, 18, 0.22);
+}
+
+html[data-bg="paper"] .section-rail a:hover {
+  color: #151412;
+}
+
+html[data-bg="paper"] .section-rail a.is-active {
+  color: #151412;
+}
+
+html[data-bg="paper"] .section-rail a.is-active .section-rail__num {
+  color: #b04724;
+}
+
+html[data-bg="paper"] .section-rail a.is-active::before {
+  background: #b04724;
 }
 
 @media (max-width: 1279px) {
@@ -2661,5 +2715,12 @@ html.lenis body {
 @media (prefers-reduced-motion: reduce) {
   .section-hero__title {
     animation: none;
+  }
+}
+
+/* reserve the right margin for the chapter rail on wide screens */
+@media (min-width: 1280px) {
+  .page-section > .container {
+    padding-right: 200px;
   }
 }

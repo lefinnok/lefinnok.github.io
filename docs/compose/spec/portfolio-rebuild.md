@@ -122,7 +122,7 @@ Every demo and project carries a year and a context line, rendered in the frame 
 
 ### S2.12 Scroll-driven decoration
 
-- Section rail fixed on the right, with active state driven by IntersectionObserver.
+- Section rail is a numbered chapter index on a continuous progress spine, with labels always visible and the active row marked in ember. It is driven by IntersectionObserver and reserves a 200px right margin on wide screens.
 - Header switches to dark styling over ink sections, and the progress line tracks the whole page.
 - Section heads stick flush under the 64px header while their section scrolls, with the same background colour so there is no visible seam.
 - Line art draws on entry via `stroke-dashoffset` when it enters view.
@@ -167,6 +167,7 @@ CMS, blog, authentication, newsletter, multilingual UI, redesign of demo interna
 - [x] T13: Demos restored — acceptance: CPU, gesture, ML, UML, diagrams and 3D models render on the site. (covers: S2.8)
 - [x] T15: Demo frame and brand tokens — acceptance: demos render inside a paper frame with an ink stage and ember accents; expand works. (covers: S2.9)
 - [x] T16: Demo index and detail pages — acceptance: `/demos` lists eight entries and each detail page mounts its demo. (covers: S2.9)
+- [x] T28: Chapter rail — acceptance: labels and numbers are always visible on a progress spine, with no dot constellation and no content overlap. (covers: S2.12)
 - [x] T26: Systems section — acceptance: diagrams have their own section and nav item, separate from demos. (covers: S2.14)
 - [x] T27: Smooth scroll and motion — acceptance: Lenis scrolling, anchor opening, ghost words and view-timeline titles work. (covers: S2.15)
 - [x] T25: Collapsible case studies and projects — acceptance: compact rows expand in place and anchors open the target. (covers: S2.13)
