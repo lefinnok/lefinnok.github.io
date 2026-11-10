@@ -3055,3 +3055,197 @@ html.lenis body {
   background: #151412;
   color: #f2efe9;
 }
+
+/* ---------- UML architecture ---------- */
+
+.uml-arch {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.9fr);
+  gap: 28px;
+  margin: 10px 0 44px;
+  border-top: 1px solid var(--line);
+}
+
+.uml-arch__flow {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.uml-arch__flow li {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.uml-arch__num {
+  padding-top: 4px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+
+.uml-arch__flow h4 {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.uml-arch__flow p,
+.uml-arch__note p {
+  margin: 6px 0 0;
+  max-width: 62ch;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--body-muted);
+}
+
+.uml-arch__side {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+
+.uml-arch__note {
+  border: 1px solid var(--line);
+  padding: 16px;
+  background: var(--paper-2);
+}
+
+.uml-arch__note pre {
+  margin: 10px 0 0;
+  padding: 12px;
+  overflow-x: auto;
+  background: #121110;
+  border: 1px solid rgba(242, 239, 233, 0.12);
+  color: #c9c2b7;
+  font-family: var(--mono);
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+@media (max-width: 960px) {
+  .uml-arch {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- generalized workflow ---------- */
+
+.workflow {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.workflow__step {
+  position: relative;
+  padding: 22px 18px 6px 0;
+  border-right: 1px solid var(--line);
+}
+
+.workflow__step:last-child {
+  padding-right: 0;
+  border-right: 0;
+}
+
+.workflow__step::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.workflow__num {
+  display: block;
+  margin-bottom: 9px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+}
+
+.workflow__step h4 {
+  margin: 0;
+  max-width: 15ch;
+  font-family: var(--display);
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+}
+
+.workflow__step p {
+  margin: 10px 0 0;
+  max-width: 30ch;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--body-muted);
+}
+
+.workflow__caption {
+  margin: 18px 0 46px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  max-width: 70ch;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  line-height: 1.7;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+@media (max-width: 1000px) {
+  .workflow {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .workflow__step {
+    padding-right: 16px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .workflow__step:nth-child(2n) {
+    border-right: 0;
+    padding-left: 16px;
+  }
+}
+
+@media (max-width: 620px) {
+  .workflow {
+    grid-template-columns: 1fr;
+  }
+
+  .workflow__step,
+  .workflow__step:nth-child(2n) {
+    padding-left: 0;
+    padding-right: 0;
+    border-right: 0;
+  }
+
+  .workflow__step h4,
+  .workflow__step p {
+    max-width: none;
+  }
+
+  .workflow__caption {
+    margin-bottom: 36px;
+  }
+}

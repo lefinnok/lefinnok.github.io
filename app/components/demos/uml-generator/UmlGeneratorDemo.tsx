@@ -388,7 +388,7 @@ export default function UmlGeneratorDemo() {
           <Stack direction="row" spacing={0.5} alignItems="center">
             {config && (
               <Chip
-                label={config.model.split("/").pop()?.replace(":free", "")}
+                label={config.model.split("/").pop()}
                 size="small"
                 onClick={() => setShowSetup(true)}
                 icon={<SettingsIcon sx={{ fontSize: "14px !important" }} />}

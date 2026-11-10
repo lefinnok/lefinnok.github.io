@@ -7,8 +7,6 @@ import {
   Button,
   TextField,
   Stack,
-  Divider,
-  Chip,
   Alert,
   IconButton,
   Link,
@@ -17,8 +15,6 @@ import {
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import WarningAmberIcon from "@mui/icons-material/WarningAmber";
-import { FREE_MODELS, type OpenRouterModel } from "../engine/types";
 
 export interface SetupResult {
   model: string;
@@ -31,28 +27,19 @@ interface SetupDialogProps {
   onComplete: (result: SetupResult) => void;
 }
 
-const PROXY_ENDPOINT = "supabase-proxy";
+const DEFAULT_ENDPOINT = "https://openrouter.ai/api/v1";
+const DEFAULT_MODEL = "openai/gpt-4o-mini";
 
 export function SetupDialog({ open, onComplete }: SetupDialogProps) {
-  const [mode, setMode] = useState<"choose" | "custom">("choose");
-  const [selectedFreeModel, setSelectedFreeModel] = useState(FREE_MODELS[0].id);
   const [customApiKey, setCustomApiKey] = useState("");
-  const [customModel, setCustomModel] = useState("");
-  const [customEndpoint, setCustomEndpoint] = useState("https://openrouter.ai/api/v1");
+  const [customModel, setCustomModel] = useState(DEFAULT_MODEL);
+  const [customEndpoint, setCustomEndpoint] = useState(DEFAULT_ENDPOINT);
   const [showKey, setShowKey] = useState(false);
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const handleFreeModelSelect = () => {
-    onComplete({
-      model: selectedFreeModel,
-      apiKey: null,
-      apiEndpoint: PROXY_ENDPOINT,
-    });
-  };
-
-  const handleCustomSubmit = () => {
+  const handleSubmit = () => {
     if (!customApiKey.trim() || !customModel.trim()) return;
     onComplete({
       model: customModel.trim(),
@@ -80,179 +67,96 @@ export function SetupDialog({ open, onComplete }: SetupDialogProps) {
         <Typography variant="h5" sx={{ mb: 0.5 }}>
           UML Diagram Generator
         </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-          Choose how to power the AI diagram generation.
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          The shared free-model proxy is retired. The live demo now runs
+          against your own OpenAI-compatible endpoint.
         </Typography>
 
-        {/* Free models option */}
-        <Box
-          onClick={() => setMode("choose")}
-          sx={{
-            p: 2,
-            borderRadius: 2,
-            border: "1px solid",
-            borderColor: mode === "choose" ? "#D97757" : "divider",
-            bgcolor: mode === "choose" ? "rgba(249,115,22,0.04)" : "transparent",
-            cursor: "pointer",
-            mb: 1.5,
-            transition: "all 0.15s",
-          }}
-        >
-          <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
-            Use free models (via proxy)
-          </Typography>
-          <Stack direction="row" alignItems="center" spacing={0.5} sx={{ mb: 1 }}>
-            <WarningAmberIcon sx={{ fontSize: 13, color: "#D97757" }} />
-            <Typography variant="caption" color="text.secondary" sx={{ lineHeight: 1.4 }}>
-              Free models may produce lower quality diagrams compared to
-              commercial models. Results may be inconsistent.
+        <Alert severity="info" sx={{ mb: 2.5, py: 0.5, "& .MuiAlert-message": { fontSize: 12 } }}>
+          Your key stays in this browser session. Requests go directly from
+          this page to the endpoint you specify, then to PlantUML&rsquo;s
+          public renderer. Nothing is proxied through this site.
+        </Alert>
+
+        <Stack spacing={1.75}>
+          <Box>
+            <Typography variant="caption" color="text.secondary" sx={{ fontSize: 10, mb: 0.25, display: "block" }}>
+              API Key
             </Typography>
-          </Stack>
+            <TextField
+              size="small"
+              fullWidth
+              placeholder="sk-..."
+              value={customApiKey}
+              onChange={(e) => setCustomApiKey(e.target.value)}
+              type={showKey ? "text" : "password"}
+              slotProps={{
+                input: {
+                  endAdornment: (
+                    <IconButton size="small" onClick={() => setShowKey(!showKey)} edge="end">
+                      {showKey ? <VisibilityOffIcon sx={{ fontSize: 16 }} /> : <VisibilityIcon sx={{ fontSize: 16 }} />}
+                    </IconButton>
+                  ),
+                  sx: { fontFamily: "'JetBrains Mono', monospace", fontSize: 12 },
+                },
+              }}
+            />
+          </Box>
 
-          {mode === "choose" && (
-            <>
-              <Typography variant="caption" color="text.secondary" sx={{ display: "block", mb: 1, fontSize: 10 }}>
-                Select a model:
-              </Typography>
-              <Stack direction="row" spacing={0.5} flexWrap="wrap" useFlexGap>
-                {FREE_MODELS.map((m) => (
-                  <Chip
-                    key={m.id}
-                    label={m.name}
-                    size="small"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedFreeModel(m.id);
-                    }}
-                    sx={{
-                      height: 24,
-                      fontSize: 11,
-                      fontFamily: "'Fira Code', monospace",
-                      bgcolor: selectedFreeModel === m.id ? "rgba(249,115,22,0.15)" : "rgba(255,255,255,0.03)",
-                      border: "1px solid",
-                      borderColor: selectedFreeModel === m.id ? "#D97757" : "rgba(255,255,255,0.1)",
-                      color: selectedFreeModel === m.id ? "#D97757" : "text.secondary",
-                    }}
-                  />
-                ))}
-              </Stack>
-              <Button
-                variant="outlined"
-                size="small"
-                onClick={handleFreeModelSelect}
-                sx={{
-                  mt: 1.5,
-                  color: "#D97757",
-                  borderColor: "#D97757",
-                  "&:hover": { borderColor: "#B04724", bgcolor: "rgba(249,115,22,0.08)" },
-                }}
-              >
-                Start with free model
-              </Button>
-            </>
-          )}
-        </Box>
+          <Box>
+            <Typography variant="caption" color="text.secondary" sx={{ fontSize: 10, mb: 0.25, display: "block" }}>
+              Model ID
+            </Typography>
+            <TextField
+              size="small"
+              fullWidth
+              placeholder="e.g. openai/gpt-4o-mini, anthropic/claude-sonnet-4"
+              value={customModel}
+              onChange={(e) => setCustomModel(e.target.value)}
+              slotProps={{
+                input: { sx: { fontFamily: "'JetBrains Mono', monospace", fontSize: 12 } },
+              }}
+            />
+          </Box>
 
-        {/* Custom API key option */}
-        <Box
-          onClick={() => setMode("custom")}
+          <Box>
+            <Typography variant="caption" color="text.secondary" sx={{ fontSize: 10, mb: 0.25, display: "block" }}>
+              API Endpoint (OpenAI-compatible)
+            </Typography>
+            <TextField
+              size="small"
+              fullWidth
+              value={customEndpoint}
+              onChange={(e) => setCustomEndpoint(e.target.value)}
+              slotProps={{
+                input: { sx: { fontFamily: "'JetBrains Mono', monospace", fontSize: 12 } },
+              }}
+            />
+          </Box>
+        </Stack>
+
+        <Typography variant="caption" color="text.secondary" sx={{ display: "block", mt: 2, lineHeight: 1.5 }}>
+          Need a key? Create one at{" "}
+          <Link href="https://openrouter.ai/keys" target="_blank" rel="noreferrer" sx={{ color: "#D97757" }}>
+            openrouter.ai/keys
+          </Link>
+          , or point the endpoint at any compatible service.
+        </Typography>
+
+        <Button
+          variant="outlined"
+          size="small"
+          onClick={handleSubmit}
+          disabled={!customApiKey.trim() || !customModel.trim()}
           sx={{
-            p: 2,
-            borderRadius: 2,
-            border: "1px solid",
-            borderColor: mode === "custom" ? "#D97757" : "divider",
-            bgcolor: mode === "custom" ? "rgba(217,119,87,0.04)" : "transparent",
-            cursor: "pointer",
-            transition: "all 0.15s",
+            mt: 2.5,
+            color: "#D97757",
+            borderColor: "#D97757",
+            "&:hover": { borderColor: "#D97757", bgcolor: "rgba(217,119,87,0.08)" },
           }}
         >
-          <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
-            Use your own API key &amp; model
-          </Typography>
-          <Typography variant="caption" color="text.secondary" sx={{ display: "block", mb: 1, lineHeight: 1.4 }}>
-            Provide your own OpenRouter or OpenAI-compatible API key for
-            higher quality results. Recommended for best experience.
-          </Typography>
-
-          {mode === "custom" && (
-            <Stack spacing={1.5} onClick={(e) => e.stopPropagation()}>
-              <Box>
-                <Typography variant="caption" color="text.secondary" sx={{ fontSize: 10, mb: 0.25, display: "block" }}>
-                  API Key
-                </Typography>
-                <TextField
-                  size="small"
-                  fullWidth
-                  placeholder="sk-..."
-                  value={customApiKey}
-                  onChange={(e) => setCustomApiKey(e.target.value)}
-                  type={showKey ? "text" : "password"}
-                  slotProps={{
-                    input: {
-                      endAdornment: (
-                        <IconButton size="small" onClick={() => setShowKey(!showKey)} edge="end">
-                          {showKey ? <VisibilityOffIcon sx={{ fontSize: 16 }} /> : <VisibilityIcon sx={{ fontSize: 16 }} />}
-                        </IconButton>
-                      ),
-                      sx: { fontFamily: "'Fira Code', monospace", fontSize: 12 },
-                    },
-                  }}
-                />
-              </Box>
-
-              <Box>
-                <Typography variant="caption" color="text.secondary" sx={{ fontSize: 10, mb: 0.25, display: "block" }}>
-                  Model ID
-                </Typography>
-                <TextField
-                  size="small"
-                  fullWidth
-                  placeholder="e.g. openai/gpt-4o, anthropic/claude-sonnet-4"
-                  value={customModel}
-                  onChange={(e) => setCustomModel(e.target.value)}
-                  slotProps={{
-                    input: { sx: { fontFamily: "'Fira Code', monospace", fontSize: 12 } },
-                  }}
-                />
-              </Box>
-
-              <Box>
-                <Typography variant="caption" color="text.secondary" sx={{ fontSize: 10, mb: 0.25, display: "block" }}>
-                  API Endpoint (OpenAI-compatible)
-                </Typography>
-                <TextField
-                  size="small"
-                  fullWidth
-                  value={customEndpoint}
-                  onChange={(e) => setCustomEndpoint(e.target.value)}
-                  slotProps={{
-                    input: { sx: { fontFamily: "'Fira Code', monospace", fontSize: 12 } },
-                  }}
-                />
-              </Box>
-
-              <Alert severity="info" sx={{ py: 0.25, "& .MuiAlert-message": { fontSize: 11 } }}>
-                Your API key is only stored in this browser session and is sent
-                directly to the endpoint you specify. It is never stored or sent
-                to this website&rsquo;s servers.
-              </Alert>
-
-              <Button
-                variant="outlined"
-                size="small"
-                onClick={handleCustomSubmit}
-                disabled={!customApiKey.trim() || !customModel.trim()}
-                sx={{
-                  color: "#D97757",
-                  borderColor: "#D97757",
-                  "&:hover": { borderColor: "#D97757", bgcolor: "rgba(217,119,87,0.08)" },
-                }}
-              >
-                Start with custom model
-              </Button>
-            </Stack>
-          )}
-        </Box>
+          Start with my model
+        </Button>
       </DialogContent>
     </Dialog>
   );

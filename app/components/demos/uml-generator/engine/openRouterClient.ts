@@ -1,6 +1,3 @@
-const PROXY_URL =
-  "https://bmpxvfzmimirmtakiuas.supabase.co/functions/v1/openrouter-proxy";
-
 export async function callOpenRouter(
   model: string,
   systemPrompt: string,
@@ -8,21 +5,17 @@ export async function callOpenRouter(
   apiKey: string | null,
   apiEndpoint: string | null,
 ): Promise<string> {
-  const useProxy = apiEndpoint === "supabase-proxy" || (!apiKey && !apiEndpoint);
+  if (!apiKey) {
+    throw new Error("An API key is required. The shared free-model proxy is retired.");
+  }
 
-  const url = useProxy
-    ? PROXY_URL
-    : `${apiEndpoint || "https://openrouter.ai/api/v1"}/chat/completions`;
-
+  const url = `${apiEndpoint || "https://openrouter.ai/api/v1"}/chat/completions`;
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
+    Authorization: `Bearer ${apiKey}`,
+    "HTTP-Referer": window.location.origin,
+    "X-Title": "UML Diagram Generator Demo",
   };
-
-  if (!useProxy && apiKey) {
-    headers["Authorization"] = `Bearer ${apiKey}`;
-    headers["HTTP-Referer"] = window.location.origin;
-    headers["X-Title"] = "UML Diagram Generator Demo";
-  }
 
   const response = await fetch(url, {
     method: "POST",

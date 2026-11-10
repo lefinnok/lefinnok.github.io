@@ -48,7 +48,7 @@ export const demos: DemoEntry[] = [
     slug: "uml-generator",
     category: "interactive",
     year: "2025",
-    context: "Built in 2025, when iterative LLM diagramming was still novel. In 2026 the interaction matters more than the generation.",
+    context: "Built in 2025, when iterative LLM diagramming was still novel. In 2026 the interaction matters more than the generation. The shared proxy is retired; bring your own API key.",
     title: "UML generator",
     kicker: "Language models",
     description:
@@ -90,9 +90,9 @@ export const demos: DemoEntry[] = [
     slug: "service-architecture",
     category: "diagram",
     year: "2026",
-    context: "A working reference diagram for the service boundaries I reach for in practice.",
+    context: "Output of Model and Verify: boundaries, interfaces and the build path before the first service is written.",
     title: "Service architecture",
-    kicker: "Diagram",
+    kicker: "Artifact · Service shape",
     description:
       "The architecture I reach for: typed clients, a gateway, service boundaries and a build path, with each module tied to a language.",
     tone: "ink",
@@ -104,9 +104,9 @@ export const demos: DemoEntry[] = [
     slug: "hardware-pipeline",
     category: "diagram",
     year: "2026",
-    context: "The actual toolchain from schematic to assembly, not a generic diagram.",
+    context: "Output of Model and Operate: the actual route from schematic and board to firmware and assembly.",
     title: "Hardware pipeline",
-    kicker: "Diagram",
+    kicker: "Artifact · Hardware path",
     description:
       "From schematic to firmware to assembly, with the tools I actually use at each stage and where the branches rejoin.",
     tone: "ink",

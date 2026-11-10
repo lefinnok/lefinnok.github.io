@@ -123,10 +123,11 @@ function Slide0() {
         input closer to a rendered diagram.
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-        The pipeline runs entirely in your browser. No backend server is
-        needed. The only external calls are to{" "}
-        <strong>OpenRouter</strong> (for the LLM) and{" "}
-        <strong>PlantUML&rsquo;s public server</strong> (for rendering).
+        The pipeline runs in your browser. The only external calls go to the
+        <strong>OpenAI-compatible endpoint you configure</strong> (for the
+        model) and <strong>PlantUML&rsquo;s public server</strong> (for
+        rendering). There is no shared proxy and no backend of ours in the
+        path.
       </Typography>
       <Typography variant="body2" color="text.secondary">
         Use the pipeline indicator above or the arrow keys to step through each
@@ -189,9 +190,10 @@ function Slide3() {
   return (
     <SlidePair visual={<PipelineDiagram activeStep={2} />}>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-        The prompt is sent to a free LLM via{" "}
-        <strong>OpenRouter</strong>, which routes requests to models like Gemma
-        2, Llama 3.1, or Mistral 7B.
+        The prompt is sent to the model you configured through an
+        OpenAI-compatible endpoint, using your own key. Any model that follows
+        the output contract can drive the demo; the default is
+        <strong>openai/gpt-4o-mini</strong>.
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
         The model is instructed to respond in one of two formats:

@@ -7,6 +7,8 @@ import { CaseStudyBlock } from "~/components/CaseStudyBlock";
 import { ProjectBlock } from "~/components/ProjectBlock";
 import { DemoBlock } from "~/components/DemoBlock";
 import { ModelFrame } from "~/components/ModelFrame";
+import { UmlArchitecture } from "~/components/UmlArchitecture";
+import { Workflow } from "~/components/Workflow";
 import { Timeline } from "~/components/Timeline";
 import { FbxModelViewer } from "~/components/FbxModelViewer";
 import { LineArt } from "~/components/LineArt";
@@ -267,17 +269,21 @@ export default function Home() {
       <section id="systems" data-theme="ink" className="page-section page-section--ink">
         <div className="container section-hero">
           <GhostWord word="SYSTEMS" />
-          <span className="eyebrow">Systems / 03</span>
-          <h2 className="section-hero__title">The systems underneath.</h2>
+          <span className="eyebrow">Method / 03</span>
+          <h2 className="section-hero__title">One workflow, many systems.</h2>
           <p className="lede">
-            Two reference drawings, kept out of the demo rack because they are
-            not toys. One is the service shape I reach for; the other is the
-            actual path from schematic to firmware.
+            A repeatable path from an unclear problem to something that can be
+            operated and audited. The same five moves apply to a service, a
+            board or a model. The drawings below are two artifacts from that
+            path, not a catalogue of the only shapes I work in.
           </p>
         </div>
 
         <div className="container">
-          <SectionHead num="01" title="Diagrams" range="Reference" />
+          <SectionHead num="01" title="Workflow" range="How I work" />
+          <Workflow />
+
+          <SectionHead num="02" title="Artifacts" range="Two examples" />
           {systemsDemos.map((demo, index) => (
             <div key={demo.slug} id={`demo-${demo.slug}`} className="demo-anchor">
               <DemoBlock
@@ -328,6 +334,9 @@ export default function Home() {
         </div>
 
         <div className="container">
+          <SectionHead num="01" title="How it works" range="UML generator" />
+          <UmlArchitecture />
+          <SectionHead num="02" title="Live demo" range="Your key, your model" />
           {interactiveDemos
             .filter((demo) => demo.slug === "uml-generator")
             .map((demo, index) => (
