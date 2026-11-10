@@ -345,18 +345,18 @@ export default function Home() {
       <section id="systems" data-theme="ink" className="page-section page-section--ink">
         <div className="container section-hero">
           <GhostWord word="SYSTEMS" />
-          <span className="eyebrow">Method / 03</span>
-          <h2 className="section-hero__title">One workflow, many systems.</h2>
+          <span className="eyebrow">Practice / 03</span>
+          <h2 className="section-hero__title">An idea of how I work.</h2>
           <p className="lede">
-            A repeatable path from an unclear problem to something that can be
-            operated and maintained. The same five moves apply to a service, a
-            board or a model. The drawings below are two artifacts from that
-            path, not a catalogue of the only shapes I work in.
+            Not a fixed process. A rough shape that tends to appear whether the
+            work is a service, a board or a model. The drawings below are
+            artifacts from that practice, not a catalogue of the only shapes I
+            work in.
           </p>
         </div>
 
         <div className="container">
-          <SectionHead num="01" title="Workflow" range="How I work" />
+          <SectionHead num="01" title="Working notes" range="Usually, not always" />
           <Workflow />
 
           <SectionHead num="02" title="Artifacts" range="Two examples" />
