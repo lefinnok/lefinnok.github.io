@@ -3528,3 +3528,63 @@ html.lenis body {
     grid-template-columns: 1fr;
   }
 }
+
+/* case thumbnails: a framed plate with a paper diagram inset */
+.case-block__toggle {
+  grid-template-columns: 210px minmax(0, 1fr) auto;
+  gap: 32px;
+}
+
+.case-block__thumb {
+  height: 144px;
+  padding: 7px;
+  border: 1px solid rgba(242, 239, 233, 0.16);
+  background:
+    radial-gradient(110% 100% at 50% 0%, rgba(217, 119, 87, 0.08) 0%, transparent 58%),
+    linear-gradient(180deg, #1a1715 0%, #121110 100%);
+  box-shadow: inset 0 1px 0 rgba(242, 239, 233, 0.05);
+  overflow: hidden;
+}
+
+.case-block__thumb::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(242, 239, 233, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(242, 239, 233, 0.04) 1px, transparent 1px);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(circle at 50% 50%, black 20%, transparent 82%);
+}
+
+.case-block__thumb-canvas {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  padding: 8px;
+  border: 1px solid rgba(242, 239, 233, 0.14);
+  background: #f8f5f0;
+  color: #151412;
+  overflow: hidden;
+}
+
+.case-block__thumb-canvas svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+@media (max-width: 860px) {
+  .case-block__toggle {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .case-block__thumb {
+    max-width: 260px;
+    height: 132px;
+  }
+}

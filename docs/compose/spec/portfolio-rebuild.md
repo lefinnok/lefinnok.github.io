@@ -31,7 +31,7 @@ source: feat/portfolio-v2
 
 **Architecture pass** — UML now explains the pipeline before the live demo and requires a user-supplied key; Systems leads with a general workflow and presents the diagrams as two artifacts.
 
-**Positioning pass** — The portfolio now leads with generalist breadth and specialist depth, with a six-part capability map and no oversized glyph. All 3D models are bounding-box centred and pulled back, with regenerated thumbnails.
+**Positioning pass** — The portfolio now leads with generalist breadth and specialist depth, with a six-part capability map and no oversized glyph. All 3D models are bounding-box centred and pulled back, with regenerated thumbnails. Case study rows also received framed, purpose-drawn diagrams.
 
 **Verification** — `npm run typecheck` PASS. `npm run build` PASS, prerendering `/`, `/engineering`, `/craft`, `/about`, `/contact`, `/projects`, the three case pages and five craft pages, then writing the SPA fallback and `404.html`. Manual visual checks at 1440px and 390px. Independent review returned no remaining critical or major issues after fixes for the duplicate H1, link names, duplicate Eccentricity page, redirect metadata and data-derived prerender slugs.
 
@@ -220,6 +220,14 @@ The portfolio is positioned around **generalist with a specialization**, not AI 
 - Thumbnail stills were re-rendered with lower per-model zoom and checked for margin.
 - The live hover preview uses the same centred viewer.
 
+### S2.23 Case thumbnails
+
+Case study rows use a dedicated small diagram rather than scaling the full 800px figure down:
+
+- `CaseThumb` redraws the pipeline and role map at 320x210 with larger labels and fewer details.
+- The diagram sits on a paper inset inside a dark framed plate with the same radial falloff, faint grid and inset edge as the model thumbnails.
+- The large `CaseFigure` remains for the expanded case study, where its detail is legible.
+
 ### S2.7 Performance and accessibility
 
 Demos stay lazy-loaded and mount only when visible. Fonts are self-hosted and subset. Targets: Lighthouse performance 90+ on both landings, no layout shift from fonts, 4.5:1 body contrast, visible focus rings, skip link, semantic heading order, keyboard-operable chooser.
@@ -235,6 +243,7 @@ CMS, blog, authentication, newsletter, multilingual UI, redesign of demo interna
 - [x] T13: Demos restored — acceptance: CPU, gesture, ML, UML, diagrams and 3D models render on the site. (covers: S2.8)
 - [x] T15: Demo frame and brand tokens — acceptance: demos render inside a paper frame with an ink stage and ember accents; expand works. (covers: S2.9)
 - [x] T16: Demo index and detail pages — acceptance: `/demos` lists eight entries and each detail page mounts its demo. (covers: S2.9)
+- [x] T39: Framed case thumbnails — acceptance: case diagrams are legible in the list and sit in a framed plate. (covers: S2.23)
 - [x] T38: Generalist positioning — acceptance: hero, capabilities, about and meta avoid AI-engineer framing and audit emphasis. (covers: S2.21)
 - [x] T37: Centred 3D models — acceptance: all models are centred and have margin in stills and live frames. (covers: S2.22)
 - [x] T36: Framed model thumbnails — acceptance: 3D thumbnails carry the depth treatment and clear the copy. (covers: S2.20)
