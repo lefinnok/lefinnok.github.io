@@ -27,7 +27,7 @@ source: feat/portfolio-v2
 
 **Frame pass** — Interactive demos keep the paper frame; 3D work now sits in a technical model plinth with grid, corner marks, CAD label and dimensions.
 
-**Plate pass** — Demo frames became light catalogue plates with numbered tabs and paper mats, while 3D work kept the dark technical plinth. Hydration mismatches from hash-open and pre-hydration track attributes were removed.
+**Frame pass** — Demos became dark screen cards with numbered tabs and full-bleed viewports, while 3D work kept the darker gridded plinth. Hydration mismatches from hash-open and pre-hydration track attributes were removed.
 
 **Architecture pass** — UML now explains the pipeline before the live demo and requires a user-supplied key; Systems leads with a general workflow and presents the diagrams as two artifacts.
 
@@ -172,13 +172,13 @@ The HKSTP intern gift is a Craft project entry:
 
 ### S2.17 Demo plate
 
-The demo frame is now a light catalogue plate, deliberately unlike the dark model plinth:
+The demo frame is a dark screen card, deliberately unlike the solid model plinth:
 
-- Cream paper card, numbered index tab, title, year and a pulsing LIVE marker.
+- Warm-black card, numbered index tab, title, year and a pulsing LIVE marker.
 - Description and dated context in the header, with a thin rule before the context.
-- The screen sits inside a paper mat with a dark viewport, so the instrument reads as a plate rather than a dark panel.
+- The screen is full-bleed inside the card, with no paper mat, so the instrument reads as a display rather than a framed print.
 - Footer carries the browser note on the left and the related link and Expand on the right.
-- Models keep the dark `ModelFrame` with grid, corner marks, CAD label and dimensions.
+- Models keep the darker `ModelFrame` with a gridded stage, corner marks, CAD label and dimensions. The distinction is structural: flat screen card versus technical plinth.
 
 ### S2.18 UML architecture and bring-your-own-key
 
@@ -208,7 +208,7 @@ CMS, blog, authentication, newsletter, multilingual UI, redesign of demo interna
 - [x] T16: Demo index and detail pages — acceptance: `/demos` lists eight entries and each detail page mounts its demo. (covers: S2.9)
 - [x] T33: UML architecture and key-only setup — acceptance: no free proxy path, architecture visible before the demo. (covers: S2.18)
 - [x] T32: Generalized workflow — acceptance: Systems leads with workflow and frames diagrams as artifacts. (covers: S2.19)
-- [x] T31: Demo plate — acceptance: demos use a light catalogue plate distinct from the model frame. (covers: S2.17)
+- [x] T31: Demo frame — acceptance: demos use a dark screen card distinct from the model plinth, with no white plate. (covers: S2.17)
 - [x] T30: Model frame — acceptance: 3D work has a technical plinth frame distinct from demo frames. (covers: S2.16)
 - [x] T29: Electronics entry — acceptance: the HKSTP medallion is a Craft project with CAD visual and manufacturing detail. (covers: S2.16)
 - [x] T28: Chapter rail — acceptance: labels and numbers are always visible on a progress spine, with no dot constellation and no content overlap. (covers: S2.12)
