@@ -14,8 +14,8 @@ export function Chooser() {
         <div className="half__mid">
           <h2 id="chooser-engineering">Engineering</h2>
           <p>
-            Product, software, systems and research. Broad by default, deep
-            where it matters.
+            Management, design, communication and technology. Broad by
+            default, deep where it matters.
           </p>
         </div>
         <div className="half__bottom">

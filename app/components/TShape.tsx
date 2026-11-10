@@ -15,11 +15,13 @@ export function TShape() {
         <path d="M310 38V172" stroke="var(--accent)" strokeWidth="1.5" />
         <circle cx="310" cy="38" r="3.5" fill="var(--accent)" />
 
-        <g style={{ fontFamily: "var(--mono)", fontSize: 9, letterSpacing: "1.3px", fill: "currentColor" }}>
-          <text x="28" y="28">PRODUCT</text>
-          <text x="160" y="28">SOFTWARE</text>
-          <text x="312" y="28">HARDWARE</text>
-          <text x="470" y="28">RESEARCH</text>
+        <g style={{ fontFamily: "var(--mono)", fontSize: 8, letterSpacing: "0.8px", fill: "currentColor" }}>
+          <text x="28" y="28">MANAGEMENT</text>
+          <text x="126" y="28">FINANCE</text>
+          <text x="214" y="28">LEADERSHIP</text>
+          <text x="326" y="28">COMMUNICATION</text>
+          <text x="452" y="28">ART / DESIGN</text>
+          <text x="552" y="28">TECHNOLOGY</text>
         </g>
 
         <g style={{ fontFamily: "var(--mono)", fontSize: 9, letterSpacing: "1.2px", fill: "currentColor", opacity: 0.8 }}>
@@ -40,13 +42,14 @@ export function TShape() {
       <div className="t-frame__copy">
         <p>
           <span>Bar / range</span>
-          Product, software, hardware and research. I can move across all four
-          and connect them, which is usually where the useful idea is.
+          Management, finance, leadership, communication, art and design, and
+          technology. I can move across all of them and connect them, which is
+          usually where the useful idea is.
         </p>
         <p>
           <span>Stem / depth</span>
-          AI and ML, and the systems that make them operable. This is the part I
-          go deepest in, and the part that keeps the breadth honest.
+          AI and ML, and the systems that make them work. Technology is the
+          specialization; these are the technical depths.
         </p>
       </div>
     </div>

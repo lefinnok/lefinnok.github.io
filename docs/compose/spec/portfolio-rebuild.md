@@ -31,7 +31,7 @@ source: feat/portfolio-v2
 
 **Architecture pass** — UML now explains the pipeline before the live demo and requires a user-supplied key; Systems leads with a general workflow and presents the diagrams as two artifacts.
 
-**Working-notes pass** — Numbers and ordered-list semantics were removed; the section now describes how the work tends to go, not a sequence to follow. **Workflow pass** — The generic Frame/Model/Verify sequence was replaced with the real listen, imagine, estimate, structure, build, hand-over process. **Revert pass** — All demos moved back to Craft, Engineering ends at Current, and the UML architecture is a collapsed details panel. **Frame refinement** — Thumbnail frames are clean paper/dark outlines only; the external geometry was removed. **Content pass** — Thumbnail mounts were lightened, event roles and PDSS model IDs were corrected, Craft was reframed around fun and usefulness, and the T-shaped model was added to Capabilities. **Ornament pass** — Thumbnail mounts gained thin geometric decoration; project actions and demo distribution were committed in the preceding pass. **Structure pass** — Demos were distributed into Engineering, Craft and Systems, the standalone Demos chapter was removed, and project actions are visible on collapsed rows. **Positioning pass** — The portfolio now leads with generalist breadth and specialist depth, with a six-part capability map and no oversized glyph. All 3D models are bounding-box centred and pulled back, with regenerated thumbnails. Case study rows also received framed, purpose-drawn diagrams.
+**Brand pass** — The identity widened from AI-focused to management, finance, leadership, communication, art and design plus technology; the enterprise platform role now says integrate, not build. **Working-notes pass** — Numbers and ordered-list semantics were removed; the section now describes how the work tends to go, not a sequence to follow. **Workflow pass** — The generic Frame/Model/Verify sequence was replaced with the real listen, imagine, estimate, structure, build, hand-over process. **Revert pass** — All demos moved back to Craft, Engineering ends at Current, and the UML architecture is a collapsed details panel. **Frame refinement** — Thumbnail frames are clean paper/dark outlines only; the external geometry was removed. **Content pass** — Thumbnail mounts were lightened, event roles and PDSS model IDs were corrected, Craft was reframed around fun and usefulness, and the T-shaped model was added to Capabilities. **Ornament pass** — Thumbnail mounts gained thin geometric decoration; project actions and demo distribution were committed in the preceding pass. **Structure pass** — Demos were distributed into Engineering, Craft and Systems, the standalone Demos chapter was removed, and project actions are visible on collapsed rows. **Positioning pass** — The portfolio now leads with generalist breadth and specialist depth, with a six-part capability map and no oversized glyph. All 3D models are bounding-box centred and pulled back, with regenerated thumbnails. Case study rows also received framed, purpose-drawn diagrams.
 
 **Verification** — `npm run typecheck` PASS. `npm run build` PASS, prerendering `/`, `/engineering`, `/craft`, `/about`, `/contact`, `/projects`, the three case pages and five craft pages, then writing the SPA fallback and `404.html`. Manual visual checks at 1440px and 390px. Independent review returned no remaining critical or major issues after fixes for the duplicate H1, link names, duplicate Eccentricity page, redirect metadata and data-derived prerender slugs.
 
@@ -224,13 +224,13 @@ Collapsed project rows now use stills rendered from the same 3D models as the ex
 
 ### S2.21 Positioning
 
-The portfolio is positioned around **generalist with a specialization**, not AI engineer:
+The portfolio is positioned around a **multifaceted generalist with a technology specialization**:
 
-- Engineering hero: "Broad by default. Deep where it matters."
-- Copy names product, software, hardware and research, with AI and ML as the specialization rather than the identity.
-- Six capability blocks: product and delivery, software, AI and ML, systems and infrastructure, hardware and interaction, research and communication. Each carries a Range, Depth or Specialization tag.
-- The oversized connector glyph was removed; the section is text and grid, not decoration.
-- About and meta copy use the same framing. Audit language is limited to the PDSS case study rather than used as the personal brand.
+- Hero: "Broad by default. Deep where it matters." Copy names management, finance, communication, art and design, and engineering; AI and ML are technical depth, not the identity.
+- Eight capability blocks: management and finance, leadership and communication, art and design, product and software, AI and ML, systems and infrastructure, hardware and interaction, research and writing.
+- AI and ML is tagged Specialization; systems is Depth; the rest are Range.
+- The current role says **integrating** an enterprise AI platform, not building one. "Enterprise platform integration" replaces "Enterprise AI integration" in the facts.
+- About, meta titles and descriptions use the same framing.
 
 ### S2.22 3D framing
 
@@ -257,7 +257,7 @@ Model and case thumbnails use a clean 210x140 frame:
 
 ### S2.27 T-shaped engineering framing
 
-Capabilities opens with a small T diagram: the bar is product, software, hardware and research; the stem is AI/ML and systems. Two short notes explain that the bar is range and the stem is depth, without using the AWS phrasing as a slogan.
+Capabilities opens with a small T diagram: the bar is management, finance, leadership, communication, art/design and technology; the stem is AI/ML and systems. Two short notes explain that the bar is range and the stem is technical depth, without using the AWS phrasing as a slogan.
 
 ### S2.28 Case accuracy
 
@@ -294,6 +294,7 @@ CMS, blog, authentication, newsletter, multilingual UI, redesign of demo interna
 - [x] T46: Case accuracy — acceptance: event roles and PDSS model IDs match the recorded sources. (covers: S2.28)
 - [x] T45: Craft framing — acceptance: Craft leads with fun and usefulness. (covers: S2.29)
 - [x] T44: T-shaped framing — acceptance: Engineering uses the T concretely for range and depth. (covers: S2.27)
+- [x] T53: Multifaceted branding — acceptance: management, finance, leadership, communication, art/design and technology are all present; AI/ML remains a technical specialization. (covers: S2.21)
 - [x] T52: Working notes, not process — acceptance: the section reads as a sketch, not a rigid sequence. (covers: S2.19)
 - [x] T51: Actual workflow framing — acceptance: the five stages reflect listening, imagination/estimation, technical structure, building and handover. (covers: S2.19)
 - [x] T50: UML architecture click — acceptance: architecture is collapsed behind a click and the live demo follows. (covers: S2.31)

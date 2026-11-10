@@ -4,7 +4,7 @@ export const SITE_URL = "https://www.lefinnokwok.com";
 export const SITE_NAME = "Lefinno Kwok";
 export const OG_IMAGE = `${SITE_URL}/og-image.png`;
 export const DEFAULT_DESCRIPTION =
-  "Portfolio of Lefinno Kwok: a generalist with a specialization in AI and ML, moving between software, systems, hardware and craft.";
+  "Portfolio of Lefinno Kwok: a generalist with a technology specialization, moving between management, finance, communication, art and design, and engineering.";
 
 export function pageMeta({
   title,

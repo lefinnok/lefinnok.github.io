@@ -21,7 +21,7 @@ import { usePageBackground } from "~/hooks/usePageBackground";
 
 export const meta: Route.MetaFunction = () =>
   pageMeta({
-    title: "Lefinno Kwok | Generalist with a specialization",
+    title: "Lefinno Kwok | Generalist with a technology specialization",
     path: "/",
   });
 
@@ -58,10 +58,11 @@ export default function Home() {
           <span className="eyebrow">Engineering / 01</span>
           <h2 className="section-hero__title">Broad by default. Deep where it matters.</h2>
           <p className="lede">
-            I am a generalist with a specialization in AI and ML. I move
-            between product, software, hardware and research, and go deep where
-            the risk is. Most of what I do is make an idea real, then explain it
-            clearly enough that someone else can run it.
+            I am a generalist with a technology specialization. I move between
+            management, finance, communication, art and design, and
+            engineering. AI and ML are where I go deepest technically, not the
+            whole story. Most of what I do is take an idea from conversation to
+            something real.
           </p>
           <div className="hero-actions">
             <a className="btn btn--solid" href="#case-pdss">
@@ -99,11 +100,11 @@ export default function Home() {
                 <span className="skill-block__num">01</span>
                 <span className="skill-block__tag">Range</span>
               </div>
-              <h3>Product and delivery</h3>
+              <h3>Management and finance</h3>
               <p>
-                Scoping ambiguous briefs, writing proposals, coordinating across
-                teams, and carrying an idea from demo to something someone else
-                can run.
+                Scoping, proposals, budgets, effort estimation and vendor
+                coordination. Comfortable with the commercial side, not just
+                the build.
               </p>
             </div>
             <div className="skill-block">
@@ -111,7 +112,31 @@ export default function Home() {
                 <span className="skill-block__num">02</span>
                 <span className="skill-block__tag">Range</span>
               </div>
-              <h3>Software</h3>
+              <h3>Leadership and communication</h3>
+              <p>
+                Coordinating small teams and cross-organisation stakeholders,
+                writing documentation and translating between technical and
+                non-technical people.
+              </p>
+            </div>
+            <div className="skill-block">
+              <div className="skill-block__top">
+                <span className="skill-block__num">03</span>
+                <span className="skill-block__tag">Range</span>
+              </div>
+              <h3>Art and design</h3>
+              <p>
+                Visual identity, interaction, 3D and game art. Blender,
+                Inkscape, FreeCAD and front-end craft; I care how the thing
+                feels.
+              </p>
+            </div>
+            <div className="skill-block">
+              <div className="skill-block__top">
+                <span className="skill-block__num">04</span>
+                <span className="skill-block__tag">Range</span>
+              </div>
+              <h3>Product and software</h3>
               <p>
                 TypeScript and React, Go, Rust, Java and Python. Frontends,
                 APIs, data access and integration; typed boundaries over glue.
@@ -119,19 +144,19 @@ export default function Home() {
             </div>
             <div className="skill-block">
               <div className="skill-block__top">
-                <span className="skill-block__num">03</span>
+                <span className="skill-block__num">05</span>
                 <span className="skill-block__tag">Specialization</span>
               </div>
               <h3>AI and ML</h3>
               <p>
                 LLM orchestration, evaluation design, Bayesian decision models,
-                computer vision, uncertainty and provenance. The area where I go
-                deepest.
+                computer vision, uncertainty and provenance. A key part of the
+                technology specialization.
               </p>
             </div>
             <div className="skill-block">
               <div className="skill-block__top">
-                <span className="skill-block__num">04</span>
+                <span className="skill-block__num">06</span>
                 <span className="skill-block__tag">Depth</span>
               </div>
               <h3>Systems and infrastructure</h3>
@@ -142,7 +167,7 @@ export default function Home() {
             </div>
             <div className="skill-block">
               <div className="skill-block__top">
-                <span className="skill-block__num">05</span>
+                <span className="skill-block__num">07</span>
                 <span className="skill-block__tag">Range</span>
               </div>
               <h3>Hardware and interaction</h3>
@@ -153,14 +178,14 @@ export default function Home() {
             </div>
             <div className="skill-block">
               <div className="skill-block__top">
-                <span className="skill-block__num">06</span>
+                <span className="skill-block__num">08</span>
                 <span className="skill-block__tag">Range</span>
               </div>
-              <h3>Research and communication</h3>
+              <h3>Research and writing</h3>
               <p>
                 Literature-grounded design, baseline evaluation, failure
-                analysis and technical writing. Explaining tradeoffs to
-                technical and non-technical teams.
+                analysis and technical writing. Publishing limitations, not
+                just results.
               </p>
             </div>
           </div>
@@ -172,7 +197,7 @@ export default function Home() {
             <div>
               <h3>Analyst, Deloitte</h3>
               <p>
-                Deploying an enterprise AI agent platform for a large client:
+                Integrating an enterprise AI agent platform for a large client:
                 identity, data access, alerting and offline porting. The
                 client, the vendor and the systems stay out of this site by
                 design; the CV carries the detail.
@@ -185,7 +210,7 @@ export default function Home() {
               </div>
               <div>
                 Focus
-                <strong>Enterprise AI integration</strong>
+                <strong>Enterprise platform integration</strong>
               </div>
               <div>
                 Stack
@@ -384,16 +409,16 @@ export default function Home() {
           <GhostWord word="ABOUT" />
           <div>
             <span className="eyebrow">About / 04</span>
-            <h2 className="section-hero__title">A generalist with a specialization.</h2>
+            <h2 className="section-hero__title">A generalist with a technology specialization.</h2>
             <p>
-              I am a builder in Hong Kong. Generalist by default, with a
-              specialization in AI and ML. I move between product, software,
-              hardware and research; the common thread is making an idea real
-              and explaining it clearly enough that someone else can run it.
+              I am a builder in Hong Kong. My range runs from management and
+              finance to communication, art and design, with technology as the
+              specialization I use to bring projects to life. AI and ML are
+              where that specialization goes deepest, not the whole identity.
             </p>
             <p>
               I studied computer science at HKU, worked across an embedded
-              startup, a science park and a consultancy, and now build an
+              startup, a science park and a consultancy, and now integrate an
               enterprise AI platform. I care about the unglamorous middle:
               integration, tests, release processes, and the parts that decide
               whether a system survives contact with reality.

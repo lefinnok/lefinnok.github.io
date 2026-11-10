@@ -31,7 +31,7 @@ export const links: Route.LinksFunction = () => [
 
 export const meta: Route.MetaFunction = () =>
   pageMeta({
-    title: "Lefinno Kwok | Generalist with a specialization",
+    title: "Lefinno Kwok | Generalist with a technology specialization",
     path: "/",
   });
 
