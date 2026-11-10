@@ -31,7 +31,7 @@ source: feat/portfolio-v2
 
 **Architecture pass** — UML now explains the pipeline before the live demo and requires a user-supplied key; Systems leads with a general workflow and presents the diagrams as two artifacts.
 
-**Anchor pass** — Section jumps now target the section titles with a direct pixel destination, so Engineering and Craft land at the heading instead of the boundary. **Brand pass** — The identity widened from AI-focused to management, finance, leadership, communication, art and design plus technology; the enterprise platform role now says integrate, not build. **Working-notes pass** — Numbers and ordered-list semantics were removed; the section now describes how the work tends to go, not a sequence to follow. **Workflow pass** — The generic Frame/Model/Verify sequence was replaced with the real listen, imagine, estimate, structure, build, hand-over process. **Revert pass** — All demos moved back to Craft, Engineering ends at Current, and the UML architecture is a collapsed details panel. **Frame refinement** — Thumbnail frames are clean paper/dark outlines only; the external geometry was removed. **Content pass** — Thumbnail mounts were lightened, event roles and PDSS model IDs were corrected, Craft was reframed around fun and usefulness, and the T-shaped model was added to Capabilities. **Ornament pass** — Thumbnail mounts gained thin geometric decoration; project actions and demo distribution were committed in the preceding pass. **Structure pass** — Demos were distributed into Engineering, Craft and Systems, the standalone Demos chapter was removed, and project actions are visible on collapsed rows. **Positioning pass** — The portfolio now leads with generalist breadth and specialist depth, with a six-part capability map and no oversized glyph. All 3D models are bounding-box centred and pulled back, with regenerated thumbnails. Case study rows also received framed, purpose-drawn diagrams.
+**Detail pass** — Workflow dots, ghost-word clipping and chapter-rail clearance were corrected. **Anchor pass** — Section jumps now target the section titles with a direct pixel destination, so Engineering and Craft land at the heading instead of the boundary. **Brand pass** — The identity widened from AI-focused to management, finance, leadership, communication, art and design plus technology; the enterprise platform role now says integrate, not build. **Working-notes pass** — Numbers and ordered-list semantics were removed; the section now describes how the work tends to go, not a sequence to follow. **Workflow pass** — The generic Frame/Model/Verify sequence was replaced with the real listen, imagine, estimate, structure, build, hand-over process. **Revert pass** — All demos moved back to Craft, Engineering ends at Current, and the UML architecture is a collapsed details panel. **Frame refinement** — Thumbnail frames are clean paper/dark outlines only; the external geometry was removed. **Content pass** — Thumbnail mounts were lightened, event roles and PDSS model IDs were corrected, Craft was reframed around fun and usefulness, and the T-shaped model was added to Capabilities. **Ornament pass** — Thumbnail mounts gained thin geometric decoration; project actions and demo distribution were committed in the preceding pass. **Structure pass** — Demos were distributed into Engineering, Craft and Systems, the standalone Demos chapter was removed, and project actions are visible on collapsed rows. **Positioning pass** — The portfolio now leads with generalist breadth and specialist depth, with a six-part capability map and no oversized glyph. All 3D models are bounding-box centred and pulled back, with regenerated thumbnails. Case study rows also received framed, purpose-drawn diagrams.
 
 **Verification** — `npm run typecheck` PASS. `npm run build` PASS, prerendering `/`, `/engineering`, `/craft`, `/about`, `/contact`, `/projects`, the three case pages and five craft pages, then writing the SPA fallback and `404.html`. Manual visual checks at 1440px and 390px. Independent review returned no remaining critical or major issues after fixes for the duplicate H1, link names, duplicate Eccentricity page, redirect metadata and data-derived prerender slugs.
 
@@ -131,7 +131,7 @@ Every demo and project carries a year and a context line, rendered in the frame 
 
 ### S2.12 Scroll-driven decoration
 
-- Section rail is a numbered chapter index on a continuous progress spine, with labels always visible and the active row marked in ember. It is driven by IntersectionObserver, reserves a 246px right margin and only appears at 1320px and above.
+- Section rail is a numbered chapter index on a continuous progress spine, with labels always visible and the active row marked in ember. It is driven by IntersectionObserver, reserves a 260px right margin, sits 32px from the edge and only appears at 1320px and above.
 - Header switches to dark styling over ink sections, and the progress line tracks the whole page.
 - Section heads stick flush under the 64px header while their section scrolls, with the same background colour so there is no visible seam.
 - Line art draws on entry via `stroke-dashoffset` when it enters view.
@@ -276,6 +276,12 @@ All five demos returned to Craft. The Engineering chapter stays paper and ends a
 
 The UML generator's architecture is now a native `<details>` panel, closed by default. Opening it reveals the pipeline, trust boundary and output contract; the live UML demo follows immediately after. The panel header shows Open/Close state and uses the page accent.
 
+### S2.32 Detail alignment
+
+- Workflow dots are centred on their column rules with a half-dot offset.
+- Ghost section words start 20px into the hero rather than above it, so they are not clipped at the top.
+- The chapter rail has more clearance from copy: 260px content margin, 32px edge offset and a 164px rail width.
+
 ### S2.7 Performance and accessibility
 
 Demos stay lazy-loaded and mount only when visible. Fonts are self-hosted and subset. Targets: Lighthouse performance 90+ on both landings, no layout shift from fonts, 4.5:1 body contrast, visible focus rings, skip link, semantic heading order, keyboard-operable chooser.
@@ -294,6 +300,7 @@ CMS, blog, authentication, newsletter, multilingual UI, redesign of demo interna
 - [x] T46: Case accuracy — acceptance: event roles and PDSS model IDs match the recorded sources. (covers: S2.28)
 - [x] T45: Craft framing — acceptance: Craft leads with fun and usefulness. (covers: S2.29)
 - [x] T44: T-shaped framing — acceptance: Engineering uses the T concretely for range and depth. (covers: S2.27)
+- [x] T55: Detail alignment — acceptance: dots sit on rules, ghost words are not clipped, and the rail clears copy. (covers: S2.32)
 - [x] T54: Title-anchored section jumps — acceptance: chooser, nav and rail land with the section title at 88px. (covers: S2.1)
 - [x] T53: Multifaceted branding — acceptance: management, finance, leadership, communication, art/design and technology are all present; AI/ML remains a technical specialization. (covers: S2.21)
 - [x] T52: Working notes, not process — acceptance: the section reads as a sketch, not a rigid sequence. (covers: S2.19)

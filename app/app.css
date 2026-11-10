@@ -4269,3 +4269,24 @@ html.lenis body {
 .section-hero__title {
   scroll-margin-top: 88px;
 }
+
+/* detail fixes: dot alignment, ghost clipping, rail clearance */
+.workflow__step::before {
+  left: -3.5px;
+}
+
+.ghost-word {
+  top: 20px;
+  line-height: 0.86;
+}
+
+.section-rail {
+  right: 32px;
+  width: 164px;
+}
+
+@media (min-width: 1320px) {
+  .page-section > .container {
+    padding-right: 260px;
+  }
+}
