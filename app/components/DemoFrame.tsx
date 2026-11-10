@@ -9,6 +9,7 @@ interface DemoFrameProps {
   context?: string;
   tone?: "ink" | "paper";
   related?: { label: string; url: string };
+  index?: string;
   showHeader?: boolean;
   children: React.ReactNode;
 }
@@ -21,6 +22,7 @@ export function DemoFrame({
   context,
   tone = "ink",
   related,
+  index = "DEMO",
   showHeader = true,
   children,
 }: DemoFrameProps) {
@@ -42,14 +44,34 @@ export function DemoFrame({
   return (
     <article className={`demo-frame ${expanded ? "is-expanded" : ""}`}>
       {showHeader ? (
-      <header className="demo-frame__head">
-        <div>
-          <span className="eyebrow">{kicker}</span>
-          <h3>{title}</h3>
-          {year ? <span className="demo-year">{year}</span> : null}
-          {description ? <p>{description}</p> : null}
-          {context ? <p className="demo-context">{context}</p> : null}
+        <header className="demo-frame__head">
+          <span className="demo-frame__index" aria-hidden="true">
+            {index}
+          </span>
+          <div className="demo-frame__intro">
+            <span className="eyebrow">{kicker}</span>
+            <h3>{title}</h3>
+            <div className="demo-frame__meta">
+              {year ? <span className="demo-year">{year}</span> : null}
+              <span className="demo-frame__live">
+                <i aria-hidden="true" />
+                Live
+              </span>
+            </div>
+            {description ? <p>{description}</p> : null}
+            {context ? <p className="demo-context">{context}</p> : null}
+          </div>
+        </header>
+      ) : null}
+
+      <div className="demo-frame__mat">
+        <div className={`demo-frame__stage demo-frame__stage--${tone}`}>
+          {children}
         </div>
+      </div>
+
+      <footer className="demo-frame__foot">
+        <span>Runs in the browser</span>
         <div className="demo-frame__actions">
           {related ? (
             <Link className="mono demo-related" to={related.url}>
@@ -65,16 +87,6 @@ export function DemoFrame({
             {expanded ? "Close" : "Expand"}
           </button>
         </div>
-      </header>
-      ) : null}
-
-      <div className={`demo-frame__stage demo-frame__stage--${tone}`}>
-        {children}
-      </div>
-
-      <footer className="demo-frame__foot">
-        <span className="mono">Interactive · runs in the browser</span>
-        <span className="mono">{tone === "ink" ? "Ink stage" : "Paper stage"}</span>
       </footer>
     </article>
   );

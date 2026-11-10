@@ -234,6 +234,7 @@ export default function Home() {
                   context={demo.context}
                   kicker={demo.kicker}
                   related={demo.related}
+                  index={String(index + 1).padStart(2, "0")}
                 />
               </div>
             );
@@ -277,7 +278,7 @@ export default function Home() {
 
         <div className="container">
           <SectionHead num="01" title="Diagrams" range="Reference" />
-          {systemsDemos.map((demo) => (
+          {systemsDemos.map((demo, index) => (
             <div key={demo.slug} id={`demo-${demo.slug}`} className="demo-anchor">
               <DemoBlock
                 componentName={demo.component!}
@@ -287,6 +288,7 @@ export default function Home() {
                 context={demo.context}
                 kicker={demo.kicker}
                 related={demo.related}
+                index={String(index + 1).padStart(2, "0")}
               />
             </div>
           ))}
@@ -328,7 +330,7 @@ export default function Home() {
         <div className="container">
           {interactiveDemos
             .filter((demo) => demo.slug === "uml-generator")
-            .map((demo) => (
+            .map((demo, index) => (
               <div key={demo.slug} id={`demo-${demo.slug}`} className="demo-anchor">
                 <DemoBlock
                   componentName={demo.component!}
@@ -338,22 +340,17 @@ export default function Home() {
                   context={demo.context}
                   kicker={demo.kicker}
                   related={demo.related}
+                  index={String(index + 1).padStart(2, "0")}
                 />
               </div>
             ))}
 
           <div id="demo-3d-models" className="demo-anchor">
-            <div className="demo-frame">
-              <header className="demo-frame__head">
-                <div>
-                  <span className="eyebrow">3D · 2020 to 2026</span>
-                  <h3>3D model gallery</h3>
-                  <p>
-                    Wireframe models from six years of making, available on
-                    their project pages.
-                  </p>
-                </div>
-              </header>
+            <ModelFrame
+              label="3D model gallery"
+              meta="2020 to 2026"
+              dimensions="Six project models"
+            >
               <div className="model-links">
                 {craftProjects.filter((project) => project.model).map((project) => (
                   <a key={project.slug} href={`#project-${project.slug}`}>
@@ -363,7 +360,7 @@ export default function Home() {
                   </a>
                 ))}
               </div>
-            </div>
+            </ModelFrame>
           </div>
         </div>
       </section>

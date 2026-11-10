@@ -27,6 +27,8 @@ source: feat/portfolio-v2
 
 **Frame pass** — Interactive demos keep the paper frame; 3D work now sits in a technical model plinth with grid, corner marks, CAD label and dimensions.
 
+**Plate pass** — Demo frames became light catalogue plates with numbered tabs and paper mats, while 3D work kept the dark technical plinth. Hydration mismatches from hash-open and pre-hydration track attributes were removed.
+
 **Verification** — `npm run typecheck` PASS. `npm run build` PASS, prerendering `/`, `/engineering`, `/craft`, `/about`, `/contact`, `/projects`, the three case pages and five craft pages, then writing the SPA fallback and `404.html`. Manual visual checks at 1440px and 390px. Independent review returned no remaining critical or major issues after fixes for the duplicate H1, link names, duplicate Eccentricity page, redirect metadata and data-derived prerender slugs.
 
 ## [S1] Problem
@@ -166,6 +168,16 @@ The HKSTP intern gift is a Craft project entry:
 - 3D work sits in a distinct `ModelFrame`: model label and format in a top bar, a gridded stage with corner registration marks and a vertical CAD label, and a footer with dimensions and rotation state. It is deliberately not the paper DemoFrame used for interactive demos.
 - Collapsed row carries the one-line summary and tags; expanded body carries the technical detail and the rotating chassis.
 
+### S2.17 Demo plate
+
+The demo frame is now a light catalogue plate, deliberately unlike the dark model plinth:
+
+- Cream paper card, numbered index tab, title, year and a pulsing LIVE marker.
+- Description and dated context in the header, with a thin rule before the context.
+- The screen sits inside a paper mat with a dark viewport, so the instrument reads as a plate rather than a dark panel.
+- Footer carries the browser note on the left and the related link and Expand on the right.
+- Models keep the dark `ModelFrame` with grid, corner marks, CAD label and dimensions.
+
 ### S2.7 Performance and accessibility
 
 Demos stay lazy-loaded and mount only when visible. Fonts are self-hosted and subset. Targets: Lighthouse performance 90+ on both landings, no layout shift from fonts, 4.5:1 body contrast, visible focus rings, skip link, semantic heading order, keyboard-operable chooser.
@@ -181,6 +193,7 @@ CMS, blog, authentication, newsletter, multilingual UI, redesign of demo interna
 - [x] T13: Demos restored — acceptance: CPU, gesture, ML, UML, diagrams and 3D models render on the site. (covers: S2.8)
 - [x] T15: Demo frame and brand tokens — acceptance: demos render inside a paper frame with an ink stage and ember accents; expand works. (covers: S2.9)
 - [x] T16: Demo index and detail pages — acceptance: `/demos` lists eight entries and each detail page mounts its demo. (covers: S2.9)
+- [x] T31: Demo plate — acceptance: demos use a light catalogue plate distinct from the model frame. (covers: S2.17)
 - [x] T30: Model frame — acceptance: 3D work has a technical plinth frame distinct from demo frames. (covers: S2.16)
 - [x] T29: Electronics entry — acceptance: the HKSTP medallion is a Craft project with CAD visual and manufacturing detail. (covers: S2.16)
 - [x] T28: Chapter rail — acceptance: labels and numbers are always visible on a progress spine, with no dot constellation and no content overlap. (covers: S2.12)

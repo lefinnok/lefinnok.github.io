@@ -4,19 +4,22 @@ import { CaseFigure } from "./CaseFigure";
 
 export function CaseStudyBlock({ study }: { study: CaseStudy }) {
   const anchor = `case-${study.slug}`;
-  const [open, setOpen] = useState(() =>
-    typeof window !== "undefined" && window.location.hash === `#${anchor}`
-  );
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const sync = () => {
-      if (window.location.hash === `#${anchor}`) setOpen(true);
+      if (window.location.hash !== `#${anchor}`) return;
+      setOpen(true);
+      requestAnimationFrame(() => {
+        document.getElementById(anchor)?.scrollIntoView({ block: "start" });
+      });
     };
     const onOpen = (event: Event) => {
       if ((event as CustomEvent<string>).detail === anchor) setOpen(true);
     };
     window.addEventListener("hashchange", sync);
     window.addEventListener("anchor:open", onOpen);
+    sync();
     return () => {
       window.removeEventListener("hashchange", sync);
       window.removeEventListener("anchor:open", onOpen);

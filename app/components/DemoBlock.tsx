@@ -13,6 +13,7 @@ export function DemoBlock({
   kicker = "Interactive demo",
   tone = "ink",
   related,
+  index,
   showHeader = true,
 }: {
   componentName: string;
@@ -23,6 +24,7 @@ export function DemoBlock({
   kicker?: string;
   tone?: "ink" | "paper";
   related?: { label: string; url: string };
+  index?: string;
   showHeader?: boolean;
 }) {
   return (
@@ -34,6 +36,7 @@ export function DemoBlock({
       context={context}
       tone={tone}
       related={related}
+      index={index}
       showHeader={showHeader}
     >
       <LazyMount>
