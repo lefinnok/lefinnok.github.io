@@ -4290,3 +4290,8 @@ html.lenis body {
     padding-right: 260px;
   }
 }
+
+/* the page background is a scroll-driven variable; MUI's baseline body colour must not win */
+body {
+  background: var(--page-bg, #f2efe9) !important;
+}
