@@ -162,7 +162,7 @@ There is no standalone Demos chapter. Demos live with the discipline they belong
 
 ### S2.25 Project actions
 
-Project rows expose their actions while collapsed: demo, play, report and model. The expand control is a separate button, so links are not nested inside the row toggle. Demo anchors point at the relocated instruments.
+Project rows expose their actions while collapsed as bordered buttons: demo, play, report and model. Each is at least 36px high and 112px wide, with no underline. The expand control is a separate button, so links are not nested inside the row toggle.
 
 ### S2.13 Collapsible long-form items
 
