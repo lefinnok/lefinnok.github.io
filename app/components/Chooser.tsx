@@ -41,8 +41,8 @@ export function Chooser() {
         <div className="half__mid">
           <h2 id="chooser-craft">Craft</h2>
           <p>
-            Games, hardware and interactive work. Judged on experience,
-            interaction and finish.
+            Games, tools and objects that are fun to use, and useful when
+            it counts.
           </p>
         </div>
         <div className="half__bottom">

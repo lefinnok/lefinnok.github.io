@@ -3814,3 +3814,109 @@ html.lenis body {
 .thumb-marks__shapes {
   overflow: hidden;
 }
+
+/* lighter mounts: paper case frame, thinner dark project frame */
+.case-block__thumb,
+.project-block__thumb {
+  height: 140px;
+  padding: 8px;
+}
+
+.case-block__thumb {
+  --thumb-accent: #b04724;
+  --thumb-line: rgba(21, 20, 18, 0.42);
+  background:
+    radial-gradient(110% 100% at 50% 0%, rgba(176, 71, 36, 0.07) 0%, transparent 58%),
+    linear-gradient(180deg, #f4f0e8 0%, #ece7dc 100%);
+  border-color: rgba(21, 20, 18, 0.2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.case-block__thumb::before {
+  background-image:
+    linear-gradient(rgba(21, 20, 18, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(21, 20, 18, 0.055) 1px, transparent 1px);
+}
+
+.case-block__thumb-canvas {
+  padding: 5px;
+  border-color: rgba(21, 20, 18, 0.18);
+  background: #fbf9f4;
+}
+
+.project-block__thumb {
+  --thumb-accent: #d97757;
+  --thumb-line: rgba(242, 239, 233, 0.4);
+  padding: 8px;
+}
+
+.thumb-marks {
+  inset: 3px;
+}
+
+.thumb-marks__corner {
+  border-color: var(--thumb-accent);
+}
+
+.thumb-marks__rule {
+  background: repeating-linear-gradient(
+    90deg,
+    var(--thumb-line) 0 3px,
+    transparent 3px 8px
+  );
+}
+
+.thumb-marks__ring {
+  border-color: var(--thumb-line);
+}
+
+.thumb-marks__diagonal {
+  background: var(--thumb-accent);
+}
+
+/* T-shaped capability framing */
+.t-frame {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.9fr);
+  gap: 34px;
+  align-items: center;
+  margin: 0 0 30px;
+  padding: 20px 0 26px;
+  border-top: 1px solid var(--line);
+}
+
+.t-frame__diagram {
+  width: 100%;
+  height: auto;
+  color: var(--ink);
+  overflow: visible;
+}
+
+.t-frame__copy p {
+  margin: 0 0 14px;
+  max-width: 46ch;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--body-muted);
+}
+
+.t-frame__copy p:last-child {
+  margin-bottom: 0;
+}
+
+.t-frame__copy span {
+  display: block;
+  margin-bottom: 5px;
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+@media (max-width: 900px) {
+  .t-frame {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+}

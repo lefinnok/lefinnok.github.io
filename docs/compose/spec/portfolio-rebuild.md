@@ -31,7 +31,7 @@ source: feat/portfolio-v2
 
 **Architecture pass** — UML now explains the pipeline before the live demo and requires a user-supplied key; Systems leads with a general workflow and presents the diagrams as two artifacts.
 
-**Ornament pass** — Thumbnail mounts gained thin geometric decoration; project actions and demo distribution were committed in the preceding pass. **Structure pass** — Demos were distributed into Engineering, Craft and Systems, the standalone Demos chapter was removed, and project actions are visible on collapsed rows. **Positioning pass** — The portfolio now leads with generalist breadth and specialist depth, with a six-part capability map and no oversized glyph. All 3D models are bounding-box centred and pulled back, with regenerated thumbnails. Case study rows also received framed, purpose-drawn diagrams.
+**Content pass** — Thumbnail mounts were lightened, event roles and PDSS model IDs were corrected, Craft was reframed around fun and usefulness, and the T-shaped model was added to Capabilities. **Ornament pass** — Thumbnail mounts gained thin geometric decoration; project actions and demo distribution were committed in the preceding pass. **Structure pass** — Demos were distributed into Engineering, Craft and Systems, the standalone Demos chapter was removed, and project actions are visible on collapsed rows. **Positioning pass** — The portfolio now leads with generalist breadth and specialist depth, with a six-part capability map and no oversized glyph. All 3D models are bounding-box centred and pulled back, with regenerated thumbnails. Case study rows also received framed, purpose-drawn diagrams.
 
 **Verification** — `npm run typecheck` PASS. `npm run build` PASS, prerendering `/`, `/engineering`, `/craft`, `/about`, `/contact`, `/projects`, the three case pages and five craft pages, then writing the SPA fallback and `404.html`. Manual visual checks at 1440px and 390px. Independent review returned no remaining critical or major issues after fixes for the duplicate H1, link names, duplicate Eccentricity page, redirect metadata and data-derived prerender slugs.
 
@@ -241,12 +241,24 @@ Case study rows use a dedicated small diagram rather than scaling the full 800px
 
 ### S2.26 Thumbnail ornament
 
-Model and case thumbnails share a 210x150 mounted plate. The mount now carries a thin technical ornament:
+Model and case thumbnails share a 210x140 mounted plate with a thin technical ornament:
 
-- dashed inner rectangle, corner cuts and corner brackets
-- a larger ember arc at the top-right, a small diamond at the top edge and a circle on the right edge
-- edge ticks and short rules in a quieter grey
-- mounting padding increased to 12px so the ornament lives in the dark mount, not over the diagram
+- Case thumbnails use a paper mount with dark/ember hairlines; project thumbnails keep a dark mount with light hairlines. The old 12px black case frame was removed.
+- The ornament is a dashed inner rectangle, corner cuts, corner brackets, edge ticks, a small diamond and a circle.
+- Mount padding is 8px, so the ornament stays in the frame rather than over the diagram.
+
+### S2.27 T-shaped engineering framing
+
+Capabilities opens with a small T diagram: the bar is product, software, hardware and research; the stem is AI/ML and systems. Two short notes explain that the bar is range and the stem is depth, without using the AWS phrasing as a slogan.
+
+### S2.28 Case accuracy
+
+- GGJHK now matches the current spec: eight roles, nine workspaces (admin, scan, desk, queue, stage, mc, me, judge, visitor). The role map is a two-column workspace bus rather than a radial chart.
+- PDSS evaluation labels name the recorded backends: google/gemini-2.0-flash-001, openai/gpt-4o-mini-2024-07-18, deepseek/deepseek-chat (V3), anthropic/claude-3.5-haiku, moonshotai/kimi-k2.5.
+
+### S2.29 Craft framing
+
+Craft leads with "Fun to use. Useful when it counts." and frames the work as games, tools and physical objects judged on enjoyment and usefulness.
 
 ### S2.7 Performance and accessibility
 
@@ -263,6 +275,9 @@ CMS, blog, authentication, newsletter, multilingual UI, redesign of demo interna
 - [x] T13: Demos restored — acceptance: CPU, gesture, ML, UML, diagrams and 3D models render on the site. (covers: S2.8)
 - [x] T15: Demo frame and brand tokens — acceptance: demos render inside a paper frame with an ink stage and ember accents; expand works. (covers: S2.9)
 - [x] T16: Demo index and detail pages — acceptance: `/demos` lists eight entries and each detail page mounts its demo. (covers: S2.9)
+- [x] T46: Case accuracy — acceptance: event roles and PDSS model IDs match the recorded sources. (covers: S2.28)
+- [x] T45: Craft framing — acceptance: Craft leads with fun and usefulness. (covers: S2.29)
+- [x] T44: T-shaped framing — acceptance: Engineering uses the T concretely for range and depth. (covers: S2.27)
 - [x] T43: Thumbnail ornament — acceptance: thumbnail frames carry visible thin geometric decoration without covering the content. (covers: S2.26)
 - [x] T42: Demo distribution — acceptance: no standalone Demos section; instruments sit in Engineering, gesture in Craft, diagrams in Systems. (covers: S2.24)
 - [x] T41: Visible project actions — acceptance: project links are available without expanding. (covers: S2.25)

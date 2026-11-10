@@ -85,17 +85,17 @@ export function CaseThumb({ kind }: { kind: FigureKind }) {
       <svg viewBox="0 0 320 210" fill="none" aria-hidden="true">
         <Box x={110} y={82} w={100} h={46} label="EVENT" sub="one binary" accent />
 
-        <Box x={12} y={26} w={78} h={34} label="JAMMER" />
-        <Box x={230} y={26} w={78} h={34} label="DESK" />
-        <Box x={12} y={150} w={78} h={34} label="JUDGE" />
-        <Box x={230} y={150} w={78} h={34} label="STAGE" />
+        <Box x={8} y={26} w={86} h={34} label="JAMMER" />
+        <Box x={226} y={26} w={86} h={34} label="ADMIN" />
+        <Box x={8} y={150} w={86} h={34} label="JUDGE" />
+        <Box x={226} y={150} w={86} h={34} label="VOLUNTEER" />
 
         <path d="M90 43 H110 M210 43 H230" stroke="currentColor" strokeOpacity=".4" />
         <path d="M90 167 H110 M210 167 H230" stroke="currentColor" strokeOpacity=".4" />
         <path d="M160 82 V60 M160 128 V150" stroke="currentColor" strokeOpacity=".4" />
 
         <text x="12" y="202" style={{ ...mono, fontSize: 9, opacity: 0.55 }}>
-          8 workspaces · one role guard per route
+          8 roles · 9 workspaces · one guard each
         </text>
       </svg>
     );

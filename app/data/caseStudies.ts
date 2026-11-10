@@ -46,7 +46,7 @@ export const caseStudies: CaseStudy[] = [
           "The evaluation compared the pipeline against raw chat baselines across five language models and four decision scenarios, scoring factual accuracy, source attribution, model rigour, uncertainty, consistency and traceability.",
           "Halfway through, I found that the multi-turn baselines were not actually multi-turn: the script ended the conversation when a model answered without a question mark. Every multi-turn score was contaminated. I stripped all sixty runs, fixed the protocol, re-ran them, and wrote the correction into the report. The pipeline lifted composite quality by 8 to 89 percent, with the largest gains in attribution and traceability, and the weakest stage was still the modelling boundary where structured output failed.",
         ],
-        figure: { kind: "evaluation", caption: "Composite quality by model, with and without the pipeline" },
+        figure: { kind: "evaluation", caption: "Composite quality by model. Backends: google/gemini-2.0-flash-001, openai/gpt-4o-mini-2024-07-18, deepseek/deepseek-chat (V3), anthropic/claude-3.5-haiku, moonshotai/kimi-k2.5." },
       },
       {
         id: "limits",
@@ -85,12 +85,12 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         id: "workspaces",
-        heading: "Eight roles, eight workspaces",
+        heading: "Eight roles, nine workspaces",
         paragraphs: [
-          "Volunteers, judges, the MC, the stage team and jammers all need different screens and different permissions. Rather than one dense admin panel, the platform gives each role its own workspace with its own navigation, guarded on the server. A person can hold several roles and switch between them.",
+          "Admins, volunteers, submission helpers, presentation helpers, the MC, jammers, judges and visitors all need different screens and permissions. Volunteers get two workspaces, scan and desk. Rather than one dense admin panel, each workspace has its own navigation and server route guard; a person can hold several roles and switch between them.",
           "The check-in flow is the one that matters on the day: a QR scan, a two-step confirmation, a manual fallback at the desk, and a printed roster if the scanner fails.",
         ],
-        figure: { kind: "workspaces", caption: "Role map: one route guard per workspace" },
+        figure: { kind: "workspaces", caption: "Role map: eight roles, nine workspaces, one route guard each" },
       },
       {
         id: "review",
@@ -109,7 +109,7 @@ export const caseStudies: CaseStudy[] = [
       },
     ],
     outcome: [
-      "Eight role workspaces, 168 tests and seven acceptance suites at handover.",
+      "Nine workspaces, 168 tests and seven acceptance suites at handover.",
       "About 871 interface strings in English and Traditional Chinese.",
       "A deployment that fits on one VPS with Caddy, systemd and nightly backups.",
     ],

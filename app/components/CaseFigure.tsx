@@ -46,7 +46,13 @@ export function CaseFigure({ kind }: { kind: FigureKind }) {
   }
 
   if (kind === "evaluation") {
-    const models = ["gemini", "gpt-4o", "deepseek", "haiku", "kimi"];
+    const models = [
+      { name: "gemini", version: "2.0-flash-001" },
+      { name: "gpt-4o-mini", version: "2024-07-18" },
+      { name: "deepseek-chat", version: "V3" },
+      { name: "claude-3.5", version: "haiku" },
+      { name: "kimi", version: "K2.5" },
+    ];
     const baseline = [38, 32, 33, 32, 43];
     const pipeline = [56, 61, 64, 58, 72];
     return (
@@ -58,10 +64,11 @@ export function CaseFigure({ kind }: { kind: FigureKind }) {
           const b = (baseline[i] / 100) * 190;
           const p = (pipeline[i] / 100) * 190;
           return (
-            <g key={model}>
+            <g key={model.name}>
               <rect x={x} y={250 - b} width={34} height={b} fill="currentColor" opacity=".25" />
               <rect x={x + 40} y={250 - p} width={34} height={p} fill="var(--accent)" />
-              <text x={x + 8} y={272} style={{ ...label, fontSize: 8 }}>{model}</text>
+              <text x={x + 2} y={268} style={{ ...label, fontSize: 8 }}>{model.name}</text>
+              <text x={x + 2} y={280} style={{ ...label, fontSize: 7, opacity: 0.55 }}>{model.version}</text>
             </g>
           );
         })}
@@ -74,24 +81,50 @@ export function CaseFigure({ kind }: { kind: FigureKind }) {
   }
 
   if (kind === "workspaces") {
-    const roles = ["ADMIN", "VOLUNTEER", "DESK", "QUEUE", "STAGE", "MC", "JUDGE", "JAMMER"];
+    const left = [
+      { role: "ADMIN", route: "/admin" },
+      { role: "VOLUNTEER", route: "/scan + /desk" },
+      { role: "JUDGE", route: "/judge" },
+      { role: "JAMMER", route: "/me" },
+    ];
+    const right = [
+      { role: "SUBMISSION", route: "/queue" },
+      { role: "PRESENTATION", route: "/stage" },
+      { role: "MC", route: "/mc" },
+      { role: "VISITOR", route: "/v" },
+    ];
+    const centres = [53, 121, 189, 257];
+
     return (
       <svg viewBox="0 0 800 300" fill="none" aria-hidden="true">
-        <rect x={330} y={120} width={140} height={60} stroke="currentColor" strokeWidth="1" />
-        <text x={352} y={146} style={label}>EVENT</text>
-        <text x={352} y={162} style={{ ...label, fontSize: 8, opacity: 0.7 }}>one binary</text>
-        {roles.map((role, i) => {
-          const angle = (i / roles.length) * Math.PI * 2 - Math.PI / 2;
-          const cx = 400 + Math.cos(angle) * 250;
-          const cy = 150 + Math.sin(angle) * 105;
-          return (
-            <g key={role}>
-              <path d={`M400 150 L${cx} ${cy}`} stroke="currentColor" strokeOpacity=".3" />
-              <rect x={cx - 46} y={cy - 14} width={92} height={28} stroke="currentColor" strokeWidth="1" fill="var(--paper-2)" />
-              <text x={cx - 38} y={cy + 4} style={{ ...label, fontSize: 8 }}>{role}</text>
-            </g>
-          );
-        })}
+        <rect x={330} y={115} width={140} height={60} stroke="currentColor" strokeWidth="1" />
+        <text x={352} y={141} style={label}>EVENT</text>
+        <text x={352} y={157} style={{ ...label, fontSize: 8, opacity: 0.7 }}>one binary</text>
+
+        <path d="M330 145H245M245 53V257" stroke="currentColor" strokeOpacity=".25" />
+        <path d="M470 145H555M555 53V257" stroke="currentColor" strokeOpacity=".25" />
+        {centres.map((y) => (
+          <path key={`l${y}`} d={`M245 ${y}H160`} stroke="currentColor" strokeOpacity=".25" />
+        ))}
+        {centres.map((y) => (
+          <path key={`r${y}`} d={`M555 ${y}H640`} stroke="currentColor" strokeOpacity=".25" />
+        ))}
+
+        {left.map((entry, i) => (
+          <g key={entry.role}>
+            <rect x={60} y={centres[i] - 18} width={100} height={36} stroke="currentColor" strokeWidth="1" fill="var(--paper-2)" />
+            <text x={68} y={centres[i] - 2} style={{ ...label, fontSize: 9 }}>{entry.role}</text>
+            <text x={68} y={centres[i] + 11} style={{ ...label, fontSize: 7, opacity: 0.55 }}>{entry.route}</text>
+          </g>
+        ))}
+
+        {right.map((entry, i) => (
+          <g key={entry.role}>
+            <rect x={640} y={centres[i] - 18} width={100} height={36} stroke="currentColor" strokeWidth="1" fill="var(--paper-2)" />
+            <text x={648} y={centres[i] - 2} style={{ ...label, fontSize: 9 }}>{entry.role}</text>
+            <text x={648} y={centres[i] + 11} style={{ ...label, fontSize: 7, opacity: 0.55 }}>{entry.route}</text>
+          </g>
+        ))}
       </svg>
     );
   }

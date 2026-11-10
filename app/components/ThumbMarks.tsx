@@ -13,7 +13,7 @@ export function ThumbMarks() {
         preserveAspectRatio="none"
         fill="none"
       >
-        <g stroke="#D97757" strokeOpacity="0.55" strokeWidth="0.8">
+        <g stroke="var(--thumb-accent)" strokeOpacity="0.6" strokeWidth="0.8">
           <rect
             x="5.5"
             y="5.5"
@@ -34,7 +34,7 @@ export function ThumbMarks() {
           <path d="M182 0a28 28 0 0 1 28 28" />
           <path d="M0 112l12 12M0 120l12 12" />
         </g>
-        <g stroke="#F2EFE9" strokeOpacity="0.3" strokeWidth="0.8">
+        <g stroke="var(--thumb-line)" strokeOpacity="0.7" strokeWidth="0.8">
           <path d="M62 6h8M74 6h4M132 144h8M144 144h4" />
           <path d="M6 54v8M6 66v4M204 96v8M204 108v4" />
         </g>

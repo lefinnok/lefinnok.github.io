@@ -9,6 +9,7 @@ import { DemoBlock } from "~/components/DemoBlock";
 import { ModelFrame } from "~/components/ModelFrame";
 import { UmlArchitecture } from "~/components/UmlArchitecture";
 import { Workflow } from "~/components/Workflow";
+import { TShape } from "~/components/TShape";
 import { Timeline } from "~/components/Timeline";
 import { FbxModelViewer } from "~/components/FbxModelViewer";
 import { caseStudies } from "~/data/caseStudies";
@@ -92,6 +93,7 @@ export default function Home() {
             seam between disciplines: scoping the idea, building the system, and
             translating it for the people who have to run it.
           </p>
+          <TShape />
           <div className="skill-grid">
             <div className="skill-block">
               <div className="skill-block__top">
@@ -252,11 +254,11 @@ export default function Home() {
         <div className="container section-hero">
           <GhostWord word="CRAFT" />
           <span className="eyebrow">Craft / 02</span>
-          <h2 className="section-hero__title">I make things you can play with.</h2>
+          <h2 className="section-hero__title">Fun to use. Useful when it counts.</h2>
           <p className="lede">
-            Games, hardware and interactive work, judged on experience and
-            finish. Some of it is commercial, some of it is a jam, all of it is
-            built to be used by someone other than me.
+            Games, tools and physical objects, judged on whether someone enjoys
+            using them and whether they help. Some of it is commercial, some of
+            it is a jam, all of it is built for someone other than me.
           </p>
           <div className="hero-actions">
             <a className="btn btn--solid" href="#case-eccentricity">
