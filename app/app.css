@@ -2158,7 +2158,7 @@ html[data-track="demos"] .demo-surface {
 /* section rail */
 .section-rail {
   position: fixed;
-  right: 24px;
+  right: 28px;
   top: 50%;
   transform: translateY(-50%);
   z-index: 35;
@@ -2166,7 +2166,7 @@ html[data-track="demos"] .demo-surface {
   flex-direction: column;
   gap: 13px;
   padding-left: 20px;
-  width: 158px;
+  width: 160px;
 }
 
 .section-rail__track {
@@ -2197,6 +2197,7 @@ html[data-track="demos"] .demo-surface {
   font-size: 10px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  white-space: nowrap;
   color: #b8b0a6;
   transition: color 0.2s ease;
 }
@@ -2261,7 +2262,7 @@ html[data-bg="paper"] .section-rail a.is-active::before {
   background: #b04724;
 }
 
-@media (max-width: 1279px) {
+@media (max-width: 1319px) {
   .section-rail {
     display: none;
   }
@@ -2802,9 +2803,9 @@ html.lenis body {
 }
 
 /* reserve the right margin for the chapter rail on wide screens */
-@media (min-width: 1280px) {
+@media (min-width: 1320px) {
   .page-section > .container {
-    padding-right: 200px;
+    padding-right: 246px;
   }
 }
 
@@ -3401,4 +3402,65 @@ html.lenis body {
 
 .demo-frame.is-expanded {
   overflow: auto;
+}
+
+/* 3D thumbnails: model-frame depth, simplified outline */
+.project-block__toggle {
+  grid-template-columns: 210px minmax(0, 1fr) auto;
+  gap: 32px;
+}
+
+.project-block__thumb {
+  height: 144px;
+  padding: 7px;
+  border: 1px solid rgba(242, 239, 233, 0.16);
+  background:
+    radial-gradient(110% 100% at 50% 0%, rgba(217, 119, 87, 0.08) 0%, transparent 58%),
+    linear-gradient(180deg, #1a1715 0%, #121110 100%);
+  box-shadow: inset 0 1px 0 rgba(242, 239, 233, 0.05);
+  overflow: hidden;
+}
+
+.project-block__thumb::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(242, 239, 233, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(242, 239, 233, 0.04) 1px, transparent 1px);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(circle at 50% 50%, black 20%, transparent 82%);
+}
+
+.project-block__thumb img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 1px solid rgba(242, 239, 233, 0.1);
+}
+
+.project-block__preview {
+  inset: 7px;
+  border: 1px solid rgba(242, 239, 233, 0.12);
+  background: #121110;
+}
+
+.project-block__preview > div {
+  height: 100% !important;
+}
+
+@media (max-width: 860px) {
+  .project-block__toggle {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .project-block__thumb {
+    max-width: 260px;
+    height: 132px;
+  }
 }

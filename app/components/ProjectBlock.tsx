@@ -66,7 +66,7 @@ export function ProjectBlock({
                     (project.model.scale ?? 0.1) *
                     ({ eccentricity: 2, "8-bit-computer": 2.3, binmin: 1.7, "gesture-recognition": 1.5, "retro-handheld": 1.9, "intern-medallion": 1.1, "space-saver": 1.6 }[project.slug] ?? 1.5),
                 }}
-                height={120}
+                height="100%"
                 rotationSpeed={0.012}
               />
             </span>
