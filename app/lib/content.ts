@@ -50,6 +50,7 @@ export interface CraftProject {
     scale?: number;
     initialRotation?: number;
     wireframe?: boolean;
+  material?: "default" | "metal" | "wireframe";
     label?: string;
     dimensions?: string;
   };

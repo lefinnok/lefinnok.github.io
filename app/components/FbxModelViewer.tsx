@@ -75,6 +75,10 @@ export function FbxModelViewer({
     directionalLight.position.set(5, 10, 7);
     scene.add(directionalLight);
 
+    const fillLight = new THREE.DirectionalLight(0xffd7b5, 0.55);
+    fillLight.position.set(-6, 4, 8);
+    scene.add(fillLight);
+
     let model: THREE.Group | null = null;
     let animationId: number | null = null;
     let isVisible = true;
@@ -99,19 +103,29 @@ export function FbxModelViewer({
       group.traverse((child) => {
         if ((child as THREE.Mesh).isMesh) {
           const mesh = child as THREE.Mesh;
+          const materialStyle =
+            config.material ?? (config.wireframe === false ? "solid" : "wireframe");
+
           mesh.material =
-            config.wireframe === false
+            materialStyle === "metal"
               ? new THREE.MeshStandardMaterial({
-                  color: 0xc9c2b7,
-                  roughness: 0.55,
-                  metalness: 0.12,
+                  color: 0xb87333,
+                  roughness: 0.32,
+                  metalness: 0.55,
                   side: THREE.DoubleSide,
                 })
-              : new THREE.MeshStandardMaterial({
-                  color: 0xffffff,
-                  emissive: 0x111111,
-                  wireframe: true,
-                });
+              : materialStyle === "solid"
+                ? new THREE.MeshStandardMaterial({
+                    color: 0xc9c2b7,
+                    roughness: 0.55,
+                    metalness: 0.12,
+                    side: THREE.DoubleSide,
+                  })
+                : new THREE.MeshStandardMaterial({
+                    color: 0xffffff,
+                    emissive: 0x111111,
+                    wireframe: true,
+                  });
         }
       });
 
