@@ -1,28 +1,28 @@
 const STEPS = [
   {
     num: "01",
-    title: "Frame",
-    text: "What decision does this serve? What must be true? What does being wrong cost? Constraints come before features.",
+    title: "Listen",
+    text: "Talk to everyone who touches the problem: users, operators, buyers, the people who maintain it. Separate the request from the need, and agree what success looks like.",
   },
   {
     num: "02",
-    title: "Model",
-    text: "Boundaries, data, interfaces and failure modes. I draw to think, not to decorate. The service and hardware drawings below come out of this step.",
+    title: "Imagine and estimate",
+    text: "Research references, gather the raw material and resources, sketch alternatives, and estimate effort and risk. Decide what is worth building before committing to it.",
   },
   {
     num: "03",
-    title: "Build the narrow path",
-    text: "A walking skeleton through every real boundary: one typed request, one real write, one visible result. Then widen it.",
+    title: "Structure",
+    text: "Give the chosen idea a technical shape: boundaries, data, interfaces, failure modes and a build order. The smallest structure that can carry the whole idea.",
   },
   {
     num: "04",
-    title: "Verify",
-    text: "Tests, evaluation, logs and provenance. If a number cannot be reproduced or explained, it is not finished.",
+    title: "Build",
+    text: "Make it real in slices. Integrate early, put working pieces in front of the people who asked for it, and let their feedback change the plan.",
   },
   {
     num: "05",
-    title: "Operate and hand over",
-    text: "Runbooks, offline paths, audit trails and a system someone else can run. The work ends when it can be operated without me.",
+    title: "Prove and hand over",
+    text: "Test with real inputs and real operators. Document it, write the runbook, and stay close enough that someone else can run it without me.",
   },
 ];
 
@@ -39,8 +39,9 @@ export function Workflow() {
         ))}
       </ol>
       <p className="workflow__caption">
-        Two artifacts from this path are below: a service shape and a hardware
-        path. They are examples, not a taxonomy of the work I can do.
+        Not a waterfall: listening and building feed each other. Two artifacts
+        from this path are below: a service shape and a hardware path. They are
+        examples, not a taxonomy of the work I can do.
       </p>
     </div>
   );

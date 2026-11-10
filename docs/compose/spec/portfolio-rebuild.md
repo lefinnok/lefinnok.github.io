@@ -31,7 +31,7 @@ source: feat/portfolio-v2
 
 **Architecture pass** — UML now explains the pipeline before the live demo and requires a user-supplied key; Systems leads with a general workflow and presents the diagrams as two artifacts.
 
-**Revert pass** — All demos moved back to Craft, Engineering ends at Current, and the UML architecture is a collapsed details panel. **Frame refinement** — Thumbnail frames are clean paper/dark outlines only; the external geometry was removed. **Content pass** — Thumbnail mounts were lightened, event roles and PDSS model IDs were corrected, Craft was reframed around fun and usefulness, and the T-shaped model was added to Capabilities. **Ornament pass** — Thumbnail mounts gained thin geometric decoration; project actions and demo distribution were committed in the preceding pass. **Structure pass** — Demos were distributed into Engineering, Craft and Systems, the standalone Demos chapter was removed, and project actions are visible on collapsed rows. **Positioning pass** — The portfolio now leads with generalist breadth and specialist depth, with a six-part capability map and no oversized glyph. All 3D models are bounding-box centred and pulled back, with regenerated thumbnails. Case study rows also received framed, purpose-drawn diagrams.
+**Workflow pass** — The generic Frame/Model/Verify sequence was replaced with the real listen, imagine, estimate, structure, build, hand-over process. **Revert pass** — All demos moved back to Craft, Engineering ends at Current, and the UML architecture is a collapsed details panel. **Frame refinement** — Thumbnail frames are clean paper/dark outlines only; the external geometry was removed. **Content pass** — Thumbnail mounts were lightened, event roles and PDSS model IDs were corrected, Craft was reframed around fun and usefulness, and the T-shaped model was added to Capabilities. **Ornament pass** — Thumbnail mounts gained thin geometric decoration; project actions and demo distribution were committed in the preceding pass. **Structure pass** — Demos were distributed into Engineering, Craft and Systems, the standalone Demos chapter was removed, and project actions are visible on collapsed rows. **Positioning pass** — The portfolio now leads with generalist breadth and specialist depth, with a six-part capability map and no oversized glyph. All 3D models are bounding-box centred and pulled back, with regenerated thumbnails. Case study rows also received framed, purpose-drawn diagrams.
 
 **Verification** — `npm run typecheck` PASS. `npm run build` PASS, prerendering `/`, `/engineering`, `/craft`, `/about`, `/contact`, `/projects`, the three case pages and five craft pages, then writing the SPA fallback and `404.html`. Manual visual checks at 1440px and 390px. Independent review returned no remaining critical or major issues after fixes for the duplicate H1, link names, duplicate Eccentricity page, redirect metadata and data-derived prerender slugs.
 
@@ -202,7 +202,15 @@ The demo frame is a dark screen card, deliberately unlike the solid model plinth
 
 ### S2.19 Workflow before artefacts
 
-The Systems section now leads with a generalized five-step workflow: Frame, Model, Build the narrow path, Verify, Operate and hand over. The two diagrams are presented afterwards as **Artifacts** from that path, explicitly described as examples rather than a taxonomy of the work.
+The Systems section leads with the actual working process rather than a generic delivery lifecycle:
+
+1. Listen: talk to everyone who touches the problem, separate request from need, agree success.
+2. Imagine and estimate: research, gather resources, sketch alternatives, price effort and risk.
+3. Structure: boundaries, data, interfaces, failure modes and build order.
+4. Build: real slices, early integration, stakeholder feedback changing the plan.
+5. Prove and hand over: real inputs and operators, documentation, runbook.
+
+The caption makes the loop explicit. The two diagrams follow as **Artifacts** from the path, examples rather than a taxonomy.
 
 ### S2.20 Model thumbnails
 
@@ -286,6 +294,7 @@ CMS, blog, authentication, newsletter, multilingual UI, redesign of demo interna
 - [x] T46: Case accuracy — acceptance: event roles and PDSS model IDs match the recorded sources. (covers: S2.28)
 - [x] T45: Craft framing — acceptance: Craft leads with fun and usefulness. (covers: S2.29)
 - [x] T44: T-shaped framing — acceptance: Engineering uses the T concretely for range and depth. (covers: S2.27)
+- [x] T51: Actual workflow framing — acceptance: the five stages reflect listening, imagination/estimation, technical structure, building and handover. (covers: S2.19)
 - [x] T50: UML architecture click — acceptance: architecture is collapsed behind a click and the live demo follows. (covers: S2.31)
 - [x] T49: Demos back in Craft — acceptance: all five demos sit in Craft and Engineering ends at Current. (covers: S2.30)
 - [x] T47: Thumbnail outline — acceptance: thumbnails use a simple 1px frame with no decorative geometry. (covers: S2.26)
