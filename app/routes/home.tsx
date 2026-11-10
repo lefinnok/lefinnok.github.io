@@ -9,7 +9,7 @@ import { DemoBlock } from "~/components/DemoBlock";
 import { ModelFrame } from "~/components/ModelFrame";
 import { UmlArchitecture } from "~/components/UmlArchitecture";
 import { Workflow } from "~/components/Workflow";
-import { TShape } from "~/components/TShape";
+import { CapabilityLayers } from "~/components/CapabilityLayers";
 import { Timeline } from "~/components/Timeline";
 import { FbxModelViewer } from "~/components/FbxModelViewer";
 import { caseStudies } from "~/data/caseStudies";
@@ -56,7 +56,7 @@ export default function Home() {
         <div className="container section-hero">
           <GhostWord word="ENGINEERING" />
           <span className="eyebrow">Engineering / 01</span>
-          <h2 className="section-hero__title">Broad by default. Deep where it matters.</h2>
+          <h2 id="engineering-title" className="section-hero__title">Broad by default. Deep where it matters.</h2>
           <p className="lede">
             I am a generalist with a technology specialization. I move between
             management, finance, communication, art and design, and
@@ -93,7 +93,7 @@ export default function Home() {
             seam between disciplines: scoping the idea, building the system, and
             translating it for the people who have to run it.
           </p>
-          <TShape />
+          <CapabilityLayers />
           <div className="skill-grid">
             <div className="skill-block">
               <div className="skill-block__top">
@@ -232,7 +232,7 @@ export default function Home() {
         <div className="container section-hero">
           <GhostWord word="CRAFT" />
           <span className="eyebrow">Craft / 02</span>
-          <h2 className="section-hero__title">Fun to use. Useful when it counts.</h2>
+          <h2 id="craft-title" className="section-hero__title">Fun to use. Useful when it counts.</h2>
           <p className="lede">
             Games, tools and physical objects, judged on whether someone enjoys
             using them and whether they help. Some of it is commercial, some of
@@ -242,7 +242,7 @@ export default function Home() {
             <a className="btn btn--solid" href="#case-eccentricity">
               Eccentricity
             </a>
-            <a className="btn" href="#systems">
+            <a className="btn" href="#systems-title">
               Systems work
             </a>
           </div>
@@ -371,7 +371,7 @@ export default function Home() {
         <div className="container section-hero">
           <GhostWord word="SYSTEMS" />
           <span className="eyebrow">Practice / 03</span>
-          <h2 className="section-hero__title">An idea of how I work.</h2>
+          <h2 id="systems-title" className="section-hero__title">An idea of how I work.</h2>
           <p className="lede">
             Not a fixed process. A rough shape that tends to appear whether the
             work is a service, a board or a model. The drawings below are
@@ -409,7 +409,7 @@ export default function Home() {
           <GhostWord word="ABOUT" />
           <div>
             <span className="eyebrow">About / 04</span>
-            <h2 className="section-hero__title">A generalist with a technology specialization.</h2>
+            <h2 id="about-title" className="section-hero__title">A generalist with a technology specialization.</h2>
             <p>
               I am a builder in Hong Kong. My range runs from management and
               finance to communication, art and design, with technology as the
@@ -478,7 +478,7 @@ export default function Home() {
       <section id="contact" data-theme="paper" className="page-section page-section--paper">
         <div className="container contact">
           <span className="eyebrow">Contact / 05</span>
-          <h2 className="section-hero__title">Start a conversation.</h2>
+          <h2 id="contact-title" className="section-hero__title">Start a conversation.</h2>
           <a className="contact__mail" href="mailto:lefinnokwok@gmail.com">
             lefinnokwok@gmail.com
           </a>

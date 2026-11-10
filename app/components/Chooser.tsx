@@ -4,7 +4,7 @@ export function Chooser() {
   return (
     <section className="chooser" aria-label="Choose a track">
       <h1 className="sr-only">Lefinno Kwok: engineering and craft</h1>
-      <a href="#engineering" className="half half--engineering" aria-labelledby="chooser-engineering">
+      <a href="#engineering-title" className="half half--engineering" aria-labelledby="chooser-engineering">
         <div className="half__top">
           <span className="mono">01 / Engineering</span>
           <span className="mono" aria-hidden="true">
@@ -31,7 +31,7 @@ export function Chooser() {
 
       <div className="seam" aria-hidden="true" />
 
-      <a href="#craft" className="half half--craft" aria-labelledby="chooser-craft">
+      <a href="#craft-title" className="half half--craft" aria-labelledby="chooser-craft">
         <div className="half__top">
           <span className="mono">02 / Craft</span>
           <span className="mono" aria-hidden="true">

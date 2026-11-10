@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 
 const SECTIONS = [
-  { id: "engineering", label: "Engineering" },
-  { id: "craft", label: "Craft" },
-  { id: "systems", label: "Systems" },
-  { id: "about", label: "About" },
-  { id: "contact", label: "Contact" },
+  { id: "engineering", hash: "engineering-title", label: "Engineering" },
+  { id: "craft", hash: "craft-title", label: "Craft" },
+  { id: "systems", hash: "systems-title", label: "Systems" },
+  { id: "about", hash: "about-title", label: "About" },
+  { id: "contact", hash: "contact-title", label: "Contact" },
 ];
 
 export function SectionRail() {
@@ -57,7 +57,7 @@ export function SectionRail() {
       {SECTIONS.map((section, index) => (
         <a
           key={section.id}
-          href={`#${section.id}`}
+          href={`#${section.hash}`}
           className={active === section.id ? "is-active" : ""}
           aria-current={active === section.id ? "location" : undefined}
         >

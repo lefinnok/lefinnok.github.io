@@ -17,14 +17,27 @@ export function useSmoothScroll() {
     });
 
     const onClick = (event: MouseEvent) => {
-      const target = event.target as Element | null;
-      const anchor = target?.closest?.('a[href^="#"]') as HTMLAnchorElement | null;
+      const eventTarget = event.target as Element | null;
+      const anchor = eventTarget?.closest?.('a[href^="#"]') as HTMLAnchorElement | null;
       if (!anchor) return;
       const hash = anchor.getAttribute("href");
       if (!hash || hash === "#") return;
       const id = hash.slice(1);
-      const el = document.getElementById(id);
-      if (!el) return;
+      const section = document.getElementById(id);
+      if (!section) return;
+
+      const sectionIds = new Set([
+        "engineering",
+        "craft",
+        "systems",
+        "about",
+        "contact",
+      ]);
+      const isSection = sectionIds.has(id);
+      const title = isSection
+        ? section.querySelector<HTMLElement>(".section-hero__title")
+        : null;
+      const jumpTarget = title ?? section;
 
       event.preventDefault();
       window.dispatchEvent(new CustomEvent("anchor:open", { detail: id }));
@@ -32,7 +45,12 @@ export function useSmoothScroll() {
 
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          lenis.scrollTo(el, { offset: -76, duration: 1.1 });
+          const isTitle = jumpTarget.classList.contains("section-hero__title");
+          const top =
+            window.scrollY +
+            jumpTarget.getBoundingClientRect().top -
+            (isSection || isTitle ? 88 : 76);
+          lenis.scrollTo(top, { duration: 1.1 });
         });
       });
     };

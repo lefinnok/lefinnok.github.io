@@ -4134,3 +4134,138 @@ html.lenis body {
   border: 0;
   background: transparent;
 }
+
+/* three-layer capability diagram */
+.capability-layers {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
+  gap: 38px;
+  align-items: center;
+  margin: 0 0 32px;
+  padding: 24px 0 28px;
+  border-top: 1px solid var(--line);
+}
+
+.capability-layers__diagram {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.capability-layer {
+  position: relative;
+  width: 100%;
+  padding: 12px 16px 14px;
+  border: 1px solid var(--line);
+  text-align: left;
+}
+
+.capability-layer.layer--general {
+  width: 100%;
+  min-height: 82px;
+}
+
+.capability-layer.layer--technology {
+  width: 74%;
+  min-height: 118px;
+  border-color: rgba(21, 20, 18, 0.28);
+}
+
+.capability-layer.layer--specialization {
+  width: 46%;
+  min-height: 76px;
+  border-color: rgba(176, 71, 36, 0.55);
+  background: rgba(176, 71, 36, 0.035);
+}
+
+.capability-layer__head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.capability-layer__num {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+
+.capability-layer__label {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.capability-layer h4 {
+  margin: 6px 0 8px;
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.capability-layer ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.capability-layer li {
+  font-family: var(--mono);
+  font-size: 8.5px;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: var(--body-muted);
+}
+
+.capability-layer li + li::before {
+  content: "·";
+  margin-right: 12px;
+  color: var(--muted);
+}
+
+.capability-layers__notes p {
+  margin: 0 0 14px;
+  max-width: 46ch;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--body-muted);
+}
+
+.capability-layers__notes p:last-child {
+  margin-bottom: 0;
+}
+
+.capability-layers__notes span {
+  display: block;
+  margin-bottom: 4px;
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+@media (max-width: 900px) {
+  .capability-layers {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .capability-layer--technology,
+  .capability-layer.layer--specialization {
+    width: 100%;
+  }
+}
+
+.section-hero__title {
+  scroll-margin-top: 88px;
+}

@@ -2,11 +2,11 @@ import { Link } from "react-router";
 import { useEffect, useState } from "react";
 
 const SECTIONS = [
-  { id: "engineering", label: "Engineering" },
-  { id: "craft", label: "Craft" },
-  { id: "systems", label: "Systems" },
-  { id: "about", label: "About" },
-  { id: "contact", label: "Contact" },
+  { id: "engineering", hash: "engineering-title", label: "Engineering" },
+  { id: "craft", hash: "craft-title", label: "Craft" },
+  { id: "systems", hash: "systems-title", label: "Systems" },
+  { id: "about", hash: "about-title", label: "About" },
+  { id: "contact", hash: "contact-title", label: "Contact" },
 ];
 
 export function SiteNav() {
@@ -79,7 +79,7 @@ export function SiteNav() {
           {SECTIONS.map((section) => (
             <a
               key={section.id}
-              href={`#${section.id}`}
+              href={`#${section.hash}`}
               aria-current={active === section.id ? "location" : undefined}
             >
               {section.label}
@@ -118,7 +118,7 @@ export function SiteNav() {
           {SECTIONS.map((section) => (
             <a
               key={section.id}
-              href={`#${section.id}`}
+              href={`#${section.hash}`}
               onClick={() => setOpen(false)}
             >
               {section.label}

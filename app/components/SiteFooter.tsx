@@ -5,10 +5,10 @@ export function SiteFooter() {
       <div className="container footer-row">
         <div>
           <div className="footer-links">
-            <a href="#engineering">Engineering</a>
-            <a href="#craft">Craft</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
+            <a href="#engineering-title">Engineering</a>
+            <a href="#craft-title">Craft</a>
+            <a href="#about-title">About</a>
+            <a href="#contact-title">Contact</a>
             <a href="https://github.com/lefinnok" target="_blank" rel="noreferrer">
               GitHub
             </a>
