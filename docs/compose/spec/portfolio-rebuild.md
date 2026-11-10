@@ -31,7 +31,7 @@ source: feat/portfolio-v2
 
 **Architecture pass** — UML now explains the pipeline before the live demo and requires a user-supplied key; Systems leads with a general workflow and presents the diagrams as two artifacts.
 
-**Thumbnail pass** — Project rows now show stills of their actual models, generated once from the viewer; expanded rows keep the live FreeCAD/FBX/OBJ view.
+**Depth pass** — Demo cards gained the model frame's radial falloff, fading grid and inset shadow with a simpler single-border outline; project rows keep stills by default and swap in one live model on hover or focus.
 
 **Verification** — `npm run typecheck` PASS. `npm run build` PASS, prerendering `/`, `/engineering`, `/craft`, `/about`, `/contact`, `/projects`, the three case pages and five craft pages, then writing the SPA fallback and `404.html`. Manual visual checks at 1440px and 390px. Independent review returned no remaining critical or major issues after fixes for the duplicate H1, link names, duplicate Eccentricity page, redirect metadata and data-derived prerender slugs.
 
@@ -176,7 +176,7 @@ The HKSTP intern gift is a Craft project entry:
 
 The demo frame is a dark screen card, deliberately unlike the solid model plinth:
 
-- Warm-black card, numbered index tab, title, year and a pulsing LIVE marker.
+- Warm-black card with a radial ember falloff, a faint 44px grid that fades behind the screen, and an inset shadow. The outline is reduced to a single border and a slim accent rule beside the index, with no corner marks.
 - Description and dated context in the header, with a thin rule before the context.
 - The screen is full-bleed inside the card, with no paper mat, so the instrument reads as a display rather than a framed print.
 - Footer carries the browser note on the left and the related link and Expand on the right.
@@ -198,8 +198,8 @@ The Systems section now leads with a generalized five-step workflow: Frame, Mode
 Collapsed project rows now use stills rendered from the same 3D models as the expanded `ModelFrame`:
 
 - Seven 480x300 PNGs in `public/thumbs`, captured from the live viewer with per-model camera zoom.
-- The saved images are static, so the project list does not mount WebGL for every row.
-- Expanding a row still opens the live rotating model in the technical plinth.
+- The saved images are static by default, so the list does not mount WebGL for every row.
+- Hovering or focusing a row swaps that thumbnail for a live rotating viewer, one context at a time. Expanding a row opens the full model plinth.
 - The generic `LineArt` variant remains as a fallback when a project has no model thumbnail.
 
 ### S2.7 Performance and accessibility
@@ -217,6 +217,7 @@ CMS, blog, authentication, newsletter, multilingual UI, redesign of demo interna
 - [x] T13: Demos restored — acceptance: CPU, gesture, ML, UML, diagrams and 3D models render on the site. (covers: S2.8)
 - [x] T15: Demo frame and brand tokens — acceptance: demos render inside a paper frame with an ink stage and ember accents; expand works. (covers: S2.9)
 - [x] T16: Demo index and detail pages — acceptance: `/demos` lists eight entries and each detail page mounts its demo. (covers: S2.9)
+- [x] T35: Live project previews — acceptance: hover/focus swaps a still for one live model. (covers: S2.20)
 - [x] T34: Model thumbnails — acceptance: project rows show stills of their actual models. (covers: S2.20)
 - [x] T33: UML architecture and key-only setup — acceptance: no free proxy path, architecture visible before the demo. (covers: S2.18)
 - [x] T32: Generalized workflow — acceptance: Systems leads with workflow and frames diagrams as artifacts. (covers: S2.19)

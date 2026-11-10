@@ -3336,3 +3336,69 @@ html.lenis body {
 .project-block__toggle:hover .project-block__thumb img {
   transform: scale(1.05);
 }
+
+.project-block__thumb {
+  position: relative;
+}
+
+.project-block__preview {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: block;
+  background: #121110;
+}
+
+/* demo cards inherit the model frame's depth, with a simpler outline */
+.demo-frame {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 50% -15%, rgba(217, 119, 87, 0.08) 0%, transparent 52%),
+    linear-gradient(180deg, #1c1916 0%, #151311 58%, #11100f 100%);
+  border: 1px solid rgba(242, 239, 233, 0.14);
+  box-shadow: inset 0 1px 0 rgba(242, 239, 233, 0.05);
+}
+
+.demo-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(242, 239, 233, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(242, 239, 233, 0.035) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(180deg, black 0%, transparent 34%, transparent 70%, black 100%);
+}
+
+.demo-frame > * {
+  position: relative;
+  z-index: 1;
+}
+
+.demo-frame__index {
+  display: block;
+  width: auto;
+  height: auto;
+  padding: 3px 0 3px 12px;
+  border: 0;
+  border-left: 1px solid #d97757;
+  border-radius: 0;
+  font-size: 13px;
+  color: #d97757;
+  align-self: start;
+}
+
+.demo-frame__stage {
+  box-shadow: inset 0 0 70px rgba(0, 0, 0, 0.5);
+}
+
+.demo-frame__foot {
+  border-top: 0;
+}
+
+.demo-frame.is-expanded {
+  overflow: auto;
+}

@@ -13,6 +13,7 @@ export function ProjectBlock({
 }) {
   const anchor = `project-${project.slug}`;
   const [open, setOpen] = useState(false);
+  const [preview, setPreview] = useState(false);
 
   useEffect(() => {
     const sync = () => {
@@ -41,7 +42,14 @@ export function ProjectBlock({
         className="project-block__toggle"
         aria-expanded={open}
         aria-controls={`${anchor}-body`}
-        onClick={() => setOpen((value) => !value)}
+        onMouseEnter={() => preview === false && !open && setPreview(true)}
+        onMouseLeave={() => setPreview(false)}
+        onFocus={() => !open && setPreview(true)}
+        onBlur={() => setPreview(false)}
+        onClick={() => {
+          setPreview(false);
+          setOpen((value) => !value);
+        }}
       >
         <span className="project-block__thumb" aria-hidden="true">
           {project.thumbnail ? (
@@ -49,6 +57,20 @@ export function ProjectBlock({
           ) : (
             <LineArt variant={project.art} className="" />
           )}
+          {preview && project.model ? (
+            <span className="project-block__preview">
+              <FbxModelViewer
+                config={{
+                  ...project.model,
+                  scale:
+                    (project.model.scale ?? 0.1) *
+                    ({ eccentricity: 2, "8-bit-computer": 2.3, binmin: 1.7, "gesture-recognition": 1.5, "retro-handheld": 1.9, "intern-medallion": 1.1, "space-saver": 1.6 }[project.slug] ?? 1.5),
+                }}
+                height={120}
+                rotationSpeed={0.012}
+              />
+            </span>
+          ) : null}
         </span>
         <span className="project-block__intro">
           <span className="mono accent">{project.year}</span>
