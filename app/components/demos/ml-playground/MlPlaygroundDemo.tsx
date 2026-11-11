@@ -205,12 +205,16 @@ export default function MlPlaygroundDemo() {
     >
       <Tabs
         value={state.activeTab}
+        variant="fullWidth"
         onChange={(_, v) => dispatch({ type: "SET_TAB", tab: v })}
         sx={{
           borderBottom: "1px solid #2A2724",
           "& .MuiTab-root": {
             textTransform: "none",
-            fontSize: "0.8rem",
+            fontSize: { xs: "0.72rem", sm: "0.8rem" },
+            minWidth: 0,
+            px: 1,
+            whiteSpace: "nowrap",
             fontFamily: "'Fira Code', monospace",
             color: "text.secondary",
             "&.Mui-selected": { color: "text.primary" },

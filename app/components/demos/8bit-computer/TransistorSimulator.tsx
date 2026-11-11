@@ -11,6 +11,7 @@ import {
   IconButton,
   ToggleButton,
   ToggleButtonGroup,
+  useMediaQuery,
 } from "@mui/material";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -236,6 +237,9 @@ export default function TransistorSimulator() {
   const [loadedProgram, setLoadedProgram] = useState<SampleProgram | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const isMobile = useMediaQuery("(max-width: 640px)");
+  const [showAdvanced, setShowAdvanced] = useState(false);
+  const compact = isMobile && !isFullscreen && !showAdvanced;
   const intervalRef = useRef<ReturnType<typeof setInterval>>(undefined);
   const { cpu, source, assembleErrors, ramSize } = state;
 
@@ -431,13 +435,18 @@ export default function TransistorSimulator() {
           <IconButton
             size="small"
             onClick={() => setIsFullscreen((prev) => !prev)}
-            sx={{ color: "text.secondary" }}
+            sx={{ color: "text.secondary", display: { xs: "none", sm: "inline-flex" } }}
             title={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
           >
             {isFullscreen ? <FullscreenExitIcon /> : <FullscreenIcon />}
           </IconButton>
         </Stack>
-        <Stack direction="row" spacing={1} alignItems="center" sx={{ flexWrap: "wrap", rowGap: 1 }}>
+        <Stack
+          direction="row"
+          spacing={1}
+          alignItems="center"
+          sx={{ flexWrap: "wrap", rowGap: 1, display: compact ? "none" : "flex" }}
+        >
           {/* RAM size toggle */}
           <ToggleButtonGroup
             value={ramSize}
@@ -526,6 +535,26 @@ export default function TransistorSimulator() {
         />
       </Box>
 
+      {isMobile && (
+        <Button
+          size="small"
+          onClick={() => setShowAdvanced((value) => !value)}
+          sx={{
+            mb: 1.5,
+            px: 0,
+            minHeight: 24,
+            fontFamily: "'Fira Code', monospace",
+            fontSize: 9,
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            color: "rgba(255,255,255,0.5)",
+            "&:hover": { bgcolor: "transparent", color: "#D97757" },
+          }}
+        >
+          {showAdvanced ? "Hide advanced controls" : "More controls · examples, RAM, editor"}
+        </Button>
+      )}
+
       {/* Main content */}
       <Box
         sx={{
@@ -582,7 +611,14 @@ export default function TransistorSimulator() {
         </Box>
 
         {/* Side panel: Module detail OR Assembly editor */}
-        <Box sx={{ flex: 2, minWidth: 0, maxWidth: { lg: 340 } }}>
+        <Box
+          sx={{
+            flex: 2,
+            minWidth: 0,
+            maxWidth: { lg: 340 },
+            display: compact && !selectedModule ? "none" : "block",
+          }}
+        >
           {selectedModule ? (
             <Paper sx={{ bgcolor: "#141414", p: 1.5, borderRadius: 1 }}>
               <ModuleDetailPanel

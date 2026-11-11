@@ -373,7 +373,7 @@ export default function UmlGeneratorDemo() {
           direction="row"
           justifyContent="space-between"
           alignItems="center"
-          sx={{ mb: 1, flexShrink: 0 }}
+          sx={{ mb: 1, flexShrink: 0, flexWrap: "wrap", gap: 1 }}
         >
           <Box>
             <Typography variant={isFullscreen ? "h6" : "h5"}>
@@ -385,7 +385,7 @@ export default function UmlGeneratorDemo() {
               </Typography>
             )}
           </Box>
-          <Stack direction="row" spacing={0.5} alignItems="center">
+          <Stack direction="row" spacing={0.5} alignItems="center" sx={{ flexWrap: "wrap", gap: 0.5 }}>
             {config && (
               <Chip
                 label={config.model.split("/").pop()}
