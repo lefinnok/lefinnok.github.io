@@ -2188,6 +2188,7 @@ html[data-track="demos"] .demo-surface {
 
 .section-rail a {
   position: relative;
+  padding-left: 4px;
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -2228,7 +2229,7 @@ html[data-track="demos"] .demo-surface {
 }
 
 .section-rail a.is-active::before {
-  width: 24px;
+  width: 14px;
   opacity: 1;
   background: #d97757;
 }
