@@ -11,6 +11,22 @@ const SECTIONS = [
 export function SectionRail() {
   const [active, setActive] = useState("engineering");
   const [progress, setProgress] = useState(0);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const chooser = document.querySelector(".chooser");
+    if (!chooser) {
+      setVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setVisible(!entry.isIntersecting),
+      { threshold: 0 }
+    );
+    observer.observe(chooser);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const nodes = SECTIONS.map((section) =>
@@ -47,7 +63,11 @@ export function SectionRail() {
   }, []);
 
   return (
-    <nav className="section-rail" aria-label="Sections">
+    <nav
+      className={`section-rail${visible ? " is-visible" : ""}`}
+      aria-label="Sections"
+      aria-hidden={!visible}
+    >
       <span className="section-rail__track" aria-hidden="true">
         <span
           className="section-rail__fill"
@@ -60,6 +80,7 @@ export function SectionRail() {
           href={`#${section.hash}`}
           className={active === section.id ? "is-active" : ""}
           aria-current={active === section.id ? "location" : undefined}
+          tabIndex={visible ? undefined : -1}
         >
           <span className="section-rail__label">{section.label}</span>
           <span className="section-rail__num">

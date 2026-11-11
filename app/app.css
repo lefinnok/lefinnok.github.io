@@ -4373,3 +4373,22 @@ html {
     padding-right: var(--gutter);
   }
 }
+
+/* the chapter rail only appears once the opening chooser has scrolled away */
+.section-rail {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease,
+    visibility 0.35s ease;
+}
+
+.section-rail.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
