@@ -379,7 +379,7 @@ export default function TransistorSimulator() {
     >
       {/* Header + view toggle + RAM mode */}
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 1.5, flexWrap: "wrap", gap: 1 }}>
-        <Stack direction="row" spacing={1} alignItems="center">
+        <Stack direction="row" spacing={1} alignItems="center" sx={{ flexWrap: "wrap", rowGap: 1 }}>
           <Typography
             variant="h6"
             sx={{
@@ -437,7 +437,7 @@ export default function TransistorSimulator() {
             {isFullscreen ? <FullscreenExitIcon /> : <FullscreenIcon />}
           </IconButton>
         </Stack>
-        <Stack direction="row" spacing={1} alignItems="center">
+        <Stack direction="row" spacing={1} alignItems="center" sx={{ flexWrap: "wrap", rowGap: 1 }}>
           {/* RAM size toggle */}
           <ToggleButtonGroup
             value={ramSize}

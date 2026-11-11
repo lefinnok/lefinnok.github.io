@@ -4295,3 +4295,81 @@ html.lenis body {
 body {
   background: var(--page-bg, #f2efe9) !important;
 }
+
+/* mobile: keep section copy, chooser art and demo controls inside the viewport */
+.about-hero > * {
+  min-width: 0;
+}
+
+.about-hero .section-hero__title {
+  overflow-wrap: anywhere;
+}
+
+.chooser,
+.half {
+  overflow: hidden;
+}
+
+.demo-frame__stage .MuiButton-root {
+  max-width: 100%;
+  white-space: normal;
+}
+
+html {
+  overflow-x: clip;
+}
+
+.footer-row > * {
+  min-width: 0;
+}
+
+.footer-links {
+  flex-wrap: wrap;
+  row-gap: 10px;
+}
+
+@media (max-width: 860px) {
+  .project-block__toggle {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .project-block__thumb {
+    max-width: 260px;
+    height: 110px;
+  }
+
+  .line-art {
+    right: 0;
+    width: 70%;
+    opacity: 0.35;
+  }
+}
+
+.section-hero__title {
+  overflow-wrap: anywhere;
+}
+
+.line-art {
+  overflow: hidden;
+}
+
+.line-art svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 600px) {
+  .about-hero .section-hero__title,
+  #contact .section-hero__title {
+    font-size: clamp(30px, 8vw, 48px);
+  }
+}
+
+@media (max-width: 860px) {
+  .about-hero {
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
+  }
+}

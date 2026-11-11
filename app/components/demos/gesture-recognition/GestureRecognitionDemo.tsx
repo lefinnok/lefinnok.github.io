@@ -431,7 +431,7 @@ export default function GestureRecognitionDemo() {
           direction="row"
           justifyContent="space-between"
           alignItems="center"
-          sx={{ mb: 1, flexShrink: 0 }}
+          sx={{ mb: 1, flexShrink: 0, flexWrap: "wrap", gap: 1 }}
         >
           <Box>
             <Typography variant={isFullscreen ? "h6" : "h5"}>
@@ -444,7 +444,7 @@ export default function GestureRecognitionDemo() {
               </Typography>
             )}
           </Box>
-          <Stack direction="row" spacing={0.5}>
+          <Stack direction="row" spacing={0.5} sx={{ flexWrap: "wrap", gap: 0.5 }}>
             <Button
               size="small"
               variant="outlined"
