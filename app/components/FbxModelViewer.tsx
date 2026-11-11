@@ -32,6 +32,7 @@ export function FbxModelViewer({
   const containerRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
   const [modelLoading, setModelLoading] = useState(true);
+  const [failed, setFailed] = useState(false);
   const localHoveredRef = useRef(false);
   const externalHoveredRef = useRef(externalHovered ?? false);
   // Normalized mouse position: -1 to 1 on each axis, relative to container center
@@ -60,10 +61,17 @@ export function FbxModelViewer({
     );
     camera.lookAt(0, 0, 0);
 
-    const renderer = new THREE.WebGLRenderer({
-      alpha: true,
-      antialias: true,
-    });
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        alpha: true,
+        antialias: true,
+      });
+    } catch {
+      setModelLoading(false);
+      setFailed(true);
+      return;
+    }
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
@@ -283,14 +291,36 @@ export function FbxModelViewer({
       ref={containerRef}
       sx={{ width, height, position: "relative", overflow: "hidden" }}
       role="img"
-      aria-label="3D model preview"
+      aria-label={failed ? "3D preview unavailable" : "3D model preview"}
     >
-      {modelLoading && (
-        <MatrixLoader
-          height="100%"
-          width="100%"
-          sx={{ position: "absolute", inset: 0, zIndex: 1, borderRadius: 0 }}
-        />
+      {failed ? (
+        <Box
+          sx={{
+            position: "absolute",
+            inset: 0,
+            display: "grid",
+            placeContent: "center",
+            gap: 0.75,
+            px: 2,
+            textAlign: "center",
+            fontFamily: "var(--mono)",
+            fontSize: 9,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            color: "var(--muted)",
+          }}
+        >
+          <span>3D preview unavailable</span>
+          <span style={{ opacity: 0.65 }}>WebGL is disabled in this browser</span>
+        </Box>
+      ) : (
+        modelLoading && (
+          <MatrixLoader
+            height="100%"
+            width="100%"
+            sx={{ position: "absolute", inset: 0, zIndex: 1, borderRadius: 0 }}
+          />
+        )
       )}
     </Box>
   );

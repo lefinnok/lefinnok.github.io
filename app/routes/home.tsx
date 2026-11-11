@@ -64,6 +64,12 @@ export default function Home() {
             whole story. Most of what I do is take an idea from conversation to
             something real.
           </p>
+          <p className="engineering-focus">
+            <span>Engineering focus</span>
+            Real-time interactive systems, applied ML, integration tooling and
+            hardware, from runtime behaviour to the workflows that let other
+            people build and operate them.
+          </p>
           <div className="hero-actions">
             <a className="btn btn--solid" href="#case-pdss">
               Read the PDSS case

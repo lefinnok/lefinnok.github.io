@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import * as THREE from "three";
 import {
@@ -206,6 +206,7 @@ export function CnnViz3D({
   height = 340,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [unavailable, setUnavailable] = useState(false);
   const mouseRef = useRef({ x: 0, y: 0 });
   const hoveredRef = useRef(false);
 
@@ -233,7 +234,13 @@ export function CnnViz3D({
     camera.position.set(1, 1.5, 14);
     camera.lookAt(1, 0, 0);
 
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    } catch {
+      setUnavailable(true);
+      return;
+    }
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
@@ -677,6 +684,34 @@ export function CnnViz3D({
       }
     };
   }, []);
+
+  if (unavailable) {
+    return (
+      <Box
+        role="img"
+        aria-label="3D view unavailable"
+        sx={{
+          width: "100%",
+          height,
+          borderRadius: 1,
+          display: "grid",
+          placeContent: "center",
+          gap: 0.75,
+          px: 2,
+          textAlign: "center",
+          fontFamily: "var(--mono)",
+          fontSize: 9,
+          letterSpacing: "0.1em",
+          textTransform: "uppercase",
+          color: "var(--muted)",
+          border: "1px solid var(--line)",
+        }}
+      >
+        <span>3D view unavailable</span>
+        <span style={{ opacity: 0.65 }}>Use the 2D activation view</span>
+      </Box>
+    );
+  }
 
   return (
     <Box
