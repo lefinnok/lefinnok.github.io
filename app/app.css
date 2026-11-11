@@ -1745,10 +1745,6 @@ html[data-track="demos"] .demo-surface {
     flex-direction: column;
   }
 
-  .nav-cv {
-    display: none;
-  }
-
   .demo-grid,
   .home-work {
     grid-template-columns: 1fr;
@@ -4412,8 +4408,4 @@ html {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--accent);
-}
-
-.mobile-cv {
-  margin-top: 18px;
 }

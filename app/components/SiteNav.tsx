@@ -88,15 +88,6 @@ export function SiteNav() {
         </nav>
 
         <div className="nav-actions">
-          <a
-            href="/lefinnok-kwok-cv.pdf"
-            className="btn nav-cv"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Open CV (PDF)"
-          >
-            CV ↗
-          </a>
           <button
             type="button"
             className={`nav-toggle ${open ? "is-open" : ""}`}
@@ -131,15 +122,6 @@ export function SiteNav() {
             </a>
           ))}
         </nav>
-        <a
-          className="btn mobile-cv"
-          href="/lefinnok-kwok-cv.pdf"
-          target="_blank"
-          rel="noreferrer"
-          onClick={() => setOpen(false)}
-        >
-          Open CV ↗
-        </a>
         <p className="mono">Hong Kong · lefinnokwok@gmail.com</p>
       </div>
     </header>

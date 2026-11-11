@@ -501,10 +501,6 @@ export default function Home() {
               <span>GitHub</span>
               github.com/lefinnok
             </a>
-            <a href="/lefinnok-kwok-cv.pdf" download>
-              <span>CV</span>
-              Download PDF
-            </a>
           </div>
           <p className="footer-note" style={{ marginTop: 40, maxWidth: "56ch" }}>
             Based in Hong Kong. Available for conversations about product,
